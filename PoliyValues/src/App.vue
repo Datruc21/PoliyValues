@@ -1,17 +1,15 @@
+<script setup lang="ts">
+import Navbar from './components/Navbar.vue';
+
+</script>
+
 <template>
   <div id="layout">
-    <header>
-      <h1>Values</h1>
-      <nav>
-        <ul id="nav-list">
-          <li href="#surprise">Surprise me</li>
-          <li href="#favorites">My favorites</li>
-          <li href="#about">About us</li>
-          <li href="parameters">Parameters</li>
-          <li>{{ accountName }}</li>
-        </ul>
-      </nav>
-    </header>
+
+
+    <Navbar />
+
+
     <footer>
       <h3>Contacts informations</h3>
       <h3>Our inspirations</h3>
@@ -20,25 +18,26 @@
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      accountName: "lorem ipsum",
-    };
-  },
-};
-</script>
 
-<style scoped>
-header,
-ul {
-  display: flex;
-  flex-direction: row;
+
+<style>
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
 }
 
-template {
+#app {
+  margin: 0;
+  padding: 0;
+  max-width: 100%;
+  width: 100%;
+}
+
+
+
+/* template {
   display: flex;
   flex-direction: column;
-}
+} */
 </style>
