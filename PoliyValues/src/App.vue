@@ -1,14 +1,13 @@
 <script setup lang="ts">
-import Navbar from './components/Navbar.vue';
-
+import Navbar from "./components/Navbar.vue";
+import Auth from "./components/Auth.vue";
+import Settings from "./components/Settings.vue";
 </script>
 
 <template>
   <div id="layout">
-
-
     <Navbar />
-
+    <Settings />
 
     <footer>
       <h3>Contacts informations</h3>
@@ -18,10 +17,9 @@ import Navbar from './components/Navbar.vue';
   </div>
 </template>
 
-
-
 <style>
-body, html {
+body,
+html {
   margin: 0;
   padding: 0;
   width: 100%;
@@ -33,8 +31,6 @@ body, html {
   max-width: 100%;
   width: 100%;
 }
-
-
 
 /* template {
   display: flex;

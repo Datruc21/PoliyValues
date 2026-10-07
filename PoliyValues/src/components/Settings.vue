@@ -23,10 +23,11 @@ We need to implement all the logic for deleting, logging out and changing the cs
       </li>
       <li>
         <span>Change font size</span>
-        <select v-model="fontSize" @change="updateFontSize"></select>
-        <option value="small">Small</option>
-        <option value="normal">Normal</option>
-        <option value="big">Big</option>
+        <select v-model="fontSize" @change="updateFontSize">
+          <option value="small">Small</option>
+          <option value="normal">Normal</option>
+          <option value="big">Big</option>
+        </select>
       </li>
     </ul>
 
@@ -45,12 +46,22 @@ We need to implement all the logic for deleting, logging out and changing the cs
         Are you really sure you want to delete your account? This decision is
         irrversible.
       </p>
-      <button v-on:click="deleteAccount">Yes, I do</button>
+      <button
+        v-on:click="
+          () => {
+            deleteAccount();
+            openModal = false;
+            accountDeleted = true;
+          }
+        "
+      >
+        Yes, I do
+      </button>
       <button v-on:click="openModal = false">I am not so sure anymore</button>
-      <p v-if="accountDeleted">
-        Congratulations you just successfully deleted your account!
-      </p>
     </Modal>
+    <p v-if="accountDeleted">
+      Congratulations you just successfully deleted your account!
+    </p>
   </div>
 </template>
 
