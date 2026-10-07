@@ -1,15 +1,55 @@
-/*This code is to create an express server that will handle connexion with vue (front end) and database*/
-
 import express from "express";
 import cors from "cors";
+import db from "./config/db.js";
+import { initDb } from "./database/initDb.js";
 
 const app = express();
 
-app.use(cors()); // Allow Vue to contact Express
-app.use(express.json()); // Enables data reading sent by Vue
+app.use(cors());
+app.use(express.json());
 
-const PORT = 3000;
+// --- ROUTES API ---
 
-app.listen(PORT, () => {
-  console.log(`Server launched on : http://localhost:${PORT}`);
+app.get("/", (req, res) => {
+  res.send(
+    "🚀 Backend Express pour PoliyValues opérationnel ! Accédez aux questions via /api/questions",
+  );
+});
+
+app.get("/api/users", async (req, res) => {
+  try {
+    const [rows] = await db.query(
+      "SELECT id, name, email, admin, created_at FROM users",
+    );
+    res.json(rows);
+  } catch (error) {
+    res.status(500).json({ error: "Erreur serveur" });
+  }
+});
+
+app.get("/api/questions", async (req, res) => {
+  try {
+    const [rows] = await db.query("SELECT * FROM questions");
+    res.json(rows);
+  } catch (error) {
+    res.status(500).json({ error: "Erreur serveur" });
+  }
+});
+
+app.get("/api/user-status", async (req, res) => {
+  try {
+    const [rows] = await db.query("SELECT * FROM user_question_status");
+    res.json(rows);
+  } catch (error) {
+    res.status(500).json({ error: "Erreur serveur" });
+  }
+});
+
+// --- DÉMARRAGE DU SERVEUR ---
+
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, async () => {
+  await initDb();
+  console.log(`🚀 Serveur lancé sur : http://localhost:${PORT}`);
 });

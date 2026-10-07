@@ -1,0 +1,43 @@
+{
+  "users": [
+    {
+      "name": "Jalil",
+      "email": "jalil@example.com",
+      "password": "hashed_password_here",
+      "admin": true
+    }
+  ],
+  "questions": [
+    {
+      "theme": "Économie",
+      "question_text": "Les services publics essentiels (eau, énergie, transports) doivent appartenir exclusivement à la collectivité.",
+      "explanation_concept": "La nationalisation est le transfert de la propriété privée d'un secteur économique vers l'État ou la collectivité.",
+      "links": [
+        {
+          "title": "Wikipédia - Nationalisation",
+          "url": "https://fr.wikipedia.org/wiki/Nationalisation"
+        }
+      ]
+    },
+    {
+      "theme": "Société",
+      "question_text": "Les citoyens doivent pouvoir voter directement les lois via des référendums d'initiative citoyenne.",
+      "explanation_concept": "La démocratie directe permet aux citoyens d'exercer directement le pouvoir sans passer par des représentants.",
+      "links": [
+        {
+          "title": "Wikipédia - Démocratie directe",
+          "url": "https://fr.wikipedia.org/wiki/D%C3%A9mocratie_directe"
+        }
+      ]
+    }
+  ],
+  "user_question_status": [
+    {
+      "user_id": 1,
+      "question_id": 1,
+      "opinion_value": 2,
+      "is_completed": true,
+      "is_favorite": true
+    }
+  ]
+}
