@@ -2,13 +2,12 @@ import express from "express";
 import cors from "cors";
 import db from "./config/db.js";
 import { initDb } from "./database/initDb.js";
+const authRoutes = require("./routes/authRoutes");
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
-
-// --- ROUTES API ---
 
 app.get("/", (req, res) => {
   res.send(
@@ -16,7 +15,9 @@ app.get("/", (req, res) => {
   );
 });
 
-app.get("/api/users", async (req, res) => {
+app.use("/api/auth", authRoutes);
+
+app.get(`${VUE_APP_API_URL}/users`, async (req, res) => {
   try {
     const [rows] = await db.query(
       "SELECT id, name, email, admin, created_at FROM users",
@@ -27,7 +28,7 @@ app.get("/api/users", async (req, res) => {
   }
 });
 
-app.get("/api/questions", async (req, res) => {
+app.get(`${VUE_APP_API_URL}/questions`, async (req, res) => {
   try {
     const [rows] = await db.query("SELECT * FROM questions");
     res.json(rows);
@@ -36,7 +37,7 @@ app.get("/api/questions", async (req, res) => {
   }
 });
 
-app.get("/api/user-status", async (req, res) => {
+app.get(`${VUE_APP_API_URL}/user-status`, async (req, res) => {
   try {
     const [rows] = await db.query("SELECT * FROM user_question_status");
     res.json(rows);
@@ -44,8 +45,6 @@ app.get("/api/user-status", async (req, res) => {
     res.status(500).json({ error: "Erreur serveur" });
   }
 });
-
-// --- DÉMARRAGE DU SERVEUR ---
 
 const PORT = process.env.PORT || 3000;
 
