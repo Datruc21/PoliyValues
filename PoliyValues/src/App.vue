@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Navbar from './components/Navbar.vue';
+import Footer from './components/Footer.vue';
 
 </script>
 
@@ -7,14 +8,14 @@ import Navbar from './components/Navbar.vue';
   <div id="layout">
 
 
-    <Navbar />
+    <Navbar /> 
 
+    <main>
+      <RouterView />
+    </main>
 
-    <footer>
-      <h3>Contacts informations</h3>
-      <h3>Our inspirations</h3>
-      <h3>How we handle your data</h3>
-    </footer>
+    <Footer />
+    
   </div>
 </template>
 
