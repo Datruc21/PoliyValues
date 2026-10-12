@@ -1,4 +1,4 @@
-@import './base.css';
+@import "./base.css";
 
 #app {
   width: 100%;
@@ -23,3 +23,8 @@ a,
 }
 
 
+
+html.dark body {
+  background-color: #1a1a1a;
+  color: white;
+}

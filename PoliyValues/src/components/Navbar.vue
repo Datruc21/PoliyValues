@@ -49,7 +49,8 @@ export default {
   align-items: center;
 }
 
-.nav-bar a, .nav-bar span {
+.nav-bar a,
+.nav-bar span {
   color: white;
   text-decoration: none;
   font-size: 1.1rem;
