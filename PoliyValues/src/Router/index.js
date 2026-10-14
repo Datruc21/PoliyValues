@@ -1,18 +1,36 @@
-import {createRouter, createWebHistory} from 'vue-router'
+import { createRouter, createWebHistory } from "vue-router";
 
 //Import all components pages
-import Settings from '../components/Settings.vue'
-import Home from '../components/Home.vue'
+import Settings from "../components/Settings.vue";
+import Home from "../components/Home.vue";
+import Auth from "../components/Auth.vue";
 
-const routes = [{
-  path: '/settings',
-  component: Settings
-}, 
-{path:'/Home',
- component: Home
-}]
+const routes = [
+  {
+    path: "/settings",
+    component: Settings,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/auth",
+    component: Auth,
+  },
+  { path: "/Home", component: Home, meta: { requiresAuth: true } },
+];
 
 export const router = createRouter({
   history: createWebHistory(),
-  routes
-})
+  routes,
+});
+
+// Le Guard de navigation pour intercepter les changements de page
+router.beforeEach((to, from, next) => {
+  const token = localStorage.getItem("poliyvalues_token"); // Ou ta méthode pour récupérer le token
+
+  // Si la route demande une authentification et qu'il n'y a pas de token
+  if (to.meta.requiresAuth && !token) {
+    next("/auth"); // Redirection vers la page de connexion
+  } else {
+    next(); // Laisse passer
+  }
+});
