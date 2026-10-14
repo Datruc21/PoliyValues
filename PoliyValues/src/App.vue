@@ -3,6 +3,7 @@ import Navbar from "./components/Navbar.vue";
 import Auth from "./components/Auth.vue";
 import Settings from "./components/Settings.vue";
 import Footer from './components/Footer.vue';
+import Quizz from './components/Quizz.vue'
 </script>
 
 <template>
@@ -10,7 +11,6 @@ import Footer from './components/Footer.vue';
 
 
     <Navbar /> 
-    <Settings />
 
     <main>
       <RouterView />
