@@ -3,6 +3,7 @@ import cors from "cors";
 import db from "./config/db.js";
 import { initDb } from "./database/initDb.js";
 const authRoutes = require("./routes/authRoutes");
+const questionRoutes = require("./routes/questionRoutes.js")
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/auth", authRoutes);
+app.use("/api/questions", questionRoutes);
 
 app.get(`${VUE_APP_API_URL}/users`, async (req, res) => {
   try {
