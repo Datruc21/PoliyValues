@@ -121,25 +121,244 @@ to modify, template-->
 export default {
   data() {
     return {
+      selectedQuestionId: null,
       question_text: "",
       explanation_concept: "",
       theme: "",
-      links: {},
+      links: "",
       name: "",
-      name: "",
+      selectedUserId: null,
       isAdmin: false,
+      questionResults: [],
+      userResults: [],
     };
   },
   methods: {
-    addQuestion,
-    editQuestion,
-    deleteQuestion,
-    searchQuestion,
-    banUser,
-    unbanUser,
-    searchUser,
-    makeAdmin,
-    undoAdmin,
+    // 1. Add a question
+    async addQuestion() {
+      try {
+        let formattedLinks = this.links
+          ? this.links.split(",").map((link) => link.trim())
+          : null;
+
+        const response = await fetch("/api/admin/questions", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            question_text: this.question_text,
+            explanation_concept: this.explanation_concept,
+            theme: this.theme,
+            links: formattedLinks,
+          }),
+        });
+
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error || "Server error");
+
+        alert("✅ " + data.message);
+        this.resetQuestionForm();
+      } catch (error) {
+        console.error("Error addQuestion:", error);
+        alert("❌ " + error.message);
+      }
+    },
+
+    // 2. Edit a question
+    async editQuestion() {
+      if (!this.selectedQuestionId) {
+        alert("Please select or specify the ID of a question to edit.");
+        return;
+      }
+      try {
+        let formattedLinks = this.links
+          ? this.links.split(",").map((link) => link.trim())
+          : null;
+
+        const response = await fetch(
+          `/api/admin/questions/${this.selectedQuestionId}`,
+          {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              question_text: this.question_text,
+              explanation_concept: this.explanation_concept,
+              theme: this.theme,
+              links: formattedLinks,
+            }),
+          },
+        );
+
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error);
+
+        alert("✅ " + data.message);
+      } catch (error) {
+        console.error("Error editQuestion:", error);
+        alert("❌ " + error.message);
+      }
+    },
+
+    // 3. Search a question
+    async searchQuestion() {
+      try {
+        const response = await fetch(
+          `/api/admin/questions/search?q=${encodeURIComponent(this.name)}`,
+        );
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error);
+
+        this.questionResults = data;
+        alert(`🔍 ${this.questionResults.length} question(s) found.`);
+      } catch (error) {
+        console.error("Error searchQuestion:", error);
+        alert("❌ Error while searching for questions.");
+      }
+    },
+
+    // 4. Delete a question
+    async deleteQuestion() {
+      if (!this.selectedQuestionId) {
+        alert("Please specify the ID of the question to delete.");
+        return;
+      }
+      if (!confirm("Are you sure you want to delete this question?")) return;
+
+      try {
+        const response = await fetch(
+          `/api/admin/questions/${this.selectedQuestionId}`,
+          {
+            method: "DELETE",
+          },
+        );
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error);
+
+        alert("✅ " + data.message);
+        this.selectedQuestionId = null;
+      } catch (error) {
+        console.error("Error deleteQuestion:", error);
+        alert("❌ Error during deletion.");
+      }
+    },
+
+    // 5. Search a user
+    async searchUser() {
+      try {
+        const response = await fetch(
+          `/api/admin/users/search?q=${encodeURIComponent(this.name)}`,
+        );
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error);
+
+        this.userResults = data;
+        alert(`🔍 ${this.userResults.length} user(s) found.`);
+      } catch (error) {
+        console.error("Error searchUser:", error);
+        alert("❌ Error while searching for users.");
+      }
+    },
+
+    // 6. Ban a user
+    async banUser() {
+      if (!this.selectedUserId) {
+        alert("Please select a user ID.");
+        return;
+      }
+      try {
+        const response = await fetch(
+          `/api/admin/users/${this.selectedUserId}/ban`,
+          {
+            method: "POST",
+          },
+        );
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error);
+
+        alert("✅ " + data.message);
+      } catch (error) {
+        console.error("Error banUser:", error);
+        alert("❌ Error while banning the user.");
+      }
+    },
+
+    // 7. Unban a user
+    async unbanUser() {
+      if (!this.selectedUserId) {
+        alert("Please select a user ID.");
+        return;
+      }
+      try {
+        const response = await fetch(
+          `/api/admin/users/${this.selectedUserId}/unban`,
+          {
+            method: "POST",
+          },
+        );
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error);
+
+        alert("✅ " + data.message);
+      } catch (error) {
+        console.error("Error unbanUser:", error);
+        alert("❌ Error while unbanning the user.");
+      }
+    },
+
+    // 8. Make a user Admin
+    async makeAdmin() {
+      if (!this.selectedUserId) {
+        alert("Please select a user ID.");
+        return;
+      }
+      try {
+        const response = await fetch(
+          `/api/admin/users/${this.selectedUserId}/make-admin`,
+          {
+            method: "PATCH",
+          },
+        );
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error);
+
+        alert("✅ " + data.message);
+      } catch (error) {
+        console.error("Error makeAdmin:", error);
+        alert("❌ Error while granting admin rights.");
+      }
+    },
+
+    // 9. Remove Admin rights
+    async undoAdmin() {
+      if (!this.selectedUserId) {
+        alert("Please select a user ID.");
+        return;
+      }
+      try {
+        const response = await fetch(
+          `/api/admin/users/${this.selectedUserId}/undo-admin`,
+          {
+            method: "PATCH",
+          },
+        );
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error);
+
+        alert("✅ " + data.message);
+      } catch (error) {
+        console.error("Error undoAdmin:", error);
+        alert("❌ Error while revoking admin rights.");
+      }
+    },
+
+    resetQuestionForm() {
+      this.question_text = "";
+      this.explanation_concept = "";
+      this.theme = "";
+      this.links = "";
+      this.selectedQuestionId = null;
+    },
   },
 };
 </script>

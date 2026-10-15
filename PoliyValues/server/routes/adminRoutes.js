@@ -1,8 +1,6 @@
-const express = require("express");
-const router = express.Router();
-const { verifyToken } = require("../middlewares/authMiddleware");
-
-const {
+import express from "express";
+import { verifyToken } from "../middlewares/authMiddleware.js";
+import {
   addQuestion,
   editQuestion,
   searchQuestion,
@@ -12,7 +10,9 @@ const {
   unbanUser,
   makeAdmin,
   undoAdmin,
-} = require("../controllers/adminController");
+} from "../controllers/adminController.js";
+
+const router = express.Router();
 
 router.post("/questions", verifyToken, addQuestion);
 router.put("/questions/:id", verifyToken, editQuestion);
@@ -25,4 +25,4 @@ router.post("/users/:id/unban", verifyToken, unbanUser);
 router.patch("/users/:id/make-admin", verifyToken, makeAdmin);
 router.patch("/users/:id/undo-admin", verifyToken, undoAdmin);
 
-module.exports = router;
+export default router;

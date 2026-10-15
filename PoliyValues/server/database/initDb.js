@@ -3,7 +3,6 @@ import { seedDB } from "./seeder.js";
 
 export async function initDb() {
   try {
-    // 1. Table users
     await db.query(`
       CREATE TABLE IF NOT EXISTS users (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -11,6 +10,7 @@ export async function initDb() {
         email VARCHAR(255) NOT NULL UNIQUE,
         password VARCHAR(255) NOT NULL,
         admin BOOLEAN NOT NULL DEFAULT FALSE,
+        isBanned BOOLEAN NOT NULL DEFAULT FALSE,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       ) ENGINE=InnoDB;
     `);

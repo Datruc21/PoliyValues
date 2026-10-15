@@ -9,7 +9,7 @@ const checkIsAdmin = async (userId) => {
 };
 
 // 1. Add a question
-const addQuestion = async (req, res) => {
+export const addQuestion = async (req, res) => {
   try {
     const isAdmin = await checkIsAdmin(req.user.id || req.user.userId);
     if (!isAdmin) {
@@ -51,7 +51,7 @@ const addQuestion = async (req, res) => {
 };
 
 // 2. Edit a question
-const editQuestion = async (req, res) => {
+export const editQuestion = async (req, res) => {
   try {
     const isAdmin = await checkIsAdmin(req.user.id || req.user.userId);
     if (!isAdmin) {
@@ -93,7 +93,7 @@ const editQuestion = async (req, res) => {
 };
 
 // 3. Search questions (by theme or text)
-const searchQuestion = async (req, res) => {
+export const searchQuestion = async (req, res) => {
   try {
     const isAdmin = await checkIsAdmin(req.user.id || req.user.userId);
     if (!isAdmin) {
@@ -128,7 +128,7 @@ const searchQuestion = async (req, res) => {
 };
 
 // 4. Delete a question
-const deleteQuestion = async (req, res) => {
+export const deleteQuestion = async (req, res) => {
   try {
     const isAdmin = await checkIsAdmin(req.user.id || req.user.userId);
     if (!isAdmin) {
@@ -157,7 +157,7 @@ const deleteQuestion = async (req, res) => {
 // --- USER MANAGEMENT ---
 
 // 5. Search user (by name or email)
-const searchUser = async (req, res) => {
+export const searchUser = async (req, res) => {
   try {
     const isAdmin = await checkIsAdmin(req.user.id || req.user.userId);
     if (!isAdmin) {
@@ -186,7 +186,7 @@ const searchUser = async (req, res) => {
 };
 
 // 6. Ban a user
-const banUser = async (req, res) => {
+export const banUser = async (req, res) => {
   try {
     const isAdmin = await checkIsAdmin(req.user.id || req.user.userId);
     if (!isAdmin) {
@@ -214,7 +214,7 @@ const banUser = async (req, res) => {
 };
 
 // 7. Unban a user
-const unbanUser = async (req, res) => {
+export const unbanUser = async (req, res) => {
   try {
     const isAdmin = await checkIsAdmin(req.user.id || req.user.userId);
     if (!isAdmin) {
@@ -242,7 +242,7 @@ const unbanUser = async (req, res) => {
 };
 
 // 8. Make a user Admin
-const makeAdmin = async (req, res) => {
+export const makeAdmin = async (req, res) => {
   try {
     const isAdmin = await checkIsAdmin(req.user.id || req.user.userId);
     if (!isAdmin) {
@@ -270,7 +270,7 @@ const makeAdmin = async (req, res) => {
 };
 
 // 9. Remove Admin rights
-const undoAdmin = async (req, res) => {
+export const undoAdmin = async (req, res) => {
   try {
     const isAdmin = await checkIsAdmin(req.user.id || req.user.userId);
     if (!isAdmin) {
@@ -295,17 +295,4 @@ const undoAdmin = async (req, res) => {
     console.error("Error undoAdmin:", error);
     res.status(500).json({ error: "Internal server error" });
   }
-};
-
-// --- GLOBAL EXPORT ---
-module.exports = {
-  addQuestion,
-  editQuestion,
-  searchQuestion,
-  deleteQuestion,
-  searchUser,
-  banUser,
-  unbanUser,
-  makeAdmin,
-  undoAdmin,
 };

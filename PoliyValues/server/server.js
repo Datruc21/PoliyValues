@@ -1,10 +1,13 @@
 import express from "express";
 import cors from "cors";
+import dotenv from "dotenv";
 import db from "./config/db.js";
 import { initDb } from "./database/initDb.js";
-const authRoutes = require("./routes/authRoutes.js");
-const questionRoutes = require("./routes/questionRoutes.js");
-const adminRoutes = require("./routes/adminRoutes.js");
+import authRoutes from "./routes/authRoutes.js";
+import questionRoutes from "./routes/questionRoutes.js";
+import adminRoutes from "./routes/adminRoutes.js";
+
+dotenv.config();
 
 const app = express();
 
@@ -21,7 +24,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/questions", questionRoutes);
 app.use("/api/admin", adminRoutes);
 
-app.get(`${VUE_APP_API_URL}/users`, async (req, res) => {
+app.get(`api/users`, async (req, res) => {
   try {
     const [rows] = await db.query(
       "SELECT id, name, email, admin, created_at FROM users",
@@ -32,7 +35,7 @@ app.get(`${VUE_APP_API_URL}/users`, async (req, res) => {
   }
 });
 
-app.get(`${VUE_APP_API_URL}/questions`, async (req, res) => {
+app.get(`api/questions`, async (req, res) => {
   try {
     const [rows] = await db.query("SELECT * FROM questions");
     res.json(rows);
@@ -41,7 +44,7 @@ app.get(`${VUE_APP_API_URL}/questions`, async (req, res) => {
   }
 });
 
-app.get(`${VUE_APP_API_URL}/user-status`, async (req, res) => {
+app.get(`api/user-status`, async (req, res) => {
   try {
     const [rows] = await db.query("SELECT * FROM user_question_status");
     res.json(rows);

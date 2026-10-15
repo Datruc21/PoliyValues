@@ -1,7 +1,8 @@
-const express = require("express");
-const router = express.Router();
+import express from "express";
 import { getRandomQuestion } from "../controllers/questionController.js";
 import { verifyToken } from "../middlewares/authMiddleware.js";
+
+const router = express.Router();
 
 router.get("/random", verifyToken, getRandomQuestion);
 
