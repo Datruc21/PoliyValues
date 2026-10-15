@@ -2,8 +2,9 @@ import express from "express";
 import cors from "cors";
 import db from "./config/db.js";
 import { initDb } from "./database/initDb.js";
-const authRoutes = require("./routes/authRoutes");
-const questionRoutes = require("./routes/questionRoutes.js")
+const authRoutes = require("./routes/authRoutes.js");
+const questionRoutes = require("./routes/questionRoutes.js");
+const adminRoutes = require("./routes/adminRoutes.js");
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/auth", authRoutes);
 app.use("/api/questions", questionRoutes);
+app.use("/api/admin", adminRoutes);
 
 app.get(`${VUE_APP_API_URL}/users`, async (req, res) => {
   try {
