@@ -30,12 +30,12 @@ const register = async (req, res) => {
     // 3. Créer l'utilisateur dans la base de données
     const [result] = await db.query(
       "INSERT INTO users (name, email, password) VALUES (?, ?, ?)",
-      [name, email, hashPassword, false],
+      [name, email, hashPassword],
     );
 
     // MySQL renvoie un objet 'result' qui contient l'ID de la ligne qu'on vient d'insérer (insertId)
     const userId = result.insertId;
-    const user = { id: userId, name, email };
+    const user = { id: userId, name, email, Admin: 0 };
 
     console.log("User created:", user);
 
@@ -154,40 +154,49 @@ const updateMe = async (req, res) => {
     const userId = req.user.id;
     const { name, email } = req.body;
 
-    // Vérifier si l'email est déjà pris par un autre utilisateur
-    if (email) {
-      const [emailTaken] = await db.query(
-        "SELECT id FROM users WHERE email = ? AND id != ?",
-        [email, userId],
-      );
-
-      if (emailTaken.length > 0) {
-        return res.status(400).json({ error: "Email already in use" });
-      }
+    // Si aucun champ n'est fourni
+    if (!name && !email) {
+      return res.status(400).json({ error: "No fields provided to update" });
     }
 
-    // Vérifier si le nom est déjà pris par un autre utilisateur
-    if (name) {
+    // 1. Récupérer l'utilisateur actuel
+    const [users] = await db.query("SELECT * FROM users WHERE id = ?", [
+      userId,
+    ]);
+    if (users.length === 0) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    const currentUser = users[0];
+
+    // Variables qui contiendront les valeurs finales
+    let updatedName = currentUser.name;
+    let updatedEmail = currentUser.email;
+
+    // 2. Traitement du NOM (s'il est renseigné et différent de l'actuel)
+    if (name && name.trim() !== "" && name !== currentUser.name) {
       const [nameTaken] = await db.query(
         "SELECT id FROM users WHERE name = ? AND id != ?",
         [name, userId],
       );
-
       if (nameTaken.length > 0) {
         return res.status(400).json({ error: "Username already in use" });
       }
+      updatedName = name.trim();
     }
 
-    // Mise à jour dynamique selon ce qui est fourni
-    // On récupère d'abord l'utilisateur actuel pour ne pas écraser les champs non fournis
-    const [users] = await db.query("SELECT * FROM users WHERE id = ?", [
-      userId,
-    ]);
-    const currentUser = users[0];
+    // 3. Traitement de l'EMAIL (s'il est renseigné et différent de l'actuel)
+    if (email && email.trim() !== "" && email !== currentUser.email) {
+      const [emailTaken] = await db.query(
+        "SELECT id FROM users WHERE email = ? AND id != ?",
+        [email, userId],
+      );
+      if (emailTaken.length > 0) {
+        return res.status(400).json({ error: "Email already in use" });
+      }
+      updatedEmail = email.trim();
+    }
 
-    const updatedName = name || currentUser.name;
-    const updatedEmail = email || currentUser.email;
-
+    // 4. Mettre à jour en base de données
     await db.query("UPDATE users SET name = ?, email = ? WHERE id = ?", [
       updatedName,
       updatedEmail,
@@ -202,7 +211,7 @@ const updateMe = async (req, res) => {
       },
     });
   } catch (err) {
-    console.error(err);
+    console.error("Update profile error:", err);
     res.status(500).json({ error: "Update failed" });
   }
 };

@@ -12,7 +12,6 @@ to modify, template-->
   <div class="admin-dashboard">
     <h1>Admin Panel</h1>
     <div class="admin-grid">
-      <!-- ================= SECTION 1: QUESTION MANAGEMENT ================= -->
       <section class="admin-section">
         <h2>Question Management</h2>
 

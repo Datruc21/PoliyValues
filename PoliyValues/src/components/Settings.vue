@@ -17,13 +17,59 @@
       </li>
     </ul>
 
-    <h2>Account settings</h2>
-    <ul>
-      <li>Change username</li>
-      <li>Change password</li>
-      <li><button @click="logOut">Log out</button></li>
-      <li><button @click="openModal = true">Delete account</button></li>
-    </ul>
+    <div class="setting-item">
+      <h3>Update Profile</h3>
+      <form @submit.prevent="updateProfile">
+        <div class="form-group">
+          <label>Name:</label>
+          <input
+            v-model="newUserName"
+            type="text"
+            placeholder="Enter new username"
+          />
+        </div>
+        <div class="form-group">
+          <label>Email:</label>
+          <input
+            v-model="newEmail"
+            type="email"
+            placeholder="Enter new email"
+          />
+        </div>
+        <button type="submit">Update Profile</button>
+      </form>
+    </div>
+
+    <!-- Formulaire Modifier Mot de passe -->
+    <div class="setting-item">
+      <h3>Change Password</h3>
+      <form @submit.prevent="changePassword">
+        <div class="form-group">
+          <input
+            v-model="oldPassword"
+            type="password"
+            placeholder="Current password"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <input
+            v-model="newPassword"
+            type="password"
+            placeholder="New password (min. 6 characters)"
+            required
+          />
+        </div>
+        <button type="submit">Change Password</button>
+      </form>
+    </div>
+
+    <!-- Messages de succès et d'erreur -->
+    <p v-if="successMessage" style="color: green">{{ successMessage }}</p>
+    <p v-if="message" class="error-message" style="color: red">{{ message }}</p>
+
+    <button @click="logOut">Log out</button>
+    <button @click="openModal = true">Delete account</button>
 
     <!-- Correction du Teleport : il doit envelopper la modale -->
     <teleport to="body">
@@ -50,14 +96,11 @@
     <p v-if="accountDeleted">
       Congratulations you just successfully deleted your account!
     </p>
-    <p v-if="message" class="error-message" style="color: red">{{ message }}</p>
   </div>
 </template>
 
 <script>
 import Modal from "./Modal.vue";
-
-const API_URL = "http://localhost:3000/api"; // Adaptez selon votre port backend
 
 export default {
   components: {
@@ -66,43 +109,123 @@ export default {
   data() {
     return {
       darkTheme: false,
-      newPassword: "",
       newUserName: "",
+      newEmail: "",
+      oldPassword: "",
+      newPassword: "",
       fontSize: "normal",
       openModal: false,
       accountDeleted: false,
       message: "",
+      successMessage: "",
     };
   },
   mounted() {
-    // Optionnel : récupérer les infos de l'utilisateur au chargement
+    // Récupérer les infos de l'utilisateur au chargement
     this.getMe();
   },
   methods: {
+    async updateProfile() {
+      this.message = "";
+      this.successMessage = "";
+
+      const payload = {};
+      if (this.newUserName && this.newUserName.trim() !== "") {
+        payload.name = this.newUserName;
+      }
+      if (this.newEmail && this.newEmail.trim() !== "") {
+        payload.email = this.newEmail;
+      }
+
+      if (Object.keys(payload).length === 0) {
+        this.message = "Please fill in at least one field to update.";
+        return;
+      }
+
+      try {
+        const token = localStorage.getItem("poliyvalues_token");
+        const response = await fetch(`${this.$apiUrl}/auth/me`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(payload),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          this.successMessage = "Profile updated successfully!";
+          if (data.data.name) {
+            localStorage.setItem("user_name", data.data.name);
+          }
+        } else {
+          this.message = data.error || "Update failed";
+        }
+      } catch (error) {
+        this.message = error.message;
+      }
+    },
+
+    async changePassword() {
+      this.message = "";
+      this.successMessage = "";
+      try {
+        const token = localStorage.getItem("poliyvalues_token");
+        const response = await fetch(`${this.$apiUrl}/auth/password`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            oldPassword: this.oldPassword,
+            newPassword: this.newPassword,
+          }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          this.successMessage = "Password changed successfully!";
+          this.oldPassword = "";
+          this.newPassword = "";
+        } else {
+          this.message = data.error || "Change password failed";
+        }
+      } catch (error) {
+        this.message = error.message;
+      }
+    },
+
     updateFontSize() {
       const sizes = {
         small: "14px",
         normal: "16px",
         big: "18px",
       };
-      // Modification de la taille de police sur l'élément html racine (en rem)
       document.documentElement.style.fontSize = sizes[this.fontSize];
     },
 
     toggleDarkTheme() {
       this.darkTheme = !this.darkTheme;
-      // Ajout/suppression d'une classe globale sur le body ou html pour le CSS
       if (this.darkTheme) {
         document.documentElement.classList.add("dark");
       } else {
         document.documentElement.classList.remove("dark");
       }
     },
+
     async deleteAccount() {
       try {
-        const response = await fetch(`${API_URL}/users/me`, {
+        const token = localStorage.getItem("poliyvalues_token");
+        const response = await fetch(`${this.$apiUrl}/auth/me`, {
           method: "DELETE",
-          credentials: "include", // Indispensable pour envoyer le cookie HTTP-only
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
         });
 
         const data = await response.json();
@@ -111,7 +234,7 @@ export default {
           localStorage.removeItem("poliyvalues_token");
           this.accountDeleted = true;
           setTimeout(() => {
-            this.$router.push("/login"); // Redirection vers la page de login
+            this.$router.push("/auth");
           }, 2000);
         } else {
           this.message = data.error || "Delete failed";
@@ -120,26 +243,35 @@ export default {
         this.message = error.message;
       }
     },
+
     async logOut() {
       try {
-        // Appel au backend pour vider le cookie JWT
-        await fetch(`${API_URL}/auth/logout`, {
+        const token = localStorage.getItem("poliyvalues_token");
+        await fetch(`${this.$apiUrl}/auth/logout`, {
           method: "POST",
-          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
         });
 
         localStorage.removeItem("poliyvalues_token");
         localStorage.removeItem("is_admin");
-        this.$router.push("/login");
+        this.$router.push("/auth");
       } catch (error) {
         console.error("Logout error:", error);
       }
     },
+
     async getMe() {
       try {
-        const response = await fetch(`${API_URL}/users/me`, {
+        const token = localStorage.getItem("poliyvalues_token");
+        const response = await fetch(`${this.$apiUrl}/auth/me`, {
           method: "GET",
-          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
         });
 
         const data = await response.json();
@@ -147,7 +279,8 @@ export default {
         if (!response.ok) {
           this.message = data.error || "Server error";
         } else {
-          console.log("User data:", data);
+          this.newUserName = data.name || "";
+          this.newEmail = data.email || "";
         }
       } catch (error) {
         this.message = error.message;

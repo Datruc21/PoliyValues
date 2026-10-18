@@ -4,7 +4,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import Settings from "../components/Settings.vue";
 import Home from "../components/Home.vue";
 import Auth from "../components/Auth.vue";
-import Quizz from '../components/Quizz.vue'
+import Quizz from "../components/Quizz.vue";
 
 const routes = [
   {
@@ -16,10 +16,30 @@ const routes = [
     path: "/auth",
     component: Auth,
   },
+
+  {
+    path: "/about",
+  },
+
+  {
+    path: "/suprise",
+    meta: { requiresAuth: true },
+  },
+
+  {
+    path: "/favorite",
+    meta: { requiresAuth: true },
+  },
+
+  {
+    path: "/",
+    redirect: () => {
+      const token = localStorage.getItem("poliyvalues_token");
+      return token ? { path: "/Home" } : { path: "/auth" };
+    },
+  },
   { path: "/Home", component: Home, meta: { requiresAuth: true } },
-  {path:'/Quizz',
-  component: Quizz
-}
+  { path: "/Quizz", component: Quizz },
 ];
 
 export const router = createRouter({
