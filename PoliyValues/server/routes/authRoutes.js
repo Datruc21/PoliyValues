@@ -1,6 +1,16 @@
-const express = require("express");
+import express from "express";
+import { verifyToken } from "../middlewares/authMiddleware.js";
+import {
+  login,
+  register,
+  logout,
+  changePassword,
+  deleteMe,
+  getMe,
+  updateMe,
+} from "../controllers/authController.js";
+
 const router = express.Router();
-const { login, register } = require("../controllers/authController");
 
 router.post("/login", login);
 router.post("/register", register);
@@ -10,4 +20,4 @@ router.delete("/me", verifyToken, deleteMe);
 router.get("/me", verifyToken, getMe);
 router.put("/me", verifyToken, updateMe);
 
-moh.exports = router;
+export default router;

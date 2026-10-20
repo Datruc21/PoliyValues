@@ -59,7 +59,7 @@ export default {
     async handleLogin() {
       if (!this.email || !this.password) return; //Must add an error message
       try {
-        const answer = await fetch(`${this.$apiUrl}/login`, {
+        const answer = await fetch(`${this.$apiUrl}/auth/login`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email: this.email, password: this.password }),
@@ -88,7 +88,7 @@ export default {
     async handleRegister() {
       if (!this.email || !this.password || !this.name) return; //Also must add an error message
       try {
-        const answer = await fetch(`${this.$apiUrl}/register`, {
+        const answer = await fetch(`${this.$apiUrl}/auth/register`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -106,7 +106,7 @@ export default {
           this.name = "";
           this.message = "Successful account creation, welcome to Poliyvalues";
           localStorage.setItem("poliyvalues_token", data.token);
-          localStorage.setItem("is_admin", data.data.user.isAdmin);
+          localStorage.setItem("is_admin", data.data.user.Admin);
           setTimeout(() => {
             window.location.href = "/";
           }, 2000);
