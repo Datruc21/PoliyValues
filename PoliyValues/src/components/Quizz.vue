@@ -212,20 +212,19 @@ const selectOpinion = (value) => {selectedOpinion.value = value;};
 
 
 
-//Check the token
+
 //Fetch a random question using the function in the controller
 //If there is an issue, display error.
 const fetchRandomQuestion = async () => {
   isLoading.value = true;
   errorMessage.value = "";
 
-  //const token = getToken();
+  
 
   try{
     const response = await fetch("http://localhost:3000/api/questions/random", {
       method: "GET",
       headers: {
-        "Authorization": `Bearer ${token}`
       }
     });
 
@@ -255,21 +254,19 @@ const fetchRandomQuestion = async () => {
 
 
 
-//Check if there is an answer, check if there is a token,
+//Check if there is an answer,
 // send the data to the data base with the controller
 // If the data is send correctly, show the hidden explanation
 // Else, display error
 const sendAnswerToDatabase = async () => {
     if (!currentQuestion.value || selectedOpinion.value === null) return;
 
-    const token = localStorage.getItem("poliyvalues_token");
 
     try {
         const response = await fetch("http://localhost:3000/api/questions/answer", {
             method: "POST", 
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}` // Ajouté pour verifyToken !
             },
             body: JSON.stringify({
                 questionId: currentQuestion.value.id, 
@@ -293,8 +290,6 @@ const sendAnswerToDatabase = async () => {
 
 const toggleFavoriteStatus = async () => {
   if (!currentQuestion.value) return;
-
-    const token = localStorage.getItem("poliyvalues_token");
     isFavorite.value = !isFavorite.value;
   
   try{
@@ -303,7 +298,6 @@ const toggleFavoriteStatus = async () => {
       method : "POST",
       headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
             },
       body: JSON.stringify({
                 questId: currentQuestion.value.id
