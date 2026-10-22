@@ -1,3 +1,4 @@
+import bcrypt from "bcryptjs";
 import db from "../config/db.js";
 import seeder from "./seeder.json" with { type: "json" };
 
@@ -7,9 +8,12 @@ export async function seedDB() {
     const [userRows] = await db.query("SELECT COUNT(*) FROM users");
     if (userRows[0]["COUNT(*)"] === 0 && seeder.users?.length > 0) {
       for (const user of seeder.users) {
+        // Hacher le mot de passe pour qu'il soit valide lors de la connexion
+        const hashedPassword = await bcrypt.hash(user.password, 10);
+
         await db.query(
           "INSERT INTO users (name, email, password, admin) VALUES (?, ?, ?, ?)",
-          [user.name, user.email, user.password, user.admin || false],
+          [user.name, user.email, hashedPassword, user.admin || false]
         );
       }
       console.log("🌱 Utilisateurs de test insérés !");
@@ -25,8 +29,8 @@ export async function seedDB() {
             q.theme,
             q.question_text,
             q.explanation_concept,
-            JSON.stringify(q.links || []),
-          ],
+            JSON.stringify(q.links || [])
+          ]
         );
       }
       console.log("🌱 Questions de test insérées !");
@@ -34,7 +38,7 @@ export async function seedDB() {
 
     // 3. Seeding User Question Status
     const [statusRows] = await db.query(
-      "SELECT COUNT(*) FROM user_question_status",
+      "SELECT COUNT(*) FROM user_question_status"
     );
     if (
       statusRows[0]["COUNT(*)"] === 0 &&
@@ -42,7 +46,7 @@ export async function seedDB() {
     ) {
       const [firstUser] = await db.query("SELECT id FROM users LIMIT 1");
       const [firstQuestion] = await db.query(
-        "SELECT id FROM questions LIMIT 1",
+        "SELECT id FROM questions LIMIT 1"
       );
 
       if (firstUser.length > 0 && firstQuestion.length > 0) {
@@ -59,8 +63,8 @@ export async function seedDB() {
               validQuestionId,
               st.opinion_value,
               st.is_completed || true,
-              st.is_favorite || false,
-            ],
+              st.is_favorite || false
+            ]
           );
         }
         console.log("🌱 Statuts de test insérés !");

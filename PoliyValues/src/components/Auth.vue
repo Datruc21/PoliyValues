@@ -52,7 +52,7 @@ export default {
       name: "",
       message: "",
       //The boolean for toggling between sign in and sign up
-      accountCreated: true,
+      accountCreated: true
     };
   },
   methods: {
@@ -62,7 +62,7 @@ export default {
         const answer = await fetch(`${this.$apiUrl}/auth/login`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: this.email, password: this.password }),
+          body: JSON.stringify({ email: this.email, password: this.password })
         });
 
         const data = await answer.json();
@@ -71,7 +71,7 @@ export default {
           this.password = "";
           this.message = "Welcome back";
           localStorage.setItem("poliyvalues_token", data.token);
-          localStorage.setItem("is_admin", data.data.user.isAdmin); //This is only for UI purposes, changing its value wont affected backend
+          localStorage.setItem("is_admin", data.data.user.Admin); //This is only for UI purposes, changing its value wont affected backend
           setTimeout(() => {
             window.location.href = "/";
           }, 2000);
@@ -94,8 +94,8 @@ export default {
           body: JSON.stringify({
             email: this.email,
             password: this.password,
-            name: this.name,
-          }),
+            name: this.name
+          })
         });
 
         const data = await answer.json();
@@ -127,7 +127,7 @@ export default {
       } else {
         this.handleRegister();
       }
-    },
-  },
+    }
+  }
 };
 </script>

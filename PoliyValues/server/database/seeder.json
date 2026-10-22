@@ -3,8 +3,14 @@
     {
       "name": "Jalil",
       "email": "jalil@example.com",
-      "password": "hashed_password_here",
+      "password": "monSuperMotDePasse123",
       "admin": true
+    },
+    {
+      "name": "UserTest",
+      "email": "user@example.com",
+      "password": "monMotDePasseUtilisateur123",
+      "admin": false
     }
   ],
   "questions": [
