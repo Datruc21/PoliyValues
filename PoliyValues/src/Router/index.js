@@ -5,6 +5,9 @@ import Settings from "../components/Settings.vue";
 import Home from "../components/Home.vue";
 import Auth from "../components/Auth.vue";
 import Quizz from "../components/Quizz.vue";
+import Admin from "../components/Admin.vue";
+
+
 
 const routes = [
   {
@@ -16,21 +19,17 @@ const routes = [
     path: "/auth",
     component: Auth,
   },
-
   {
     path: "/about",
   },
-
   {
     path: "/suprise",
     meta: { requiresAuth: true },
   },
-
   {
     path: "/favorite",
     meta: { requiresAuth: true },
   },
-
   {
     path: "/",
     redirect: () => {
@@ -39,7 +38,8 @@ const routes = [
     },
   },
   { path: "/Home", component: Home, meta: { requiresAuth: true } },
-  { path: "/Quizz", component: Quizz },
+  { path: "/Quizz", component: Quizz, meta: { requiresAuth: true } },
+  { path: "/Admin", component: Admin, meta: { requiresAuth: true }},
 ];
 
 export const router = createRouter({

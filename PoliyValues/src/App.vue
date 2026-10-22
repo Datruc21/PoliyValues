@@ -6,6 +6,7 @@ import Auth from "./components/Auth.vue";
 import Settings from "./components/Settings.vue";
 import Quizz from './components/Quizz.vue'
 import Footer from "./components/Footer.vue";
+import Admin from "./components/Admin.vue"
 
 const route = useRoute();
 
