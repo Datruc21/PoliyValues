@@ -1,45 +1,47 @@
 <template>
+    <div>
 
-  <!-- Show a message when the question is being fetched -->
-  <div v-if="isLoading" class="status-message">
-      <p>Chargement de la question...</p>
-  </div>
-
-
-  <!-- Show an error message if there is an issue -->
-  <div v-else-if="errorMessage" class="status-message error">
-       <p>{{ errorMessage }}</p>
-  </div>
-
-
-  <!-- If the question is fetched and there is no error, display the question -->
-  <div v-else-if="currentQuestion" id = "container">
-    <button @click="toggleFavoriteStatus" id="favorite">★</button>       
-    <h1> {{ currentQuestion.theme }} </h1>
-    <h2>{{ currentQuestion.question_text }}</h2>
-    
-    
-    
-    <!-- Button to select the opinion -->
-    <div class="Opinion_button">
-      <button @click="selectOpinion(-2)" :class="{ 'active-disagree': selectedOpinion === -2 }">Completely Disagree</button>
-      <button @click="selectOpinion(-1)" :class="{ 'active-p-disagree': selectedOpinion === -1 }">Partially Disagree</button>
-      <button @click="selectOpinion(0)" :class="{ 'active-neutral': selectedOpinion === 0 }">Neutral</button>
-      <button @click="selectOpinion(1)" :class="{ 'active-p-agree': selectedOpinion === 1 }">Partially Agree</button>
-      <button @click="selectOpinion(2)" :class="{ 'active-agree': selectedOpinion === 2 }">Completly Agree</button>
+    <!-- Show a message when the question is being fetched -->
+    <div v-if="isLoading" class="status-message">
+        <p>Chargement de la question...</p>
     </div>
 
-    <!-- Submit or don't answer -->
-    <div id="Submit_button">
-      <button @click="sendAnswerToDatabase" :disabled="selectedOpinion === null">Submit</button>
-      <button @click="handleIdontKnow">I don't know</button>
-    </div>
-  </div>
 
-  <!-- Explanation of the stakes of the question -->
-  <div v-show="showExplanation" class="hidden">
-    <p> {{ currentQuestion.explanation_concept }}</p>
-    <button @click="goToNextQuestion">Next Question =></button>
+    <!-- Show an error message if there is an issue -->
+    <div v-else-if="errorMessage" class="status-message error">
+        <p>{{ errorMessage }}</p>
+    </div>
+
+
+    <!-- If the question is fetched and there is no error, display the question -->
+    <div v-else-if="currentQuestion" id = "container">
+      <button @click="toggleFavoriteStatus" id="favorite">★</button>       
+      <h1> {{ currentQuestion.theme }} </h1>
+      <h2>{{ currentQuestion.question_text }}</h2>
+      
+      
+      
+      <!-- Button to select the opinion -->
+      <div class="Opinion_button">
+        <button @click="selectOpinion(-2)" :class="{ 'active-disagree': selectedOpinion === -2 }">Completely Disagree</button>
+        <button @click="selectOpinion(-1)" :class="{ 'active-p-disagree': selectedOpinion === -1 }">Partially Disagree</button>
+        <button @click="selectOpinion(0)" :class="{ 'active-neutral': selectedOpinion === 0 }">Neutral</button>
+        <button @click="selectOpinion(1)" :class="{ 'active-p-agree': selectedOpinion === 1 }">Partially Agree</button>
+        <button @click="selectOpinion(2)" :class="{ 'active-agree': selectedOpinion === 2 }">Completly Agree</button>
+      </div>
+
+      <!-- Submit or don't answer -->
+      <div id="Submit_button">
+        <button @click="sendAnswerToDatabase" :disabled="selectedOpinion === null">Submit</button>
+        <button @click="handleIdontKnow">I don't know</button>
+      </div>
+    </div>
+
+    <!-- Explanation of the stakes of the question -->
+    <div v-show="showExplanation" class="hidden">
+      <p> {{ currentQuestion.explanation_concept }}</p>
+      <button @click="goToNextQuestion">Next Question =></button>
+    </div>
   </div>
 </template>
 

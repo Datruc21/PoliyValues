@@ -73,7 +73,7 @@ export default {
           localStorage.setItem("poliyvalues_token", data.token);
           localStorage.setItem("is_admin", data.data.user.isAdmin); //This is only for UI purposes, changing its value wont affected backend
           setTimeout(() => {
-            window.location.href = "/";
+            this.$router.push("/Home");
           }, 2000);
 
           //Add in the if adding the cookie in localStorage

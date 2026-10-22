@@ -47,14 +47,11 @@ export const router = createRouter({
   routes,
 });
 
-// Le Guard de navigation pour intercepter les changements de page
-router.beforeEach((to, from, next) => {
-  const token = localStorage.getItem("poliyvalues_token"); // Ou ta méthode pour récupérer le token
 
-  // Si la route demande une authentification et qu'il n'y a pas de token
+router.beforeEach((to) => {
+  const token = localStorage.getItem("poliyvalues_token");
+
   if (to.meta.requiresAuth && !token) {
-    next("/auth"); // Redirection vers la page de connexion
-  } else {
-    next(); // Laisse passer
+    return "/auth";
   }
 });
