@@ -19,17 +19,17 @@ const routes = [
     path: "/auth",
     component: Auth,
   },
-  {
-    path: "/about",
-  },
-  {
-    path: "/suprise",
-    meta: { requiresAuth: true },
-  },
-  {
-    path: "/favorite",
-    meta: { requiresAuth: true },
-  },
+  // {                        Deactivated until the component exist 
+  //   path: "/about",
+  // },
+  // {
+  //   path: "/suprise",
+  //   meta: { requiresAuth: true },
+  // },
+  // {
+  //   path: "/favorite",
+  //   meta: { requiresAuth: true },
+  // },
   {
     path: "/",
     redirect: () => {
