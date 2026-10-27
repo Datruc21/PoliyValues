@@ -42,10 +42,11 @@
       </div>
 
 
-    <!-- Explanation of the stakes of the question -->
-    <div v-if="showExplanation && currentQuestion" class="hidden">
-      <p>{{ currentQuestion.explanation_concept }}</p>
-      <button @click="goToNextQuestion">Next Question =></button>
+      <!-- Explanation of the stakes of the question -->
+      <div v-if="showExplanation && currentQuestion" class="hidden">
+        <p>{{ currentQuestion.explanation_concept }}</p>
+        <button @click="goToNextQuestion">Next Question =></button>
+      </div>
     </div>
   </div>
 </template>
