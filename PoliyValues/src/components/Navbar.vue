@@ -36,56 +36,13 @@ export default {
 
 <style scoped>
 .navbar {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  box-sizing: border-box;
-
-  background-color: #075707;
-  border-bottom: 1px solid black;
-  padding: 15px 40px;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 15px 40px; box-sizing: border-box;
+  background-color: var(--header-bg); border-bottom: 1px solid var(--border-color);
 }
-
-.logo {
-  font-size: 2rem;
-  font-weight: bold;
-  margin: 0;
-}
-
-.logo-link {
-  color: white;
-  text-decoration: none;
-}
-
-.nav-bar {
-  display: flex;
-  gap: 30px;
-  flex-direction: row;
-  align-items: center;
-}
-
-.nav-bar a,
-.nav-bar span {
-  color: white;
-  text-decoration: none;
-  font-size: 1.1rem;
-  white-space: nowrap;
-}
-
-.nav-bar a:hover {
-  text-decoration: underline;
-}
-
-/* Vue Router ajoute automatiquement cette classe sur le lien actif */
-.nav-bar a.router-link-exact-active {
-  font-weight: bold;
-  text-decoration: underline;
-}
+.logo { font-size: 2rem; font-weight: bold; margin: 0;}
+.logo-link, .nav-bar a, .nav-bar span { color: white; text-decoration: none; font-size: 1.1rem; }
+.nav-bar { display: flex; gap: 30px; align-items: center; }
+.nav-bar a:hover { text-decoration: underline; }
+.nav-bar a.router-link-exact-active { font-weight: bold; text-decoration: underline; }
 </style>
-<!--      <a href="#surprise">Surprise me</a>
-      <a href="#favorites">My favorites</a>
-      <a href="#about">About us</a>
-to add in router link
-      -->

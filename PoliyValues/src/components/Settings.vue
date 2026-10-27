@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ 'dark-theme': darkTheme }">
+  <div class="settings-container">
     <h1>Settings</h1>
     <h2>General</h2>
     <ul>
@@ -68,8 +68,9 @@
     <p v-if="successMessage" style="color: green">{{ successMessage }}</p>
     <p v-if="message" class="error-message" style="color: red">{{ message }}</p>
 
-    <button @click="logOut">Log out</button>
-    <button @click="openModal = true">Delete account</button>
+    <button class="btn-danger" @click="logOut">Log out</button>
+    <button class="btn-danger" @click="openModal = true">Delete account</button>
+
 
     <!-- Correction du Teleport : il doit envelopper la modale -->
     <teleport to="body">
@@ -289,3 +290,77 @@ export default {
   },
 };
 </script>
+
+
+<style scoped>
+.settings-container {
+  max-width: 650px;
+  margin: 3rem auto;
+  padding: 2rem;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+}
+h1 {
+  text-align: center;
+  color: var(--primary-color);
+  font-size: 2.2rem;
+  text-transform: uppercase;
+  border-bottom: 2px solid var(--primary-color);
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+h2 {
+  color: var(--primary-color);
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 5px;
+  margin: 2rem 0 1rem;
+}
+h3, li p, li span, label { color: var(--text-main); }
+ul { list-style-type: none; padding: 0; margin: 0 0 2rem 0; }
+li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--border-color);
+}
+.setting-item {
+  background-color: var(--bg-body);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.form-group { margin-bottom: 1rem; }
+.form-group label { display: block; font-weight: bold; margin-bottom: 0.3rem; }
+input, select {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: var(--input-bg);
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+button {
+  padding: 0.75rem 1.25rem;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+  margin: 0.5rem 0.5rem 0 0;
+}
+button:hover { opacity: 0.8; }
+button.btn-danger {
+  background-color: var(--danger-color);
+}
+.error-message {
+  font-weight: bold; color: var(--danger-color) !important;
+  background-color: var(--border-color); padding: 0.75rem; border-radius: 4px;
+}
+</style>

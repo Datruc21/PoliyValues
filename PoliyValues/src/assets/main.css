@@ -3,28 +3,7 @@
 #app {
   width: 100%;
   margin: 0 auto;
-  padding: 2rem;
   font-weight: normal;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);  
-  transition: 0.4s;
-  padding: 3px;
-}
-
-@media (hover: hover) {
-  a:hover {
-    /* background-color: hsla(160, 100%, 37%, 0.2);  Je l'enlève, ça m'arrange pas des masses de l'avoir*/
-    
-  }
-}
-
-
-
-html.dark body {
-  background-color: #1a1a1a;
-  color: white;
-}

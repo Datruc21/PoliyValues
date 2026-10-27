@@ -52,187 +52,41 @@
 </template>
 
 <style scoped>
-/* --- Main Card Container --- */
 #container {
-  max-width: 650px;
-  margin: 3rem auto;
-  padding: 2.5rem;
-  background-color: #ffffff;
-  border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-  position: relative;
+  max-width: 650px; margin: 3rem auto; padding: 2.5rem;
+  background-color: var(--bg-card); color: var(--text-main);
+  border-radius: 16px; border: 1px solid var(--border-color); position: relative;
 }
-
-  h1{      
-    text-align: center;
-    width : auto;
-    margin : 3vw;
-    padding: 0;
-    border-bottom: 2px solid #f1f3f5;   
-    border-radius: 15px;
-  }
-  /* #container button:first-child  {
-    position: absolute;
-    top: 0;
-    right: 0;
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: #000; 
-    margin : 0;
-    padding: 0;
-  } */
-
+h1 { text-align: center; margin: 3vw; padding: 0; border-bottom: 2px solid var(--border-color); }
 #favorite {
-  position: absolute;
-  top: 0;
-  right: 0;
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-  color: #ffca28;
-  margin: 0;
-  padding: 0;
+  position: absolute; top: 0; right: 0; background: none; border: none;
+  font-size: 1.5rem; cursor: pointer; color: #ffca28;
 }
-
-.Opinion_button {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  gap: 0.5rem;
-  margin-bottom: 2rem;
-}
-
+.Opinion_button { display: flex; gap: 0.5rem; margin-bottom: 2rem; }
 .Opinion_button button {
-  flex: 1;
-  padding: 0.75rem 0.5rem;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  background-color: #f8f9fa;
-  color: #495057;
-  font-size: 0.85rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s ease;
+  flex: 1; padding: 0.75rem 0.5rem;
+  background-color: var(--input-bg); color: var(--text-main);
+  border: 1px solid var(--border-color); border-radius: 8px; cursor: pointer;
 }
+/* Les couleurs spécifiques des boutons d'opinion sont conservées pour leur fonction visuelle */
+.Opinion_button button:nth-child(1):hover, .Opinion_button button.active-disagree { background-color: #ffe3e3; color: #dc3545; border-color: #dc3545; }
+.Opinion_button button:nth-child(2):hover, .Opinion_button button.active-p-disagree { background-color: #fff0f6; color: #e64980; border-color: #e64980; }
+.Opinion_button button:nth-child(3):hover, .Opinion_button button.active-neutral { background-color: #f1f3f5; color: #6c757d; border-color: #6c757d; }
+.Opinion_button button:nth-child(4):hover, .Opinion_button button.active-p-agree { background-color: #ebfbee; color: #40c057; border-color: #40c057; }
+.Opinion_button button:nth-child(5):hover, .Opinion_button button.active-agree { background-color: #e6fcf5; color: #0ca678; border-color: #0ca678; }
 
-/* Give a particular color to each opinion button */
-
-.Opinion_button button:nth-child(1):hover {
-  background-color: #ffe3e3;
-  color: #dc3545;
-  border-color: #dc3545;
+#Submit_button { display: flex; flex-direction: column; gap: 0.75rem; margin-top: 1.5rem; }
+#Submit_button button { padding: 0.85rem; font-weight: 600; border-radius: 10px; cursor: pointer; }
+#Submit_button button:first-child { background-color: var(--primary-color); color: white; border: none; }
+#Submit_button button:disabled { background-color: var(--text-muted); cursor: not-allowed; }
+#Submit_button button:last-child { background: none; border: 1px solid var(--border-color); color: var(--text-muted); }
+.hidden { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px dashed var(--border-color); color: var(--text-main); }
+.hidden button {
+  display: block; margin: 1.5rem auto 0; padding: 0.85rem 2rem;
+  background-color: var(--primary-color); color: white;
+  border: 2px solid var(--primary-color); border-radius: 8px; cursor: pointer;
 }
-.Opinion_button button:nth-child(2):hover {
-  background-color: #fff0f6;
-  color: #e64980;
-  border-color: #e64980;
-}
-.Opinion_button button:nth-child(3):hover {
-  background-color: #f1f3f5;
-  color: #6c757d;
-  border-color: #6c757d;
-}
-.Opinion_button button:nth-child(4):hover {
-  background-color: #ebfbee;
-  color: #40c057;
-  border-color: #40c057;
-}
-.Opinion_button button:nth-child(5):hover {
-  background-color: #e6fcf5;
-  color: #0ca678;
-  border-color: #0ca678;
-}
-
-/*Keep the color if the the button is selected */
-.Opinion_button button.active-disagree {
-  background-color: #ffe3e3;
-  color: #dc3545;
-  border-color: #dc3545;
-  box-shadow: inset 0 0 0 1px #dc3545;
-}
-.Opinion_button button.active-p-disagree {
-  background-color: #fff0f6;
-  color: #e64980;
-  border-color: #e64980;
-  box-shadow: inset 0 0 0 1px #e64980;
-}
-.Opinion_button button.active-neutral {
-  background-color: #f1f3f5;
-  color: #6c757d;
-  border-color: #6c757d;
-  box-shadow: inset 0 0 0 1px #6c757d;
-}
-.Opinion_button button.active-p-agree {
-  background-color: #ebfbee;
-  color: #40c057;
-  border-color: #40c057;
-  box-shadow: inset 0 0 0 1px #40c057;
-}
-.Opinion_button button.active-agree {
-  background-color: #e6fcf5;
-  color: #0ca678;
-  border-color: #0ca678;
-  box-shadow: inset 0 0 0 1px #0ca678;
-}
-
-#Submit_button {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  width: 100%;
-  margin-top: 1.5rem;
-}
-
-#Submit_button button {
-  padding: 0.85rem;
-  font-size: 1rem;
-  font-weight: 600;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-#Submit_button button:first-child {
-  background-color: #4361ee;
-  color: white;
-  border: none;
-  box-shadow: 0 4px 12px rgba(67, 97, 238, 0.2);
-}
-
-#Submit_button button:first-child:hover {
-  background-color: #3046c8;
-  transform: translateY(-1px);
-}
-
-#Submit_button button:disabled {
-  background-color: #a5b4fc;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
-}
-
-#Submit_button button:last-child {
-  background: none;
-  border: 1px solid #ced4da;
-  color: #6c757d;
-}
-
-#Submit_button button:last-child:hover {
-  background-color: #f1f3f5;
-  color: #343a40;
-}
-
-.hidden {
-  margin-top: 2rem;
-  padding-top: 1.5rem;
-  border-top: 1px dashed #e0e0e0;
-  color: #666666;
-  font-size: 0.9rem;
-  line-height: 1.5;
-}
+.hidden button:hover { background-color: var(--primary-hover); transform: translateY(-2px); }
 </style>
 
 <script setup>

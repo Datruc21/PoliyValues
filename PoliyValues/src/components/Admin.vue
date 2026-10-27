@@ -362,4 +362,60 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.admin-dashboard {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+.admin-dashboard h1 {
+  text-align: center;
+  color: var(--primary-color);
+  font-size: 2.2rem;
+  text-transform: uppercase;
+  border-bottom: 2px solid var(--primary-color);
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+.admin-grid { display: flex; flex-direction: column; gap: 2rem; }
+.admin-section h2 {
+  color: var(--primary-color);
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 5px; margin-bottom: 5px;
+}
+.form-card, .action-card {
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  background-color: var(--bg-card);
+}
+.form-card h3, .action-card h3, .form-group label { color: var(--text-main); margin-top: 0; }
+.form-group { margin-bottom: 1rem; }
+.form-group label { display: block; font-weight: bold; margin-bottom: 0.3rem; }
+input[type="text"], textarea {
+  width: 100%; padding: 0.5rem;
+  background-color: var(--input-bg);
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+  border-radius: 4px; box-sizing: border-box;
+}
+.search-box { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+.search-box input { flex: 1; }
+.button-group { display: flex; gap: 0.5rem; margin-top: 1rem; }
+.btn {
+  padding: 0.5rem 1rem; border: none; border-radius: 4px;
+  cursor: pointer; color: white; font-weight: bold;
+}
+.btn:hover { opacity: 0.8; }
+.btn-primary { background-color: var(--primary-color); }
+.btn-secondary { background-color: var(--text-muted); }
+.btn-info { background-color: #34495e; }
+.btn-danger { background-color: var(--danger-color); }
+.btn-success { background-color: #1a7132; }
+.btn-warning { background-color: #495057; }
+.user-status {
+  background-color: var(--bg-body);
+  padding: 0.5rem; border-radius: 4px; color: var(--text-main);
+}
+</style>

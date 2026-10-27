@@ -7,7 +7,7 @@ To Do : -add potentially google account
 -->
 
 <template>
-  <div>
+  <div class = "auth-container">
     <h1 v-if="accountCreated">Welcome to PoliyValues, sign in to proceed</h1>
     <h1 v-else>Welcome to PoliyValues, sign up to proceed</h1>
     <form v-on:submit.prevent="handleAuthSubmit">
@@ -114,3 +114,55 @@ export default {
   },
 };
 </script>
+
+
+<style scoped>
+.auth-container {
+  max-width: 400px;
+  margin: 4rem auto;
+  padding: 2rem;
+  font-family: sans-serif;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+}
+h1 {
+  text-align: center;
+  color: var(--primary-color);
+  font-size: 1.5rem;
+  border-bottom: 2px solid var(--primary-color);
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+form { display: flex; flex-direction: column; gap: 1rem; }
+input {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: var(--input-bg);
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+button {
+  padding: 0.75rem;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+button:hover { opacity: 0.8; }
+a {
+  display: block; text-align: center; margin-top: 1.5rem;
+  color: var(--text-muted); cursor: pointer; text-decoration: none; font-weight: bold;
+}
+a:hover { color: var(--primary-color); text-decoration: underline; }
+span {
+  display: block; text-align: center; margin-top: 1rem; padding: 0.5rem;
+  font-weight: bold; color: var(--danger-color); background-color: var(--border-color);
+  border-radius: 4px;
+}
+</style>
