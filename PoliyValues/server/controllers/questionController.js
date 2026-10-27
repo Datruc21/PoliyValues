@@ -1,37 +1,32 @@
 import db from "../config/db.js";
 
 const getRandomQuestion = async(req, res) => {
-
-    //Get user    
     const id = req.user.id;
 
-    try{
-        //ask database for 1 random question not already answered by the user (we assume the attribute is_completed can't be NULL)
-        const [questions] = await db.query(
-                            "SELECT q.* \
-                            FROM questions q\
-                            LEFT JOIN user_question_status uqs \
-                                ON q.id = uqs.question_id AND uqs.user_id = ?\
-                            WHERE (uqs.is_completed = FALSE OR uqs.is_completed IS NULL)\
-                            ORDER BY RAND() \
-                            LIMIT 1", [id])  //[userId] ??
+    try {
+        const [questions] = await db.query(`
+            SELECT q.* 
+            FROM questions q
+            LEFT JOIN user_question_status uqs 
+                ON q.id = uqs.question_id AND uqs.user_id = ?
+            WHERE (uqs.is_completed = FALSE OR uqs.is_completed IS NULL)
+            ORDER BY RAND() 
+            LIMIT 1
+        `, [id]);
 
-        // In case there is no more available questions    
-        if (questions.length === 0){ return res.send("You have answered every questions available for the moment")} 
-        //Send the answer
-        res.json(questions[0])
-    }
-
-    //Keep the server from crashing if the database doesnt'answer
-    catch (err) {
+        if (questions.length === 0) { 
+            return res.status(404).json({ message: "You have answered every questions available for the moment" });
+        }
+        
+        res.json(questions[0]);
+    } catch (err) {
         console.error(err);
         res.status(500).json({ error: "Server error" });
-  }
-
+    }
 }
 
 const submitAnswer = async(req, res) => {
-    const userId = req.user.id;
+    const userId = req.userId;
 
     const {questionId, opinionValue} = req.body;
 
@@ -44,10 +39,18 @@ const submitAnswer = async(req, res) => {
     }
 
     try{
-        await db.query("INSERT INTO user_question_status \
-            Values (?, ?, TRUE, ? ,CURRENT_TIMESTAMP)\
-            ON DUPLICATE KEY (user_id, question_id, is_completed, opinion_value, answered_at)",
-            [userId, questionId, opinionValue]);
+        
+        await db.query(`
+    INSERT INTO user_question_status 
+    (user_id, question_id, is_completed, opinion_value, answered_at)
+    VALUES (?, ?, TRUE, ?, CURRENT_TIMESTAMP) 
+    ON DUPLICATE KEY UPDATE 
+    is_completed = TRUE, 
+    opinion_value = ?, 
+    answered_at = CURRENT_TIMESTAMP
+`, [userId, questionId, opinionValue, opinionValue]);
+
+
         res.status(200).json({ message: "Réponse enregistrée avec succès !" });
     } catch (err) {
         console.error(err);

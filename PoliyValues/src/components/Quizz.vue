@@ -35,13 +35,17 @@
         <button @click="sendAnswerToDatabase" :disabled="selectedOpinion === null">Submit</button>
         <button @click="handleIdontKnow">I don't know</button>
       </div>
+
+
+      <!-- Explanation of the stakes of the question -->
+      <div v-show="showExplanation" class="hidden">
+        <p> {{ currentQuestion.explanation_concept }}</p>
+        <button @click="goToNextQuestion">Next Question =></button>
+      </div>
+
     </div>
 
-    <!-- Explanation of the stakes of the question -->
-    <div v-show="showExplanation" class="hidden">
-      <p> {{ currentQuestion.explanation_concept }}</p>
-      <button @click="goToNextQuestion">Next Question =></button>
-    </div>
+
   </div>
 </template>
 
@@ -68,7 +72,7 @@
     border-bottom: 2px solid #f1f3f5;   
     border-radius: 15px;
   }
-  #container button:first-child  {
+  /* #container button:first-child  {
     position: absolute;
     top: 0;
     right: 0;
@@ -79,7 +83,7 @@
     color: #000; 
     margin : 0;
     padding: 0;
-  }
+  } */
 
   #favorite {
     position: absolute;
@@ -202,8 +206,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 
-
-const currentQuestion = ref(null)     //The data about the question
+const currentQuestion = ref(null);    //The data about the question
 const selectedOpinion = ref(null);    //The opinion selected by the user
 const showExplanation = ref(false);   //Boolean to show or not the hidden explanation
 const isLoading = ref(true);          //Boolean depending of if the question has been fetched yet or not
@@ -212,63 +215,59 @@ const isFavorite = ref(false);        //Boolean allowing to toggle between makin
 
 const selectOpinion = (value) => {selectedOpinion.value = value;};
 
-
-
-
 //Fetch a random question using the function in the controller
 //If there is an issue, display error.
 const fetchRandomQuestion = async () => {
   isLoading.value = true;
   errorMessage.value = "";
-
   
+  // 1. Récupération du token
+  const token = localStorage.getItem('poliyvalues_token');
 
-  try{
+  try {
     const response = await fetch("http://localhost:3000/api/questions/random", {
       method: "GET",
       headers: {
+        // 2. Ajout du token dans l'en-tête
+        "Authorization": `Bearer ${token}`
       }
     });
 
-  if (response.ok) {
-            const data = await response.json();
-            currentQuestion.value = data; 
-        } else if (response.status === 404) {
-            errorMessage.value = "Vous avez répondu à toutes les questions disponibles !";
-            currentQuestion.value = null;
-        } else {
-            console.error("Erreur serveur lors de la récupération.");
-        }
-    } catch (error) {
-        console.error("Erreur réseau :", error);
-        errorMessage.value = "Impossible de se connecter au serveur.";
-    } finally {
-        isLoading.value = false;
+    if (response.ok) {
+        const data = await response.json();
+        currentQuestion.value = data; 
+    } else if (response.status === 404) { 
+        errorMessage.value = "Vous avez répondu à toutes les questions disponibles !";
+        currentQuestion.value = null;
+    } else {
+        console.error("Erreur serveur lors de la récupération.");
     }
+  } catch (error) {
+      console.error("Erreur réseau :", error);
+      errorMessage.value = "Impossible de se connecter au serveur.";
+  } finally {
+      isLoading.value = false;
+  }
 };
 
-  
-
 // Load a question when we load the page
-  onMounted(() => {
-    fetchRandomQuestion();
-  });
+onMounted(() => {
+  fetchRandomQuestion();
+});
 
-
-
-//Check if there is an answer,
-// send the data to the data base with the controller
-// If the data is send correctly, show the hidden explanation
-// Else, display error
+//Check if there is an answer, send the data to the database
 const sendAnswerToDatabase = async () => {
     if (!currentQuestion.value || selectedOpinion.value === null) return;
-
+    
+    const token = localStorage.getItem('poliyvalues_token');
 
     try {
         const response = await fetch("http://localhost:3000/api/questions/answer", {
             method: "POST", 
             headers: {
                 "Content-Type": "application/json",
+                // Ajout du token
+                "Authorization": `Bearer ${token}`
             },
             body: JSON.stringify({
                 questionId: currentQuestion.value.id, 
@@ -279,7 +278,6 @@ const sendAnswerToDatabase = async () => {
         if (response.ok) {
             console.log("Réponse sauvegardée !");
             showExplanation.value = true;
-            
         } else {
             console.error("Erreur lors de l'enregistrement de la réponse.");
         }
@@ -288,39 +286,35 @@ const sendAnswerToDatabase = async () => {
     }
 };
 
-
-
 const toggleFavoriteStatus = async () => {
   if (!currentQuestion.value) return;
-    isFavorite.value = !isFavorite.value;
+  isFavorite.value = !isFavorite.value;
   
-  try{
-
+  const token = localStorage.getItem('poliyvalues_token');
+  
+  try {
     const response = await fetch("http://localhost:3000/api/questions/favorite",{
       method : "POST",
       headers: {
-                "Content-Type": "application/json",
-            },
+          "Content-Type": "application/json",
+          // Ajout du token
+          "Authorization": `Bearer ${token}`
+      },
       body: JSON.stringify({
-                questId: currentQuestion.value.id
-            })
+          questId: currentQuestion.value.id
+      })
     });
 
     if (!response.ok){
-      isFavorite.value = !isFavorite.value
+      isFavorite.value = !isFavorite.value;
       console.log("Failed to update the favorite status");
     }
   }
   catch(error){
-    isFavorite.value = !isFavorite.value
+    isFavorite.value = !isFavorite.value;
     console.error("There has been a problem when adding a question to favorite");
   }
 }
-
-
-
-
-
 
 //Show the hidden explanation
 const handleIdontKnow = () => {showExplanation.value = true;};
@@ -330,10 +324,5 @@ const goToNextQuestion = () => {
   showExplanation.value = false;
   selectedOpinion.value = null;
   fetchRandomQuestion();
-
 }
-
-
-
-
 </script>
