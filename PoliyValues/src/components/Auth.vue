@@ -11,34 +11,15 @@ To Do : -add potentially google account
     <h1 v-if="accountCreated">Welcome to PoliyValues, sign in to proceed</h1>
     <h1 v-else>Welcome to PoliyValues, sign up to proceed</h1>
     <form v-on:submit.prevent="handleAuthSubmit">
-      <input
-        v-if="!accountCreated"
-        v-model="name"
-        placeholder="Please enter your name"
-        required
-      />
-      <input
-        v-model="email"
-        type="text"
-        placeholder="Please enter your email address"
-        required
-      />
-      <input
-        v-model="password"
-        type="password"
-        placeholder="Please enter your password"
-        required
-      />
+      <input v-if="!accountCreated" v-model="name" placeholder="Please enter your name" required />
+      <input v-model="email" type="text" placeholder="Please enter your email address" required />
+      <input v-model="password" type="password" placeholder="Please enter your password" required />
       <button type="submit">
         {{ accountCreated ? "Sign In" : "Sign Up" }}
       </button>
     </form>
-    <a v-if="accountCreated" @click="accountCreated = false"
-      >No account ? Sign up here</a
-    >
-    <a v-else @click="accountCreated = true"
-      >Already have an account ? Sign in here</a
-    >
+    <a v-if="accountCreated" @click="accountCreated = false">No account ? Sign up here</a>
+    <a v-else @click="accountCreated = true">Already have an account ? Sign in here</a>
     <span v-if="message" v-text="message"></span>
   </div>
 </template>
@@ -71,7 +52,8 @@ export default {
           this.password = "";
           this.message = "Welcome back";
           localStorage.setItem("poliyvalues_token", data.token);
-          localStorage.setItem("is_admin", data.data.user.isAdmin); //This is only for UI purposes, changing its value wont affected backend
+          localStorage.setItem("is_admin", data.data.user.Admin); //This is only for UI purposes, changing its value wont affected backend
+          localStorage.setItem("user_name", data.data.user.name);
           setTimeout(() => {
             this.$router.push("/Home");
           }, 2000);
@@ -107,6 +89,7 @@ export default {
           this.message = "Successful account creation, welcome to Poliyvalues";
           localStorage.setItem("poliyvalues_token", data.token);
           localStorage.setItem("is_admin", data.data.user.Admin);
+          localStorage.setItem("user_name", data.data.user.name);
           setTimeout(() => {
             window.location.href = "/";
           }, 2000);

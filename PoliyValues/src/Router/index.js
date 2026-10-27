@@ -6,8 +6,9 @@ import Home from "../components/Home.vue";
 import Auth from "../components/Auth.vue";
 import Quizz from "../components/Quizz.vue";
 import Admin from "../components/Admin.vue";
-
-
+import About from "../components/About.vue";
+import Favorite from "../components/Favorite.vue";
+import Surprise from "../components/Surprise.vue";
 
 const routes = [
   {
@@ -19,34 +20,37 @@ const routes = [
     path: "/auth",
     component: Auth,
   },
-  // {                        Deactivated until the component exist 
-  //   path: "/about",
-  // },
-  // {
-  //   path: "/suprise",
-  //   meta: { requiresAuth: true },
-  // },
-  // {
-  //   path: "/favorite",
-  //   meta: { requiresAuth: true },
-  // },
+  {
+    path: "/about",
+    component: About,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/surprise",
+    component: Surprise,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/favorite",
+    component: Favorite,
+    meta: { requiresAuth: true },
+  },
   {
     path: "/",
     redirect: () => {
       const token = localStorage.getItem("poliyvalues_token");
-      return token ? { path: "/Home" } : { path: "/auth" };
+      return token ? { path: "/home" } : { path: "/auth" };
     },
   },
-  { path: "/Home", component: Home, meta: { requiresAuth: true } },
-  { path: "/Quizz", component: Quizz, meta: { requiresAuth: true } },
-  { path: "/Admin", component: Admin, meta: { requiresAuth: true }},
+  { path: "/home", component: Home, meta: { requiresAuth: true } },
+  { path: "/quizz", component: Quizz, meta: { requiresAuth: true } },
+  { path: "/admin", component: Admin, meta: { requiresAuth: true } },
 ];
 
 export const router = createRouter({
   history: createWebHistory(),
   routes,
 });
-
 
 router.beforeEach((to) => {
   const token = localStorage.getItem("poliyvalues_token");

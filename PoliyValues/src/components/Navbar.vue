@@ -4,8 +4,8 @@
       <router-link to="/Home" class="logo-link">Values</router-link>
     </h1>
     <nav class="nav-bar">
-      <router-link to="/Home">Home</router-link>
-      <router-link to="/Quizz">Quizz</router-link>
+      <router-link to="/home">Home</router-link>
+      <router-link to="/quizz">Quizz</router-link>
       <router-link to="/favorite">My Favorite</router-link>
       <router-link to="/about">About us</router-link>
 
@@ -21,7 +21,7 @@
 export default {
   data() {
     return {
-      accountName: "Mon compte",
+      accountName: "My account",
     };
   },
   mounted() {
