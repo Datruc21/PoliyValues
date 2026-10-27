@@ -7,7 +7,7 @@ const getRandomQuestion = async (req, res) => {
   try {
     //ask database for 1 random question not already answered by the user (we assume the attribute is_completed can't be NULL)
     const [questions] = await db.query(
-      "SELECT q.* \
+      "SELECT q.*, COALESCE(uqs.is_favorite, FALSE) AS is_favorite \
                             FROM questions q\
                             LEFT JOIN user_question_status uqs \
                                 ON q.id = uqs.question_id AND uqs.user_id = ?\
@@ -81,5 +81,40 @@ const toggleFavorite = async (req, res) => {
   }
 };
 
-export { getRandomQuestion, submitAnswer, toggleFavorite };
+const getFavorites = async (req, res) => {
+  const userId = req.user.id;
 
+  try {
+    const [rows] = await db.query(
+      `SELECT q.id, q.theme, q.question_text, q.explanation_concept, q.links, uqs.opinion_value
+       FROM user_question_status uqs
+       JOIN questions q ON q.id = uqs.question_id
+       WHERE uqs.user_id = ? AND uqs.is_favorite = TRUE
+       ORDER BY q.theme`,
+      [userId],
+    );
+    res.json(rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Error while fetching favorites" });
+  }
+};
+
+const resetAnswers = async (req, res) => {
+  const userId = req.user.id;
+
+  try {
+    await db.query(
+      `UPDATE user_question_status
+       SET is_completed = FALSE, opinion_value = NULL, answered_at = NULL
+       WHERE user_id = ?`,
+      [userId],
+    );
+    res.status(200).json({ message: "Answers reset successfully" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Error while resetting answers" });
+  }
+};
+
+export { getRandomQuestion, submitAnswer, toggleFavorite, getFavorites, resetAnswers };

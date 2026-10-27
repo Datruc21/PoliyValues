@@ -8,12 +8,12 @@
     <!-- Show an error message if there is an issue -->
     <div v-else-if="errorMessage" class="status-message error">
       <p>{{ errorMessage }}</p>
+      <button v-if="allDone" @click="resetAllQuestions" class="reset-button">Start over</button>
     </div>
 
     <!-- If the question is fetched and there is no error, display the question -->
     <div v-else-if="currentQuestion" id="container">
-      <button @click="toggleFavoriteStatus" id="favorite">★</button>
-      <h1>{{ currentQuestion.theme }}</h1>
+      <button @click="toggleFavoriteStatus" id="favorite">{{ isFavorite ? "★" : "☆" }}</button>      <h1>{{ currentQuestion.theme }}</h1>
       <h2>{{ currentQuestion.question_text }}</h2>
 
       <!-- Button to select the opinion -->
@@ -45,6 +45,11 @@
       <!-- Explanation of the stakes of the question -->
       <div v-if="showExplanation && currentQuestion" class="hidden">
         <p>{{ currentQuestion.explanation_concept }}</p>
+        <ul v-if="currentQuestion.links && currentQuestion.links.length">
+          <li v-for="(link, i) in currentQuestion.links" :key="i">
+            <a :href="link.url" target="_blank" rel="noopener">{{ link.title }}</a>
+          </li>
+        </ul>
         <button @click="goToNextQuestion">Next Question =></button>
       </div>
     </div>
@@ -87,10 +92,27 @@ h1 { text-align: center; margin: 3vw; padding: 0; border-bottom: 2px solid var(-
   border: 2px solid var(--primary-color); border-radius: 8px; cursor: pointer;
 }
 .hidden button:hover { background-color: var(--primary-hover); transform: translateY(-2px); }
+
+.reset-button {
+  margin-top: 1rem;
+  padding: 0.85rem 1.5rem;
+  border: none;
+  border-radius: 10px;
+  background-color: #4361ee;
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.reset-button:hover {
+  background-color: #3046c8;
+}
 </style>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, computed, onMounted } from "vue";
 
 const currentQuestion = ref(null); //The data about the question
 const selectedOpinion = ref(null); //The opinion selected by the user
@@ -98,7 +120,7 @@ const showExplanation = ref(false); //Boolean to show or not the hidden explanat
 const isLoading = ref(true); //Boolean depending of if the question has been fetched yet or not
 const errorMessage = ref(""); //Error to display to the user when there is an issue
 const isFavorite = ref(false); //Boolean allowing to toggle between making the question favorite or not
-
+const allDone = ref(false);
 
 const selectOpinion = (value) => {
   selectedOpinion.value = value;
@@ -107,6 +129,7 @@ const selectOpinion = (value) => {
 //Fetch a random question using the function in the controller
 //If there is an issue, display error.
 const fetchRandomQuestion = async () => {
+  allDone.value = false;
   isLoading.value = true;
   errorMessage.value = "";
   const token = localStorage.getItem("poliyvalues_token");
@@ -121,9 +144,11 @@ const fetchRandomQuestion = async () => {
     if (response.ok) {
       const data = await response.json();
       currentQuestion.value = data;
+      isFavorite.value = Boolean(data.is_favorite);
     } else if (response.status === 404) {
       errorMessage.value = "Vous avez répondu à toutes les questions disponibles !";
       currentQuestion.value = null;
+      allDone.value = true;
     } else {
       console.error("Erreur serveur lors de la récupération.");
     }
@@ -195,6 +220,26 @@ const toggleFavoriteStatus = async () => {
   } catch (error) {
     isFavorite.value = !isFavorite.value;
     console.error("There has been a problem when adding a question to favorite");
+  }
+};
+
+const resetAllQuestions = async () => {
+  if (!confirm("Start over? Your previous answers will be erased (your favorites are kept).")) return;
+
+  const token = localStorage.getItem("poliyvalues_token");
+  try {
+    const response = await fetch("http://localhost:3000/api/questions/reset", {
+      method: "POST",
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    if (response.ok) {
+      fetchRandomQuestion();
+    } else {
+      errorMessage.value = "Could not reset your answers.";
+    }
+  } catch (error) {
+    errorMessage.value = "Impossible de se connecter au serveur.";
   }
 };
 

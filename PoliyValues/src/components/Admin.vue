@@ -133,14 +133,27 @@ export default {
     };
   },
   methods: {
+
+    authFetch(path, options = {}) {
+      const token = localStorage.getItem("poliyvalues_token");
+      return fetch(`http://localhost:3000${path}`, {
+        ...options,
+        headers: { ...(options.headers || {}), Authorization: `Bearer ${token}` },
+      });
+    },
+
     // 1. Add a question
     async addQuestion() {
       try {
         let formattedLinks = this.links
-          ? this.links.split(",").map((link) => link.trim())
+          ? this.links
+              .split(",")
+              .map((l) => l.trim())
+              .filter((l) => l)
+              .map((l) => ({ title: l, url: l }))
           : null;
 
-        const response = await fetch("/api/admin/questions", {
+        const response = await this.authFetch("/api/admin/questions", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -172,10 +185,14 @@ export default {
       }
       try {
         let formattedLinks = this.links
-          ? this.links.split(",").map((link) => link.trim())
+          ? this.links
+              .split(",")
+              .map((l) => l.trim())
+              .filter((l) => l)
+              .map((l) => ({ title: l, url: l }))
           : null;
 
-        const response = await fetch(
+        const response = await this.authFetch(
           `/api/admin/questions/${this.selectedQuestionId}`,
           {
             method: "PUT",
@@ -202,7 +219,7 @@ export default {
     // 3. Search a question
     async searchQuestion() {
       try {
-        const response = await fetch(
+        const response = await this.authFetch(
           `/api/admin/questions/search?q=${encodeURIComponent(this.name)}`,
         );
         const data = await response.json();
@@ -225,7 +242,7 @@ export default {
       if (!confirm("Are you sure you want to delete this question?")) return;
 
       try {
-        const response = await fetch(
+        const response = await this.authFetch(
           `/api/admin/questions/${this.selectedQuestionId}`,
           {
             method: "DELETE",
@@ -245,7 +262,7 @@ export default {
     // 5. Search a user
     async searchUser() {
       try {
-        const response = await fetch(
+        const response = await this.authFetch(
           `/api/admin/users/search?q=${encodeURIComponent(this.name)}`,
         );
         const data = await response.json();
@@ -266,7 +283,7 @@ export default {
         return;
       }
       try {
-        const response = await fetch(
+        const response = await this.authFetch(
           `/api/admin/users/${this.selectedUserId}/ban`,
           {
             method: "POST",
@@ -289,7 +306,7 @@ export default {
         return;
       }
       try {
-        const response = await fetch(
+        const response = await this.authFetch(
           `/api/admin/users/${this.selectedUserId}/unban`,
           {
             method: "POST",
@@ -312,7 +329,7 @@ export default {
         return;
       }
       try {
-        const response = await fetch(
+        const response = await this.authFetch(
           `/api/admin/users/${this.selectedUserId}/make-admin`,
           {
             method: "PATCH",
@@ -335,7 +352,7 @@ export default {
         return;
       }
       try {
-        const response = await fetch(
+        const response = await this.authFetch(
           `/api/admin/users/${this.selectedUserId}/undo-admin`,
           {
             method: "PATCH",

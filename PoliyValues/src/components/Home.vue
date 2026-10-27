@@ -8,7 +8,7 @@
             <button>Start to Discover right now</button>
         </RouterLink>
 
-        <RouterLink to="/Particular_concepts">
+        <RouterLink to="/Surprise">
             <button>Discover precies themes about Politics</button>
         </RouterLink>
     </div>
