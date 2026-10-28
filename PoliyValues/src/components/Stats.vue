@@ -16,9 +16,15 @@
         <p v-if="itemsFor(col.value).length === 0" class="empty">Nothing here</p>
 
         <div v-for="a in itemsFor(col.value)" :key="a.id" class="item">
-          <strong>{{ a.ideology || a.theme }}</strong>
-          <small v-if="a.ideology">{{ a.theme }}</small>
-          <a v-if="firstLink(a)" :href="firstLink(a)" target="_blank" rel="noopener">Learn more</a>
+            <strong>{{ a.ideology || a.theme }}</strong>
+            <small v-if="a.ideology">{{ a.theme }}</small>
+            <span class="peers">
+                <template v-if="ratioText(a)">
+                <b>{{ ratioText(a) }}</b> answered the same
+                </template>
+                <template v-else>No one else has answered yet</template>
+            </span>
+            <a v-if="firstLink(a)" :href="firstLink(a)" target="_blank" rel="noopener">Learn more</a>
         </div>
       </section>
     </div>
@@ -41,6 +47,12 @@ const columns = [
 
 const itemsFor = (value) => answers.value.filter((a) => a.opinion_value === value);
 const firstLink = (a) => (a.links && a.links.length ? a.links[0].url : null);
+const ratioText = (a) => {
+  const same = Number(a.same_count);
+  const total = Number(a.total_others);
+  if (total === 0) return null;
+  return `${same}/${total} (${Math.round((same / total) * 100)}%)`;
+};
 
 onMounted(async () => {
   const token = localStorage.getItem("poliyvalues_token");
@@ -69,5 +81,7 @@ h1 { text-align: center; margin-bottom: 2rem; }
 .empty { text-align: center; color: #adb5bd; font-size: 0.85rem; }
 @media (max-width: 800px) {
   .columns { grid-template-columns: 1fr; }
+.peers { font-size: 0.8rem; color: var(--text-muted); }
+.peers b { color: var(--text-main); }
 }
 </style>

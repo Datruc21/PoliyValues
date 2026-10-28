@@ -122,7 +122,19 @@ const getStats = async (req, res) => {
 
   try {
     const [rows] = await db.query(
-      `SELECT q.id, q.theme, q.ideology, q.question_text, q.links, uqs.opinion_value
+      `SELECT q.id, q.theme, q.ideology, q.question_text, q.links, uqs.opinion_value,
+              (SELECT COUNT(*)
+                 FROM user_question_status o
+                WHERE o.question_id = q.id
+                  AND o.user_id <> uqs.user_id
+                  AND o.is_completed = TRUE
+                  AND o.opinion_value = uqs.opinion_value) AS same_count,
+              (SELECT COUNT(*)
+                 FROM user_question_status o
+                WHERE o.question_id = q.id
+                  AND o.user_id <> uqs.user_id
+                  AND o.is_completed = TRUE
+                  AND o.opinion_value IS NOT NULL) AS total_others
        FROM user_question_status uqs
        JOIN questions q ON q.id = uqs.question_id
        WHERE uqs.user_id = ?
