@@ -363,4 +363,12 @@ button.btn-danger {
   font-weight: bold; color: var(--danger-color) !important;
   background-color: var(--border-color); padding: 0.75rem; border-radius: 4px;
 }
+
+@media (max-width: 600px) {
+
+  .settings-container {
+    padding: 1rem;
+    margin: 1rem;
+  }
+}
 </style>

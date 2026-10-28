@@ -109,6 +109,22 @@ h1 { text-align: center; margin: 3vw; padding: 0; border-bottom: 2px solid var(-
 .reset-button:hover {
   background-color: #3046c8;
 }
+
+
+
+@media (max-width: 600px) {
+    
+  #container {
+    padding: 1rem;
+    margin: 1rem;
+  }
+  
+  .Opinion_button {
+    flex-direction: column;
+  }
+
+}
+
 </style>
 
 <script setup>
