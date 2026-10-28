@@ -44,6 +44,7 @@
 
       <!-- Explanation of the stakes of the question -->
       <div v-if="showExplanation && currentQuestion" class="hidden">
+        <p v-if="opinionMessage" class="opinion-message">{{ opinionMessage }}</p>
         <p>{{ currentQuestion.explanation_concept }}</p>
         <ul v-if="currentQuestion.links && currentQuestion.links.length">
           <li v-for="(link, i) in currentQuestion.links" :key="i">
@@ -124,6 +125,12 @@ h1 { text-align: center; margin: 3vw; padding: 0; border-bottom: 2px solid var(-
   }
 
 }
+.opinion-message {
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--text-main);
+  margin-bottom: 0.75rem;
+}
 
 </style>
 
@@ -137,6 +144,7 @@ const isLoading = ref(true); //Boolean depending of if the question has been fet
 const errorMessage = ref(""); //Error to display to the user when there is an issue
 const isFavorite = ref(false); //Boolean allowing to toggle between making the question favorite or not
 const allDone = ref(false);
+const submittedOpinion = ref(null);
 
 const selectOpinion = (value) => {
   selectedOpinion.value = value;
@@ -205,6 +213,7 @@ const sendAnswerToDatabase = async () => {
     if (response.ok) {
       console.log("Réponse sauvegardée !");
       showExplanation.value = true;
+      submittedOpinion.value = selectedOpinion.value;
     } else {
       console.error("Erreur lors de l'enregistrement de la réponse.");
     }
@@ -268,6 +277,21 @@ const handleIdontKnow = () => {
 const goToNextQuestion = () => {
   showExplanation.value = false;
   selectedOpinion.value = null;
+  submittedOpinion.value = null;
   fetchRandomQuestion();
 };
+
+const opinionMessage = computed(() => {
+  const q = currentQuestion.value;
+  if (!q || !q.ideology || submittedOpinion.value === null) return "";
+  const messages = {
+    "2": "You'd probably love",
+    "1": "You may like",
+    "0": "You feel neutral about",
+    "-1": "You may not be into",
+    "-2": "You probably dislike",
+  };
+  return `${messages[submittedOpinion.value]}: ${q.ideology}`;
+});
+
 </script>

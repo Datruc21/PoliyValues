@@ -117,4 +117,25 @@ const resetAnswers = async (req, res) => {
   }
 };
 
-export { getRandomQuestion, submitAnswer, toggleFavorite, getFavorites, resetAnswers };
+const getStats = async (req, res) => {
+  const userId = req.user.id;
+
+  try {
+    const [rows] = await db.query(
+      `SELECT q.id, q.theme, q.ideology, q.question_text, q.links, uqs.opinion_value
+       FROM user_question_status uqs
+       JOIN questions q ON q.id = uqs.question_id
+       WHERE uqs.user_id = ?
+         AND uqs.is_completed = TRUE
+         AND uqs.opinion_value IS NOT NULL
+       ORDER BY uqs.answered_at DESC`,
+      [userId],
+    );
+    res.json(rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Error while fetching stats" });
+  }
+};
+
+export { getRandomQuestion, submitAnswer, toggleFavorite, getFavorites, resetAnswers, getStats };

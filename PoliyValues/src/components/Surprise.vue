@@ -26,7 +26,6 @@
 <script setup>
 import { ideologies } from "../data/ideologies.js";
 
-// Pick a random ideology and open its Wikipedia page in a new tab
 const goToRandomIdeology = () => {
   const pick = ideologies[Math.floor(Math.random() * ideologies.length)];
   window.open(pick.url, "_blank", "noopener");

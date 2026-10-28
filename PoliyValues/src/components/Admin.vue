@@ -18,6 +18,16 @@ to modify, template-->
         <!-- Add / Edit Form -->
         <div class="form-card">
           <h3>Add / Edit a Question</h3>
+
+          <div class="form-group">
+              <label>Question ID (for Edit / Delete):</label>
+              <input type="text" v-model="selectedQuestionId" />
+          </div>
+
+          <div class="form-group">
+            <label>Ideology:</label>
+            <input type="text" v-model="ideology" placeholder="Enter ideology's name" />
+          </div>
           <div class="form-group">
             <label>Question:</label>
             <input
@@ -124,6 +134,7 @@ export default {
       question_text: "",
       explanation_concept: "",
       theme: "",
+      ideology: "",
       links: "",
       name: "",
       selectedUserId: null,
@@ -163,6 +174,7 @@ export default {
             explanation_concept: this.explanation_concept,
             theme: this.theme,
             links: formattedLinks,
+            ideology: this.ideology,
           }),
         });
 
@@ -202,6 +214,7 @@ export default {
               explanation_concept: this.explanation_concept,
               theme: this.theme,
               links: formattedLinks,
+              ideology: this.ideology,
             }),
           },
         );
@@ -374,6 +387,7 @@ export default {
       this.theme = "";
       this.links = "";
       this.selectedQuestionId = null;
+      this.ideology="";
     },
   },
 };

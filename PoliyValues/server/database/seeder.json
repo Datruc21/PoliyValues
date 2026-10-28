@@ -14,29 +14,129 @@
     }
   ],
   "questions": [
-    {
-      "theme": "Économie",
-      "question_text": "Les services publics essentiels (eau, énergie, transports) doivent appartenir exclusivement à la collectivité.",
-      "explanation_concept": "La nationalisation est le transfert de la propriété privée d'un secteur économique vers l'État ou la collectivité.",
-      "links": [
-        {
-          "title": "Wikipédia - Nationalisation",
-          "url": "https://fr.wikipedia.org/wiki/Nationalisation"
-        }
-      ]
-    },
-    {
-      "theme": "Société",
-      "question_text": "Les citoyens doivent pouvoir voter directement les lois via des référendums d'initiative citoyenne.",
-      "explanation_concept": "La démocratie directe permet aux citoyens d'exercer directement le pouvoir sans passer par des représentants.",
-      "links": [
-        {
-          "title": "Wikipédia - Démocratie directe",
-          "url": "https://fr.wikipedia.org/wiki/D%C3%A9mocratie_directe"
-        }
-      ]
-    }
+
+  {
+    "theme": "Digital freedom",
+    "ideology": "Technolibertarianism",
+    "question_text": "The government should have no power to censor or block online content, even when that content is offensive or harmful.",
+    "explanation_concept": "A core idea of technolibertarianism is a 'free' web in the sense of libre: without restrictions, including censorship. Its supporters see any state control of online speech as a threat to freedom. Critics point out that harmful content can cause real damage and that private companies hold great power online.",
+    "links": [
+      { "title": "Wikipedia - Technolibertarianism", "url": "https://en.wikipedia.org/wiki/Technolibertarianism" },
+      { "title": "Wikipedia - Cypherpunk", "url": "https://en.wikipedia.org/wiki/Cypherpunk" }
+    ]
+  },
+  {
+    "theme": "Privacy",
+    "ideology": "Technolibertarianism",
+    "question_text": "Everyone should have the right to use strong encryption, even if it makes it harder for the authorities to investigate crime.",
+    "explanation_concept": "Strong cryptography as a shield against state surveillance comes from the cypherpunk culture in which technolibertarianism is rooted. Its supporters see privacy tools as a guarantee of individual freedom, while opponents worry about criminals and terrorists using them.",
+    "links": [
+      { "title": "Wikipedia - Technolibertarianism", "url": "https://en.wikipedia.org/wiki/Technolibertarianism" },
+      { "title": "Wikipedia - Cypherpunk", "url": "https://en.wikipedia.org/wiki/Cypherpunk" }
+    ]
+  },
+  {
+    "theme": "Economy",
+    "ideology": "Technolibertarianism",
+    "question_text": "Digital platforms and online communities are best organised through free-market competition and merit, not through rules imposed by governments.",
+    "explanation_concept": "Technolibertarians embrace fluid, merit-based hierarchies and believe that markets serve them best. This view has been criticised for overlooking how large tech companies can concentrate power, a theme explored by authors such as Paulina Borsook and David Golumbia.",
+    "links": [
+      { "title": "Wikipedia - Technolibertarianism", "url": "https://en.wikipedia.org/wiki/Technolibertarianism" },
+      { "title": "Wikipedia - Cypherpunk", "url": "https://en.wikipedia.org/wiki/Cypherpunk" }
+    ]
+  },
+  {
+    "theme": "Technology",
+    "ideology": "Technolibertarianism",
+    "question_text": "New technologies such as AI or cryptocurrencies should be left largely unregulated, because government rules do more harm than good to innovation.",
+    "explanation_concept": "Minimising government regulation is central to technolibertarianism. Its supporters argue that innovation and individual freedom flourish when authorities stay out of the way. Critics argue that unregulated technology can harm consumers and concentrate power in a few hands.",
+    "links": [
+      { "title": "Wikipedia - Technolibertarianism", "url": "https://en.wikipedia.org/wiki/Technolibertarianism" },
+      { "title": "Wikipedia - Cypherpunk", "url": "https://en.wikipedia.org/wiki/Cypherpunk" }
+    ]
+  },
+  {
+    "theme": "History",
+    "ideology": "Anarcho-primitivism",
+    "question_text": "The shift from hunter-gatherer life to agriculture was a historic mistake that created inequality, coercion and alienation.",
+    "explanation_concept": "Anarcho-primitivists argue that the Neolithic Revolution, the move from hunting and gathering to farming, gave rise to coercion, social alienation and social stratification. Many researchers see a more nuanced picture, including the benefits that farming brought in food supply and population growth.",
+    "links": [
+      { "title": "Wikipedia - Anarcho-primitivism", "url": "https://en.wikipedia.org/wiki/Anarcho-primitivism" },
+      { "title": "Wikipedia - John Zerzan", "url": "https://en.wikipedia.org/wiki/John_Zerzan" }
+    ]
+  },
+  {
+    "theme": "Technology",
+    "ideology": "Anarcho-primitivism",
+    "question_text": "A truly free society would require dismantling industrial technology, not just changing who owns or controls it.",
+    "explanation_concept": "Anarcho-primitivism calls for deindustrialization and for abandoning all technology other than prehistoric technology. This sets it apart from many other critics of capitalism, who want to reform or take over industry rather than end it.",
+    "links": [
+      { "title": "Wikipedia - Anarcho-primitivism", "url": "https://en.wikipedia.org/wiki/Anarcho-primitivism" },
+      { "title": "Wikipedia - John Zerzan", "url": "https://en.wikipedia.org/wiki/John_Zerzan" }
+    ]
+  },
+  {
+    "theme": "Civilization",
+    "ideology": "Anarcho-primitivism",
+    "question_text": "Civilization itself, and not only capitalism or the state, is the root cause of oppression and environmental destruction.",
+    "explanation_concept": "Anarcho-primitivism argues that civilization is at the root of societal and environmental problems. Thinkers such as John Zerzan also blame domestication, technology and even language for cutting humans off from what they call 'authentic reality'.",
+    "links": [
+      { "title": "Wikipedia - Anarcho-primitivism", "url": "https://en.wikipedia.org/wiki/Anarcho-primitivism" },
+      { "title": "Wikipedia - John Zerzan", "url": "https://en.wikipedia.org/wiki/John_Zerzan" }
+    ]
+  },
+  {
+    "theme": "Ecology",
+    "ideology": "Anarcho-primitivism",
+    "question_text": "The best path to freedom and a healthy planet is to rewild: leave cities behind and return to a way of life based on hunting, gathering and small communities.",
+    "explanation_concept": "Many anarcho-primitivists advocate a tribal-like way of life, and rewilding is part of their practice: using reclaimed skills to work towards a sustainable future while undoing the institutions of civilization. Critics question whether this could support the world's current population.",
+    "links": [
+      { "title": "Wikipedia - Anarcho-primitivism", "url": "https://en.wikipedia.org/wiki/Anarcho-primitivism" },
+      { "title": "Wikipedia - John Zerzan", "url": "https://en.wikipedia.org/wiki/John_Zerzan" }
+    ]
+  },
+  {
+    "theme": "The state",
+    "ideology": "Fusionism",
+    "question_text": "The state should be limited to police, military and courts, while society keeps strong traditional moral values.",
+    "explanation_concept": "Frank Meyer, the thinker most associated with fusionism, argued that the state has only three legitimate functions: police, military and a legal system. Yet he also held that tradition and virtue are essential to society. Fusionism tries to combine both, a synthesis criticised by traditionalists and libertarians alike.",
+    "links": [
+      { "title": "Wikipedia - Fusionism", "url": "https://en.wikipedia.org/wiki/Fusionism" },
+      { "title": "Wikipedia - Frank Meyer", "url": "https://en.wikipedia.org/wiki/Frank_Meyer_(political_philosopher)" }
+    ]
+  },
+  {
+    "theme": "Morality",
+    "ideology": "Fusionism",
+    "question_text": "Government should not force people to be virtuous, but a free society cannot last unless its citizens freely uphold traditional moral values.",
+    "explanation_concept": "Meyer held that coerced values cannot be truly virtuous, so virtue must come from individuals and not from the state. At the same time, he believed that freedom must be balanced by responsibility. Traditionalists such as Russell Kirk thought libertarians ignored the moral order, while some libertarians rejected the emphasis on tradition.",
+    "links": [
+      { "title": "Wikipedia - Fusionism", "url": "https://en.wikipedia.org/wiki/Fusionism" },
+      { "title": "Wikipedia - Frank Meyer", "url": "https://en.wikipedia.org/wiki/Frank_Meyer_(political_philosopher)" }
+    ]
+  },
+  {
+    "theme": "Conservatism",
+    "ideology": "Fusionism",
+    "question_text": "Free markets, traditional values and a strong national defense belong together as one conservative agenda and should not be separated.",
+    "explanation_concept": "Fusionism combines free markets, social conservatism and a hawkish foreign policy. Ronald Reagan, a strong advocate, said conservatives have one agenda rather than separate economic, social and foreign agendas. Since 2014 the approach has been attacked by integralists and postliberals, among others.",
+    "links": [
+      { "title": "Wikipedia - Fusionism", "url": "https://en.wikipedia.org/wiki/Fusionism" },
+      { "title": "Wikipedia - Frank Meyer", "url": "https://en.wikipedia.org/wiki/Frank_Meyer_(political_philosopher)" }
+    ]
+  },
+  {
+    "theme": "Foreign policy",
+    "ideology": "Fusionism",
+    "question_text": "A free society must actively oppose collectivist regimes abroad, not only defend free markets and traditional values at home.",
+    "explanation_concept": "Fusionism emerged at National Review magazine in the 1950s, where libertarians, traditional conservatives and anti-communists were brought together. Opposition to communism was one of the glues of that alliance. Some conservatives and libertarians question the interventionist foreign policy that came with it.",
+    "links": [
+      { "title": "Wikipedia - Fusionism", "url": "https://en.wikipedia.org/wiki/Fusionism" },
+      { "title": "Wikipedia - Frank Meyer", "url": "https://en.wikipedia.org/wiki/Frank_Meyer_(political_philosopher)" }
+    ]
+  }
   ],
+
   "user_question_status": [
     {
       "user_id": 1,

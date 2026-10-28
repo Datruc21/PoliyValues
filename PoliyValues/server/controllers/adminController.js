@@ -18,18 +18,18 @@ export const addQuestion = async (req, res) => {
         .json({ error: "Access denied. Administrator rights required." });
     }
 
-    const { theme, question_text, explanation_concept, links } = req.body;
+    const { theme, question_text, explanation_concept, links, ideology } = req.body;
 
-    if (!theme || !question_text || !explanation_concept) {
+    if (!theme || !question_text || !explanation_concept || !ideology) {
       return res.status(400).json({
         error:
-          "All mandatory fields (theme, question_text, explanation_concept) must be filled.",
+          "All mandatory fields (theme, question_text, explanation_concept, links, ideology) must be filled.",
       });
     }
 
     const query = `
-      INSERT INTO questions (theme, question_text, explanation_concept, links) 
-      VALUES (?, ?, ?, ?)
+      INSERT INTO questions (theme, question_text, explanation_concept, links, ideology) 
+      VALUES (?, ?, ?, ?, ?)
     `;
 
     const linksValue = links ? JSON.stringify(links) : null;
@@ -38,6 +38,7 @@ export const addQuestion = async (req, res) => {
       question_text,
       explanation_concept,
       linksValue,
+      ideology
     ]);
 
     res.status(201).json({
@@ -61,23 +62,25 @@ export const editQuestion = async (req, res) => {
     }
 
     const { id } = req.params;
-    const { theme, question_text, explanation_concept, links } = req.body;
+    const { theme, question_text, explanation_concept, links, ideology } = req.body;
 
     const query = `
       UPDATE questions 
       SET theme = COALESCE(?, theme), 
           question_text = COALESCE(?, question_text), 
           explanation_concept = COALESCE(?, explanation_concept), 
-          links = COALESCE(?, links)
+          links = COALESCE(?, links),
+          ideology = COALESCE(?, ideology)
       WHERE id = ?
     `;
 
     const linksValue = links ? JSON.stringify(links) : null;
     const [result] = await db.execute(query, [
-      theme,
-      question_text,
-      explanation_concept,
+      theme ?? null,
+      question_text ?? null,
+      explanation_concept ?? null,
       linksValue,
+      ideology ?? null,
       id,
     ]);
 

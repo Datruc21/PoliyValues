@@ -9,6 +9,7 @@ import Admin from "../components/Admin.vue";
 import About from "../components/About.vue";
 import Favorite from "../components/Favorite.vue";
 import Surprise from "../components/Surprise.vue";
+import Stats from "../components/Stats.vue";
 
 const routes = [
   {
@@ -45,6 +46,7 @@ const routes = [
   { path: "/home", component: Home, meta: { requiresAuth: true } },
   { path: "/quizz", component: Quizz, meta: { requiresAuth: true } },
   { path: "/admin", component: Admin, meta: { requiresAuth: true } },
+  { path: "/stats", component: Stats, meta: { requiresAuth: true } },
 ];
 
 export const router = createRouter({

@@ -24,13 +24,8 @@ export async function seedDB() {
     if (questionRows[0]["COUNT(*)"] === 0 && seeder.questions?.length > 0) {
       for (const q of seeder.questions) {
         await db.query(
-          "INSERT INTO questions (theme, question_text, explanation_concept, links) VALUES (?, ?, ?, ?)",
-          [
-            q.theme,
-            q.question_text,
-            q.explanation_concept,
-            JSON.stringify(q.links || [])
-          ]
+          "INSERT INTO questions (theme, ideology, question_text, explanation_concept, links) VALUES (?, ?, ?, ?, ?)",
+          [q.theme, q.ideology || null, q.question_text, q.explanation_concept, JSON.stringify(q.links || [])]
         );
       }
       console.log("🌱 Questions de test insérées !");

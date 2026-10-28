@@ -20,6 +20,7 @@ export async function initDb() {
       CREATE TABLE IF NOT EXISTS questions (
         id INT AUTO_INCREMENT PRIMARY KEY,
         theme VARCHAR(100) NOT NULL,
+        ideology VARCHAR(100) NULL,
         question_text TEXT NOT NULL,
         explanation_concept TEXT NOT NULL,
         links JSON NULL,
