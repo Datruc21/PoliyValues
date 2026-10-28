@@ -45,4 +45,26 @@ export default {
 .nav-bar { display: flex; gap: 30px; align-items: center; }
 .nav-bar a:hover { text-decoration: underline; }
 .nav-bar a.router-link-exact-active { font-weight: bold; text-decoration: underline; }
+
+.navbar .account-name{
+  color : var(--header-bg);
+  background-color: white;
+  border : none;
+  padding: 8px 20px; 
+  border-radius: 50px;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    padding: 10px; 
+  }
+  .nav-bar {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px; 
+    margin-top: 10px;
+  }
+}
+
 </style>

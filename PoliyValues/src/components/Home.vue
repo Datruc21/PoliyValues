@@ -37,12 +37,16 @@ div {
 }
 a { text-decoration: none; }
 button {
+  width: 100%;
+  max-width: 320px;
   background-color: var(--primary-color);
   color: white;
   border: 2px solid var(--primary-color);
   padding: 1.2rem 2.5rem; font-size: 1.2rem; font-weight: bold;
   border-radius: 8px; cursor: pointer; transition: all 0.3s ease; min-width: 320px;
 }
+
+
 button:hover {
   background-color: var(--primary-hover);
   border-color: white; transform: translateY(-2px);
