@@ -1,8 +1,8 @@
 <template>
   <div id="favorites-page">
-    <h1>Mes favoris</h1>
+    <h1>My favorites</h1>
 
-    <p v-if="isLoading" class="status-message">Chargement...</p>
+    <p v-if="isLoading" class="status-message">Loading...</p>
     <p v-else-if="errorMessage" class="status-message">{{ errorMessage }}</p>
     <p v-else-if="favorites.length === 0" class="status-message">
       You have no favorites yet. Clik on ☆ during a quizz to add one.
@@ -12,7 +12,9 @@
       <li v-for="fav in favorites" :key="fav.id" class="favorite-card">
         <div class="card-header">
           <h2>{{ fav.theme }}</h2>
-          <button class="remove-btn" title="Remove form favories" @click="removeFavorite(fav.id)">★</button>
+          <button class="remove-btn" title="Remove form favories" @click="removeFavorite(fav.id)">
+            ★
+          </button>
         </div>
 
         <p class="question">{{ fav.question_text }}</p>
@@ -60,11 +62,9 @@ const fetchFavorites = async () => {
   }
 };
 
-
 const toggleDetails = (id) => {
   openId.value = openId.value === id ? null : id;
 };
-
 
 const removeFavorite = async (id) => {
   const token = localStorage.getItem("poliyvalues_token");

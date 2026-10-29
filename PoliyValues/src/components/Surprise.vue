@@ -4,20 +4,18 @@
 
     <div class="card">
       <p>
-        Curious about political ideas you've never heard of? Press the button below
-        and we'll open a random Wikipedia page about a political ideology,
-        movement or system of government.
+        Curious about political ideas you've never heard of? Press the button below and we'll open a
+        random Wikipedia page about a political ideology, movement or system of government.
       </p>
       <p>
-        It could be something familiar or something very niche. Read it, make up
-        your own mind, then come back and try again.
+        It could be something familiar or something very niche. Read it, make up your own mind, then
+        come back and try again.
       </p>
 
       <button class="btn" @click="goToRandomIdeology">Surprise me!</button>
 
       <p class="note">
-        The page opens in a new tab. Appearing in this list doesn't mean we
-        endorse an ideology.
+        The page opens in a new tab. Appearing in this list doesn't mean we endorse an ideology.
       </p>
     </div>
   </div>
@@ -40,7 +38,9 @@ const goToRandomIdeology = () => {
   text-align: center;
 }
 .card {
-  background: #fff;
+  background-color: var(--bg-card);
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
   border-radius: 16px;
   padding: 2.5rem;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
@@ -48,10 +48,19 @@ const goToRandomIdeology = () => {
   flex-direction: column;
   gap: 1rem;
   line-height: 1.5;
-  color: #495057;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
+
 .card p {
   margin: 0;
+  color: var(--text-main);
+}
+
+.note {
+  font-size: 0.85rem;
+  color: var(--text-muted);
 }
 .btn {
   margin-top: 0.5rem;
@@ -69,9 +78,5 @@ const goToRandomIdeology = () => {
 .btn:hover {
   background: #3046c8;
   transform: translateY(-1px);
-}
-.note {
-  font-size: 0.85rem;
-  color: #6c757d;
 }
 </style>

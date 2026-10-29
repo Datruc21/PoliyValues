@@ -22,19 +22,11 @@
       <form @submit.prevent="updateProfile">
         <div class="form-group">
           <label>Name:</label>
-          <input
-            v-model="newUserName"
-            type="text"
-            placeholder="Enter new username"
-          />
+          <input v-model="newUserName" type="text" placeholder="Enter new username" />
         </div>
         <div class="form-group">
           <label>Email:</label>
-          <input
-            v-model="newEmail"
-            type="email"
-            placeholder="Enter new email"
-          />
+          <input v-model="newEmail" type="email" placeholder="Enter new email" />
         </div>
         <button type="submit">Update Profile</button>
       </form>
@@ -45,12 +37,7 @@
       <h3>Change Password</h3>
       <form @submit.prevent="changePassword">
         <div class="form-group">
-          <input
-            v-model="oldPassword"
-            type="password"
-            placeholder="Current password"
-            required
-          />
+          <input v-model="oldPassword" type="password" placeholder="Current password" required />
         </div>
         <div class="form-group">
           <input
@@ -71,15 +58,11 @@
     <button class="btn-danger" @click="logOut">Log out</button>
     <button class="btn-danger" @click="openModal = true">Delete account</button>
 
-
     <!-- Correction du Teleport : il doit envelopper la modale -->
     <teleport to="body">
       <Modal v-if="openModal">
         <h3>Delete account</h3>
-        <p>
-          Are you really sure you want to delete your account? This decision is
-          irreversible.
-        </p>
+        <p>Are you really sure you want to delete your account? This decision is irreversible.</p>
         <button
           @click="
             () => {
@@ -94,9 +77,8 @@
       </Modal>
     </teleport>
 
-    <p v-if="accountDeleted">
-      Congratulations you just successfully deleted your account!
-    </p>
+    <p v-if="accountDeleted">Congratulations you just successfully deleted your account!</p>
+    <button v-if="isAdmin" @click="$router.push('/admin')">Admin Dashboard</button>
   </div>
 </template>
 
@@ -113,6 +95,7 @@ export default {
       newUserName: "",
       newEmail: "",
       oldPassword: "",
+      isAdmin: false,
       newPassword: "",
       fontSize: "normal",
       openModal: false,
@@ -124,6 +107,7 @@ export default {
   mounted() {
     // Récupérer les infos de l'utilisateur au chargement
     this.getMe();
+    this.isAdmin = localStorage.getItem("is_admin");
   },
   methods: {
     async updateProfile() {
@@ -291,7 +275,6 @@ export default {
 };
 </script>
 
-
 <style scoped>
 .settings-container {
   max-width: 650px;
@@ -316,8 +299,17 @@ h2 {
   padding-bottom: 5px;
   margin: 2rem 0 1rem;
 }
-h3, li p, li span, label { color: var(--text-main); }
-ul { list-style-type: none; padding: 0; margin: 0 0 2rem 0; }
+h3,
+li p,
+li span,
+label {
+  color: var(--text-main);
+}
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0 0 2rem 0;
+}
 li {
   display: flex;
   justify-content: space-between;
@@ -332,9 +324,16 @@ li {
   padding: 1.5rem;
   margin-bottom: 1.5rem;
 }
-.form-group { margin-bottom: 1rem; }
-.form-group label { display: block; font-weight: bold; margin-bottom: 0.3rem; }
-input, select {
+.form-group {
+  margin-bottom: 1rem;
+}
+.form-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.3rem;
+}
+input,
+select {
   width: 100%;
   padding: 0.75rem;
   background-color: var(--input-bg);
@@ -355,17 +354,21 @@ button {
   transition: opacity 0.2s ease;
   margin: 0.5rem 0.5rem 0 0;
 }
-button:hover { opacity: 0.8; }
+button:hover {
+  opacity: 0.8;
+}
 button.btn-danger {
   background-color: var(--danger-color);
 }
 .error-message {
-  font-weight: bold; color: var(--danger-color) !important;
-  background-color: var(--border-color); padding: 0.75rem; border-radius: 4px;
+  font-weight: bold;
+  color: var(--danger-color) !important;
+  background-color: var(--border-color);
+  padding: 0.75rem;
+  border-radius: 4px;
 }
 
 @media (max-width: 600px) {
-
   .settings-container {
     padding: 1rem;
     margin: 1rem;
