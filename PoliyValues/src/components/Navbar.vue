@@ -1,18 +1,39 @@
 <template>
   <header class="navbar">
     <h1 class="logo">
-      <router-link to="/Home" class="logo-link" style="font-size: 2rem">Values</router-link>
+      <router-link to="/Home" class="logo-link"> Values </router-link>
     </h1>
-    <nav class="nav-bar">
-      <router-link to="/home">Home</router-link>
-      <router-link to="/quizz">Quizz</router-link>
-      <router-link to="/favorite">My Favorites</router-link>
-      <router-link to="/about">About us</router-link>
 
-      <router-link to="/surprise">Suprise me</router-link>
-      <router-link to="/settings">Settings</router-link>
+    <!-- Bouton burger visible sur mobile -->
+    <button
+      class="burger"
+      @click="menuOpen = !menuOpen"
+      :aria-expanded="menuOpen"
+      aria-label="Ouvrir ou fermer le menu"
+      aria-controls="main-navigation"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
 
-      <span class="account-name">{{ accountName }}</span>
+    <!-- Navigation -->
+    <nav id="main-navigation" class="nav-bar" :class="{ 'nav-open': menuOpen }">
+      <router-link to="/home" @click="closeMenu"> Home </router-link>
+
+      <router-link to="/quizz" @click="closeMenu"> Quizz </router-link>
+
+      <router-link to="/favorite" @click="closeMenu"> My Favorites </router-link>
+
+      <router-link to="/about" @click="closeMenu"> About us </router-link>
+
+      <router-link to="/surprise" @click="closeMenu"> Surprise me </router-link>
+
+      <router-link to="/settings" @click="closeMenu"> Settings </router-link>
+
+      <span class="account-name">
+        {{ accountName }}
+      </span>
     </nav>
   </header>
 </template>
@@ -22,14 +43,22 @@ export default {
   data() {
     return {
       accountName: "My account",
+      menuOpen: false,
     };
   },
+
   mounted() {
-    // Optionnel : Si tu stockes le nom de l'utilisateur dans le localStorage lors de la connexion
     const storedName = localStorage.getItem("user_name");
+
     if (storedName) {
       this.accountName = storedName;
     }
+  },
+
+  methods: {
+    closeMenu() {
+      this.menuOpen = false;
+    },
   },
 };
 </script>
@@ -44,11 +73,13 @@ export default {
   background-color: var(--header-bg);
   border-bottom: 1px solid var(--border-color);
 }
+
 .logo {
   font-size: 2rem;
   font-weight: bold;
   margin: 0;
 }
+
 .logo-link,
 .nav-bar a,
 .nav-bar span {
@@ -56,14 +87,21 @@ export default {
   text-decoration: none;
   font-size: 1.1rem;
 }
+
+.logo-link {
+  font-size: 2rem;
+}
+
 .nav-bar {
   display: flex;
   gap: 30px;
   align-items: center;
 }
+
 .nav-bar a:hover {
   text-decoration: underline;
 }
+
 .nav-bar a.router-link-exact-active {
   font-weight: bold;
   text-decoration: underline;
@@ -77,16 +115,57 @@ export default {
   border-radius: 50px;
 }
 
+/* Bouton burger caché sur ordinateur */
+.burger {
+  display: none;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 8px;
+}
+
+.burger span {
+  display: block;
+  width: 26px;
+  height: 3px;
+  margin: 5px 0;
+  border-radius: 2px;
+  background: white;
+}
+
+/* Version mobile */
 @media (max-width: 768px) {
   .navbar {
-    flex-direction: column;
-    padding: 10px;
-  }
-  .nav-bar {
+    position: relative;
     flex-wrap: wrap;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 10px;
+    padding: 12px 16px;
+  }
+
+  .burger {
+    display: block;
+  }
+
+  .nav-bar {
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    gap: 0;
+    padding-top: 12px;
+  }
+
+  .nav-bar.nav-open {
+    display: flex;
+  }
+
+  .nav-bar a {
+    padding: 12px 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  .navbar .account-name {
+    margin-top: 12px;
+    align-self: flex-start;
   }
 }
 </style>
