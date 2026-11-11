@@ -1,6 +1,32 @@
 import db from "../config/db.js";
 import { seedDB } from "./seeder.js";
 
+async function ensureVerificationColumns() {
+  const columns = [
+    {
+      name: "isVerified",
+      sql: "ALTER TABLE users ADD COLUMN isVerified BOOLEAN DEFAULT FALSE",
+    },
+    {
+      name: "verificationToken",
+      sql: "ALTER TABLE users ADD COLUMN verificationToken VARCHAR(255) DEFAULT NULL",
+    },
+    {
+      name: "verificationTokenExpires",
+      sql: "ALTER TABLE users ADD COLUMN verificationTokenExpires DATETIME DEFAULT NULL",
+    },
+  ];
+
+  for (const column of columns) {
+    const [existing] = await db.query("SHOW COLUMNS FROM users LIKE ?", [column.name]);
+
+    if (existing.length === 0) {
+      await db.query(column.sql);
+      console.log(`✅ Column ${column.name} added successfully`);
+    }
+  }
+}
+
 export async function initDb() {
   try {
     await db.query(`
@@ -17,7 +43,7 @@ export async function initDb() {
         verificationTokenExpires DATETIME DEFAULT NULL
       ) ENGINE=InnoDB;
     `);
-
+    await ensureVerificationColumns();
     // 2. Table questions
     await db.query(`
       CREATE TABLE IF NOT EXISTS questions (
