@@ -440,11 +440,11 @@ input[type="text"], textarea {
 }
 .btn:hover { opacity: 0.8; }
 .btn-primary { background-color: var(--primary-color); }
-.btn-secondary { background-color: var(--text-muted); }
-.btn-info { background-color: #34495e; }
+.btn-secondary { background-color: var(--primary-color); }
+.btn-info { background-color: var(--secondary-color); }
 .btn-danger { background-color: var(--danger-color); }
-.btn-success { background-color: #1a7132; }
-.btn-warning { background-color: #495057; }
+.btn-success { background-color: var(--primary-color); }
+.btn-warning { background-color: var(--danger-color); }
 .user-status {
   background-color: var(--bg-body);
   padding: 0.5rem; border-radius: 4px; color: var(--text-main);
