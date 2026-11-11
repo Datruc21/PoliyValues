@@ -7,7 +7,7 @@ To Do : -add potentially google account
 -->
 
 <template>
-  <div class = "auth-container">
+  <div class="auth-container">
     <h1 v-if="accountCreated">Welcome to PoliyValues, sign in to proceed</h1>
     <h1 v-else>Welcome to PoliyValues, sign up to proceed</h1>
     <form v-on:submit.prevent="handleAuthSubmit">
@@ -20,7 +20,7 @@ To Do : -add potentially google account
     </form>
     <a v-if="accountCreated" @click="accountCreated = false">No account ? Sign up here</a>
     <a v-else @click="accountCreated = true">Already have an account ? Sign in here</a>
-    <span v-if="message" v-text="message"></span>
+    <span v-if="message" v-text="message" :style="{ color: error ? 'red' : 'green' }"></span>
   </div>
 </template>
 
@@ -29,6 +29,7 @@ export default {
   data() {
     return {
       email: "",
+      error: false,
       password: "",
       name: "",
       message: "",
@@ -50,6 +51,7 @@ export default {
         if (answer.ok) {
           this.email = "";
           this.password = "";
+          this.error = false;
           this.message = "Welcome back";
           localStorage.setItem("poliyvalues_token", data.token);
           localStorage.setItem("is_admin", data.data.user.Admin); //This is only for UI purposes, changing its value wont affected backend
@@ -60,9 +62,11 @@ export default {
 
           //Add in the if adding the cookie in localStorage
         } else {
+          this.error = true;
           this.message = "Error: " + data.error;
         }
       } catch (error) {
+        this.error = true;
         this.message = "Error, cannot connect with the server";
         console.error("Error: " + error);
       }
@@ -87,6 +91,7 @@ export default {
           this.password = "";
           this.name = "";
           this.message = "Successful account creation, welcome to Poliyvalues";
+          this.error = false;
           localStorage.setItem("poliyvalues_token", data.token);
           localStorage.setItem("is_admin", data.data.user.Admin);
           localStorage.setItem("user_name", data.data.user.name);
@@ -94,9 +99,11 @@ export default {
             window.location.href = "/";
           }, 2000);
         } else {
+          this.error = true;
           this.message = "Error: " + data.error;
         }
       } catch (error) {
+        this.error = true;
         this.message = "Error, cannot connect with the server";
         console.error("Error: " + error);
       }
@@ -114,7 +121,6 @@ export default {
   },
 };
 </script>
-
 
 <style scoped>
 .auth-container {
@@ -134,7 +140,11 @@ h1 {
   padding-bottom: 10px;
   margin-bottom: 20px;
 }
-form { display: flex; flex-direction: column; gap: 1rem; }
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
 input {
   width: 100%;
   padding: 0.75rem;
@@ -154,15 +164,30 @@ button {
   font-weight: bold;
   cursor: pointer;
 }
-button:hover { opacity: 0.8; }
-a {
-  display: block; text-align: center; margin-top: 1.5rem;
-  color: var(--text-muted); cursor: pointer; text-decoration: none; font-weight: bold;
+button:hover {
+  opacity: 0.8;
 }
-a:hover { color: var(--primary-color); text-decoration: underline; }
+a {
+  display: block;
+  text-align: center;
+  margin-top: 1.5rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: bold;
+}
+a:hover {
+  color: var(--primary-color);
+  text-decoration: underline;
+}
 span {
-  display: block; text-align: center; margin-top: 1rem; padding: 0.5rem;
-  font-weight: bold; color: var(--danger-color); background-color: var(--border-color);
+  display: block;
+  text-align: center;
+  margin-top: 1rem;
+  padding: 0.5rem;
+  font-weight: bold;
+  color: var(--danger-color);
+  background-color: var(--border-color);
   border-radius: 4px;
 }
 </style>

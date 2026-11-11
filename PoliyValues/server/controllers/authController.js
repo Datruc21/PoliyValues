@@ -12,15 +12,10 @@ const register = async (req, res) => {
   try {
     // 1. Vérifier si l'utilisateur existe déjà
     // On utilise [rows] pour récupérer directement les résultats de la requête
-    const [existingUsers] = await db.query(
-      "SELECT * FROM users WHERE email = ?",
-      [email],
-    );
+    const [existingUsers] = await db.query("SELECT * FROM users WHERE email = ?", [email]);
 
     if (existingUsers.length > 0) {
-      return res
-        .status(400)
-        .json({ error: "User already exists with this email" });
+      return res.status(400).json({ error: "User already exists with this email" });
     }
 
     // 2. Hacher le mot de passe
@@ -28,10 +23,11 @@ const register = async (req, res) => {
     const hashPassword = await bcrypt.hash(password, salt);
 
     // 3. Créer l'utilisateur dans la base de données
-    const [result] = await db.query(
-      "INSERT INTO users (name, email, password) VALUES (?, ?, ?)",
-      [name, email, hashPassword],
-    );
+    const [result] = await db.query("INSERT INTO users (name, email, password) VALUES (?, ?, ?)", [
+      name,
+      email,
+      hashPassword,
+    ]);
 
     // MySQL renvoie un objet 'result' qui contient l'ID de la ligne qu'on vient d'insérer (insertId)
     const userId = result.insertId;
@@ -69,10 +65,7 @@ const login = async (req, res) => {
   }
 
   try {
-    const [existingUsers] = await db.query(
-      "SELECT * FROM users WHERE email = ?",
-      [email],
-    );
+    const [existingUsers] = await db.query("SELECT * FROM users WHERE email = ?", [email]);
 
     // 1. Vérifier si l'utilisateur existe (tableau vide = aucun utilisateur trouvé)
     if (existingUsers.length === 0) {
@@ -86,6 +79,11 @@ const login = async (req, res) => {
     const passwdValid = await bcrypt.compare(password, user.password);
     if (!passwdValid) {
       return res.status(401).json({ error: "Invalid email or password" });
+    }
+    if (user.isBanned === 1 || user.isBanned === true) {
+      return res.status(403).json({
+        error: "Your account has been banned",
+      });
     }
 
     // 3 generer le token
@@ -127,10 +125,9 @@ const getMe = async (req, res) => {
     const userId = req.user.id;
 
     // Requête SQL pour récupérer l'utilisateur par son ID
-    const [users] = await db.query(
-      "SELECT id, name, email, created_at FROM users WHERE id = ?",
-      [userId],
-    );
+    const [users] = await db.query("SELECT id, name, email, created_at FROM users WHERE id = ?", [
+      userId,
+    ]);
 
     if (users.length === 0) {
       return res.status(404).json({ error: "Utilisateur introuvable" });
@@ -160,9 +157,7 @@ const updateMe = async (req, res) => {
     }
 
     // 1. Récupérer l'utilisateur actuel
-    const [users] = await db.query("SELECT * FROM users WHERE id = ?", [
-      userId,
-    ]);
+    const [users] = await db.query("SELECT * FROM users WHERE id = ?", [userId]);
     if (users.length === 0) {
       return res.status(404).json({ error: "User not found" });
     }
@@ -174,10 +169,10 @@ const updateMe = async (req, res) => {
 
     // 2. Traitement du NOM (s'il est renseigné et différent de l'actuel)
     if (name && name.trim() !== "" && name !== currentUser.name) {
-      const [nameTaken] = await db.query(
-        "SELECT id FROM users WHERE name = ? AND id != ?",
-        [name, userId],
-      );
+      const [nameTaken] = await db.query("SELECT id FROM users WHERE name = ? AND id != ?", [
+        name,
+        userId,
+      ]);
       if (nameTaken.length > 0) {
         return res.status(400).json({ error: "Username already in use" });
       }
@@ -186,10 +181,10 @@ const updateMe = async (req, res) => {
 
     // 3. Traitement de l'EMAIL (s'il est renseigné et différent de l'actuel)
     if (email && email.trim() !== "" && email !== currentUser.email) {
-      const [emailTaken] = await db.query(
-        "SELECT id FROM users WHERE email = ? AND id != ?",
-        [email, userId],
-      );
+      const [emailTaken] = await db.query("SELECT id FROM users WHERE email = ? AND id != ?", [
+        email,
+        userId,
+      ]);
       if (emailTaken.length > 0) {
         return res.status(400).json({ error: "Email already in use" });
       }
@@ -237,9 +232,7 @@ const changePassword = async (req, res) => {
     const { oldPassword, newPassword } = req.body;
 
     // 1. Récupérer l'utilisateur
-    const [users] = await db.query("SELECT * FROM users WHERE id = ?", [
-      userId,
-    ]);
+    const [users] = await db.query("SELECT * FROM users WHERE id = ?", [userId]);
     if (users.length === 0) {
       return res.status(404).json({ error: "User not found" });
     }
@@ -263,10 +256,7 @@ const changePassword = async (req, res) => {
     const hashedPassword = await bcrypt.hash(newPassword, salt);
 
     // 5. Mettre à jour en BDD
-    await db.query("UPDATE users SET password = ? WHERE id = ?", [
-      hashedPassword,
-      userId,
-    ]);
+    await db.query("UPDATE users SET password = ? WHERE id = ?", [hashedPassword, userId]);
 
     res.json({
       message: "Password updated successfully",
