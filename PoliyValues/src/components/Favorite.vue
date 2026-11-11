@@ -110,11 +110,12 @@ h1 {
   gap: 1rem;
 }
 .favorite-card {
-  background: #fff;
+  background: var(--bg-card);
   border-radius: 16px;
   padding: 1.5rem;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
 }
+
 .card-header {
   display: flex;
   justify-content: space-between;
@@ -128,11 +129,11 @@ h1 {
   background: none;
   border: none;
   font-size: 1.5rem;
-  color: #ffca28;
+  color: var(--danger-color);
   cursor: pointer;
 }
 .question {
-  color: #495057;
+  color: var(--text-main);
 }
 .toggle-btn {
   background: none;
@@ -146,7 +147,7 @@ h1 {
   margin-top: 1rem;
   padding-top: 1rem;
   border-top: 1px dashed #e0e0e0;
-  color: #666;
+  color: var(--text-main);
   line-height: 1.5;
 }
 .links {

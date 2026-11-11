@@ -1,19 +1,20 @@
 <template>
-  <div>
+  <div id="container">
     <!-- Show a message when the question is being fetched -->
     <div v-if="isLoading" class="status-message">
       <p>Chargement de la question...</p>
     </div>
 
     <!-- Show an error message if there is an issue -->
-    <div v-else-if="errorMessage" class="status-message error">
+    <div v-else-if="errorMessage" class="status-message-error">
       <p>{{ errorMessage }}</p>
       <button v-if="allDone" @click="resetAllQuestions" class="reset-button">Start over</button>
     </div>
 
     <!-- If the question is fetched and there is no error, display the question -->
     <div v-else-if="currentQuestion" id="container">
-      <button @click="toggleFavoriteStatus" id="favorite">{{ isFavorite ? "★" : "☆" }}</button>      <h1>{{ currentQuestion.theme }}</h1>
+      <button @click="toggleFavoriteStatus" id="favorite">{{ isFavorite ? "★" : "☆" }}</button>     
+      <h1>{{ currentQuestion.theme }}</h1>
       <h2>{{ currentQuestion.question_text }}</h2>
 
       <!-- Button to select the opinion -->
@@ -62,6 +63,7 @@
   max-width: 650px; margin: 3rem auto; padding: 2.5rem;
   background-color: var(--bg-card); color: var(--text-main);
   border-radius: 16px; border: 1px solid var(--border-color); position: relative;
+  justify-content: center; align-items: center;
 }
 h1 { text-align: center; margin: 3vw; padding: 0; border-bottom: 2px solid var(--border-color); }
 #favorite {
@@ -106,6 +108,8 @@ h1 { text-align: center; margin: 3vw; padding: 0; border-bottom: 2px solid var(-
   cursor: pointer;
   transition: all 0.2s ease;
 }
+
+
 
 .reset-button:hover {
   background-color: #3046c8;
