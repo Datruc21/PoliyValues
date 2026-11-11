@@ -64,6 +64,7 @@
         <h3>Delete account</h3>
         <p>Are you really sure you want to delete your account? This decision is irreversible.</p>
         <button
+          style="background-color: red"
           @click="
             () => {
               deleteAccount();

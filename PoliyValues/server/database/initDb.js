@@ -11,7 +11,10 @@ export async function initDb() {
         password VARCHAR(255) NOT NULL,
         admin BOOLEAN NOT NULL DEFAULT FALSE,
         isBanned BOOLEAN NOT NULL DEFAULT FALSE,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        isVerified BOOLEAN DEFAULT FALSE,
+        verificationToken VARCHAR(255) DEFAULT NULL,
+        verificationTokenExpires DATETIME DEFAULT NULL
       ) ENGINE=InnoDB;
     `);
 

@@ -1,20 +1,59 @@
 <template>
   <div class="auth-container">
-    <h1 v-if="accountCreated">Welcome to PoliyValues, sign in to proceed</h1>
-    <h1 v-else>Welcome to PoliyValues, sign up to proceed</h1>
-    <form v-on:submit.prevent="handleAuthSubmit">
-      <input v-if="!accountCreated" v-model="name" placeholder="Please enter your name" required />
-      <input v-model="email" type="text" placeholder="Please enter your email address" required />
-      <input v-model="password" type="password" placeholder="Please enter your password" required />
-      <button type="submit">
-        {{ accountCreated ? "Sign In" : "Sign Up" }}
-      </button>
-    </form>
-    <div class="google-btn-container">
-      <div id="buttonDiv"></div>
-    </div>
-    <a v-if="accountCreated" @click="accountCreated = false">No account ? Sign up here</a>
-    <a v-else @click="accountCreated = true">Already have an account ? Sign in here</a>
+    <!-- SCREEN 1: SIGN IN OR SIGN UP -->
+    <template v-if="!isVerifying">
+      <h1 v-if="accountCreated">Welcome to PoliyValues, sign in to proceed</h1>
+      <h1 v-else>Welcome to PoliyValues, sign up to proceed</h1>
+
+      <form v-on:submit.prevent="handleAuthSubmit">
+        <input
+          v-if="!accountCreated"
+          v-model="name"
+          placeholder="Please enter your name"
+          required
+        />
+        <input v-model="email" type="text" placeholder="Please enter your email address" required />
+        <input
+          v-model="password"
+          type="password"
+          placeholder="Please enter your password"
+          required
+        />
+        <button type="submit">
+          {{ accountCreated ? "Sign In" : "Sign Up" }}
+        </button>
+      </form>
+
+      <div class="google-btn-container" v-if="accountCreated">
+        <div id="buttonDiv"></div>
+      </div>
+
+      <a v-if="accountCreated" @click="accountCreated = false">No account ? Sign up here</a>
+      <a v-else @click="accountCreated = true">Already have an account ? Sign in here</a>
+    </template>
+
+    <!-- SCREEN 2: EMAIL VERIFICATION -->
+    <template v-else>
+      <h1>Email Verification</h1>
+      <p class="subtitle">
+        A 6-digit code has been sent to <b>{{ email }}</b>
+      </p>
+
+      <form v-on:submit.prevent="handleVerifyEmail">
+        <input
+          v-model="verificationCode"
+          type="text"
+          maxlength="6"
+          placeholder="Enter the 6-digit code"
+          required
+        />
+        <button type="submit">Verify Code</button>
+      </form>
+
+      <a @click="handleResendCode">Resend Code</a>
+      <a @click="isVerifying = false">Back to Sign In</a>
+    </template>
+
     <span v-if="message" v-text="message" :style="{ color: error ? 'red' : 'green' }"></span>
   </div>
 </template>
@@ -24,12 +63,13 @@ export default {
   data() {
     return {
       email: "",
-      error: false,
       password: "",
       name: "",
+      verificationCode: "",
+      error: false,
       message: "",
-      //The boolean for toggling between sign in and sign up
       accountCreated: true,
+      isVerifying: false,
     };
   },
   mounted() {
@@ -47,11 +87,14 @@ export default {
           client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
           callback: this.handleGoogleResponse,
         });
-        window.google.accounts.id.renderButton(document.getElementById("buttonDiv"), {
-          theme: "outline",
-          size: "large",
-          width: "100%",
-        });
+        const btnContainer = document.getElementById("buttonDiv");
+        if (btnContainer) {
+          window.google.accounts.id.renderButton(btnContainer, {
+            theme: "outline",
+            size: "large",
+            width: "100%",
+          });
+        }
       }
     },
 
@@ -71,7 +114,7 @@ export default {
           localStorage.setItem("is_admin", data.data.user.Admin);
           localStorage.setItem("user_name", data.data.user.name);
           setTimeout(() => {
-            this.$router.push("/Home"); // ou window.location.href = "/" selon ton router
+            this.$router.push("/Home");
           }, 1000);
         } else {
           this.error = true;
@@ -83,8 +126,9 @@ export default {
         console.error("Google auth error:", error);
       }
     },
+
     async handleLogin() {
-      if (!this.email || !this.password) return; //Must add an error message
+      if (!this.email || !this.password) return;
       try {
         const answer = await fetch(`${this.$apiUrl}/auth/login`, {
           method: "POST",
@@ -99,13 +143,11 @@ export default {
           this.error = false;
           this.message = "Welcome back";
           localStorage.setItem("poliyvalues_token", data.token);
-          localStorage.setItem("is_admin", data.data.user.Admin); //This is only for UI purposes, changing its value wont affected backend
+          localStorage.setItem("is_admin", data.data.user.Admin);
           localStorage.setItem("user_name", data.data.user.name);
           setTimeout(() => {
             this.$router.push("/Home");
           }, 2000);
-
-          //Add in the if adding the cookie in localStorage
         } else {
           this.error = true;
           this.message = "Error: " + data.error;
@@ -116,8 +158,9 @@ export default {
         console.error("Error: " + error);
       }
     },
+
     async handleRegister() {
-      if (!this.email || !this.password || !this.name) return; //Also must add an error message
+      if (!this.email || !this.password || !this.name) return;
       try {
         const answer = await fetch(`${this.$apiUrl}/auth/register`, {
           method: "POST",
@@ -131,18 +174,9 @@ export default {
 
         const data = await answer.json();
         if (answer.ok) {
-          this.accountCreated = true;
-          this.email = "";
-          this.password = "";
-          this.name = "";
-          this.message = "Successful account creation, welcome to Poliyvalues";
           this.error = false;
-          localStorage.setItem("poliyvalues_token", data.token);
-          localStorage.setItem("is_admin", data.data.user.Admin);
-          localStorage.setItem("user_name", data.data.user.name);
-          setTimeout(() => {
-            window.location.href = "/";
-          }, 2000);
+          this.message = "Account created! Please enter the code sent to your email.";
+          this.isVerifying = true;
         } else {
           this.error = true;
           this.message = "Error: " + data.error;
@@ -154,9 +188,59 @@ export default {
       }
     },
 
+    async handleVerifyEmail() {
+      if (!this.verificationCode) return;
+      try {
+        const answer = await fetch(`${this.$apiUrl}/auth/verify-email`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email: this.email,
+            code: this.verificationCode,
+          }),
+        });
+
+        const data = await answer.json();
+        if (answer.ok) {
+          this.error = false;
+          this.message = "Email verified successfully! You can now sign in.";
+          this.isVerifying = false;
+          this.accountCreated = true;
+          this.verificationCode = "";
+          this.password = "";
+        } else {
+          this.error = true;
+          this.message = "Error: " + data.error;
+        }
+      } catch (error) {
+        this.error = true;
+        this.message = "Server connection error";
+        console.error("Verification error:", error);
+      }
+    },
+
+    async handleResendCode() {
+      try {
+        const answer = await fetch(`${this.$apiUrl}/auth/resend-code`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: this.email }),
+        });
+        const data = await answer.json();
+        if (answer.ok) {
+          this.error = false;
+          this.message = "New verification code sent to your email!";
+        } else {
+          this.error = true;
+          this.message = "Error: " + data.error;
+        }
+      } catch (error) {
+        this.error = true;
+        this.message = "Error connecting to server";
+      }
+    },
+
     handleAuthSubmit() {
-      //Must sent same informations: but not to the same route whether we
-      //create a new account or just log in
       if (this.accountCreated) {
         this.handleLogin();
       } else {
@@ -185,6 +269,12 @@ h1 {
   padding-bottom: 10px;
   margin-bottom: 20px;
 }
+.subtitle {
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
 form {
   display: flex;
   flex-direction: column;
@@ -198,6 +288,9 @@ input {
   border: 1px solid var(--border-color);
   border-radius: 4px;
   box-sizing: border-box;
+  text-align: center;
+  font-size: 1rem;
+  letter-spacing: 2px;
 }
 button {
   padding: 0.75rem;
@@ -211,6 +304,20 @@ button {
 }
 button:hover {
   opacity: 0.8;
+}
+/* Style spécifique pour les boutons de suppression en rouge */
+.btn-danger,
+button.delete-btn {
+  background-color: #dc3545 !important;
+}
+.btn-danger:hover,
+button.delete-btn:hover {
+  background-color: #b02a37 !important;
+}
+.google-btn-container {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
 }
 a {
   display: block;
@@ -231,8 +338,6 @@ span {
   margin-top: 1rem;
   padding: 0.5rem;
   font-weight: bold;
-  color: var(--danger-color);
-  background-color: var(--border-color);
   border-radius: 4px;
 }
 </style>

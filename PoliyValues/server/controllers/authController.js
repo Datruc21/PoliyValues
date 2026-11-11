@@ -1,4 +1,5 @@
 import bcrypt from "bcryptjs";
+import { sendVerificationEmail } from "../utils/sendEmail.js";
 import generateToken from "../utils/generateToken.js";
 import { OAuth2Client } from "google-auth-library";
 import db from "../config/db.js";
@@ -12,51 +13,79 @@ const register = async (req, res) => {
   }
 
   try {
-    // 1. Vérifier si l'utilisateur existe déjà
-    // On utilise [rows] pour récupérer directement les résultats de la requête
     const [existingUsers] = await db.query("SELECT * FROM users WHERE email = ?", [email]);
 
     if (existingUsers.length > 0) {
       return res.status(400).json({ error: "User already exists with this email" });
     }
 
-    // 2. Hacher le mot de passe
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(password, salt);
 
-    // 3. Créer l'utilisateur dans la base de données
-    const [result] = await db.query("INSERT INTO users (name, email, password) VALUES (?, ?, ?)", [
-      name,
-      email,
-      hashPassword,
-    ]);
-
-    // MySQL renvoie un objet 'result' qui contient l'ID de la ligne qu'on vient d'insérer (insertId)
-    const userId = result.insertId;
-    const user = { id: userId, name, email, Admin: 0 };
-
-    console.log("User created:", user);
-
-    // 4. Générer le token
-    const token = generateToken(user.id, user.Admin, res);
-
-    console.log("Token generated:", token);
+    // Générer un code à 6 chiffres et une expiration à +10 minutes
+    const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
+    const codeExpires = new Date(Date.now() + 10 * 60 * 1000);
+    console.log("👉 DEBUG - Code généré pour :", email, "Code :", verificationCode);
+    // Insérer l'utilisateur avec isVerified = 0 et le token de vérification
+    const [result] = await db.query(
+      "INSERT INTO users (name, email, password, isVerified, verificationToken, verificationTokenExpires) VALUES (?, ?, ?, ?, ?, ?)",
+      [name, email, hashPassword, 0, verificationCode, codeExpires],
+    );
+    console.log("👉 DEBUG - Utilisateur inséré en BDD avec l'ID :", result.insertId);
+    // Envoyer l'e-mail de vérification
+    console.log("👉 DEBUG - Tentative d'envoi du mail via Nodemailer...");
+    await sendVerificationEmail(email, verificationCode);
+    console.log("👉 DEBUG - Mail envoyé avec succès !");
 
     res.status(201).json({
       status: "success",
-      message: "User profile created successfully",
+      message: "Compte créé ! Veuillez vérifier votre e-mail pour entrer le code de validation.",
       data: {
-        user: {
-          id: user.id,
-          name: user.name,
-          email: user.email,
-        },
+        email: email,
       },
-      token: token,
     });
   } catch (error) {
     console.error("Error during registration:", error);
     res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+const verifyEmail = async (req, res) => {
+  const { email, code } = req.body;
+
+  if (!email || !code) {
+    return res.status(400).json({ error: "Email et code requis" });
+  }
+
+  try {
+    const [users] = await db.query("SELECT * FROM users WHERE email = ?", [email]);
+    if (users.length === 0) {
+      return res.status(404).json({ error: "Utilisateur introuvable" });
+    }
+
+    const user = users[0];
+
+    if (user.isVerified) {
+      return res.status(400).json({ error: "Ce compte est déjà vérifié" });
+    }
+
+    if (user.verificationToken !== code || new Date() > new Date(user.verificationTokenExpires)) {
+      return res.status(400).json({ error: "Code invalide ou expiré" });
+    }
+
+    // Mettre à jour le statut et nettoyer les tokens
+    await db.query(
+      "UPDATE users SET isVerified = TRUE, verificationToken = NULL, verificationTokenExpires = NULL WHERE id = ?",
+      [user.id],
+    );
+
+    res.status(200).json({
+      status: "success",
+      message: "E-mail vérifié avec succès ! Vous pouvez maintenant vous connecter.",
+    });
+  } catch (error) {
+    console.error("Erreur lors de la vérification :", error);
+    res.status(500).json({ error: "Erreur serveur" });
   }
 };
 
@@ -318,4 +347,43 @@ const googleLogin = async (req, res) => {
   }
 };
 
-export { register, login, logout, getMe, updateMe, deleteMe, changePassword, googleLogin };
+const resendVerificationCode = async (req, res) => {
+  const { email } = req.body;
+  if (!email) return status(400).json({ error: "Email is required" });
+
+  try {
+    const [users] = await db.query("SELECT * FROM users WHERE email = ?", [email]);
+    if (users.length === 0) return status(404).json({ error: "User not found" });
+
+    const user = users[0];
+    if (user.isVerified) return status(400).json({ error: "Account is already verified" });
+
+    const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
+    const codeExpires = new Date(Date.now() + 10 * 60 * 1000);
+
+    await db.query(
+      "UPDATE users SET verificationToken = ?, verificationTokenExpires = ? WHERE id = ?",
+      [verificationCode, codeExpires, user.id],
+    );
+
+    await sendVerificationEmail(email, verificationCode);
+
+    res.status(200).json({ status: "success", message: "New verification code sent!" });
+  } catch (error) {
+    console.error("Resend code error:", error);
+    res.status(500).json({ error: "Server error" });
+  }
+};
+
+export {
+  register,
+  verifyEmail,
+  login,
+  logout,
+  getMe,
+  resendVerificationCode,
+  updateMe,
+  deleteMe,
+  changePassword,
+  googleLogin,
+};
