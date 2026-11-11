@@ -79,6 +79,7 @@ footer {
   color: #ecf0f1;
   padding: 2rem 1rem 0.5rem;
   margin-top: 2vw;
+  min-height: 430px;
 }
 .flexbox {
   display: flex;
@@ -102,7 +103,7 @@ footer {
   min-width: 220px;
 }
 .footer-section h4 {
-  color: var(--primary-color);
+  color: var(--secondary-color);
   border-bottom: 2px solid var(--border-color);
   padding-bottom: 0.5rem;
   margin-bottom: 1rem;
