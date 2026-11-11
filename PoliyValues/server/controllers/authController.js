@@ -1,7 +1,9 @@
 import bcrypt from "bcryptjs";
 import generateToken from "../utils/generateToken.js";
+import { OAuth2Client } from "google-auth-library";
 import db from "../config/db.js";
 
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 const register = async (req, res) => {
   const { email, password, name } = req.body;
 
@@ -75,7 +77,6 @@ const login = async (req, res) => {
     // On extrait l'utilisateur du tableau
     const user = existingUsers[0];
 
-    // 2. Vérifier le mot de passe
     const passwdValid = await bcrypt.compare(password, user.password);
     if (!passwdValid) {
       return res.status(401).json({ error: "Invalid email or password" });
@@ -89,7 +90,6 @@ const login = async (req, res) => {
     // 3 generer le token
     const token = generateToken(user.id, user.Admin, res);
 
-    // 4. Réponse de succès (code 200)
     res.status(200).json({
       status: "success",
       message: "User successfully logged in",
@@ -151,23 +151,19 @@ const updateMe = async (req, res) => {
     const userId = req.user.id;
     const { name, email } = req.body;
 
-    // Si aucun champ n'est fourni
     if (!name && !email) {
       return res.status(400).json({ error: "No fields provided to update" });
     }
 
-    // 1. Récupérer l'utilisateur actuel
     const [users] = await db.query("SELECT * FROM users WHERE id = ?", [userId]);
     if (users.length === 0) {
       return res.status(404).json({ error: "User not found" });
     }
     const currentUser = users[0];
 
-    // Variables qui contiendront les valeurs finales
     let updatedName = currentUser.name;
     let updatedEmail = currentUser.email;
 
-    // 2. Traitement du NOM (s'il est renseigné et différent de l'actuel)
     if (name && name.trim() !== "" && name !== currentUser.name) {
       const [nameTaken] = await db.query("SELECT id FROM users WHERE name = ? AND id != ?", [
         name,
@@ -179,7 +175,6 @@ const updateMe = async (req, res) => {
       updatedName = name.trim();
     }
 
-    // 3. Traitement de l'EMAIL (s'il est renseigné et différent de l'actuel)
     if (email && email.trim() !== "" && email !== currentUser.email) {
       const [emailTaken] = await db.query("SELECT id FROM users WHERE email = ? AND id != ?", [
         email,
@@ -267,4 +262,60 @@ const changePassword = async (req, res) => {
   }
 };
 
-export { register, login, logout, getMe, updateMe, deleteMe, changePassword };
+const googleLogin = async (req, res) => {
+  const { credential } = req.body;
+
+  if (!credential) {
+    return res.status(400).json({ error: "No Google token provided" });
+  }
+
+  try {
+    const ticket = await client.verifyIdToken({
+      idToken: credential,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
+    const payload = ticket.getPayload();
+    const { email, name } = payload;
+
+    let [users] = await db.query("SELECT * FROM users WHERE email = ?", [email]);
+    let user;
+
+    if (users.length === 0) {
+      const dummyPassword = Math.random().toString(36).slice(-8);
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(dummyPassword, salt);
+
+      const [result] = await db.query(
+        "INSERT INTO users (name, email, password, Admin) VALUES (?, ?, ?, ?)",
+        [name, email, hashedPassword, 0],
+      );
+      user = { id: result.insertId, name, email, Admin: 0 };
+    } else {
+      user = users[0];
+      if (user.isBanned === 1 || user.isBanned === true) {
+        return res.status(403).json({ error: "Your account has been banned" });
+      }
+    }
+
+    const token = generateToken(user.id, user.Admin, res);
+
+    res.status(200).json({
+      status: "success",
+      message: "Google authentication successful",
+      data: {
+        user: {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          Admin: user.Admin === 1,
+        },
+      },
+      token: token,
+    });
+  } catch (error) {
+    console.error("Google auth error:", error);
+    res.status(401).json({ error: "Google authentication failed" });
+  }
+};
+
+export { register, login, logout, getMe, updateMe, deleteMe, changePassword, googleLogin };

@@ -1,11 +1,3 @@
-<!-- 
-This component handles the sign in and the sign up of user
-You should see it only if no session cookie has been found in your web browser
-Simple toggle between sign in and sign up
-To Do : -add potentially google account
-        -handleLogin and backend
--->
-
 <template>
   <div class="auth-container">
     <h1 v-if="accountCreated">Welcome to PoliyValues, sign in to proceed</h1>
@@ -18,6 +10,9 @@ To Do : -add potentially google account
         {{ accountCreated ? "Sign In" : "Sign Up" }}
       </button>
     </form>
+    <div class="google-btn-container">
+      <div id="buttonDiv"></div>
+    </div>
     <a v-if="accountCreated" @click="accountCreated = false">No account ? Sign up here</a>
     <a v-else @click="accountCreated = true">Already have an account ? Sign in here</a>
     <span v-if="message" v-text="message" :style="{ color: error ? 'red' : 'green' }"></span>
@@ -37,7 +32,57 @@ export default {
       accountCreated: true,
     };
   },
+  mounted() {
+    const script = document.createElement("script");
+    script.src = "https://accounts.google.com/gsi/client";
+    script.async = true;
+    script.defer = true;
+    script.onload = () => this.initGoogleSingleSignOn();
+    document.head.appendChild(script);
+  },
   methods: {
+    initGoogleSingleSignOn() {
+      if (window.google) {
+        window.google.accounts.id.initialize({
+          client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+          callback: this.handleGoogleResponse,
+        });
+        window.google.accounts.id.renderButton(document.getElementById("buttonDiv"), {
+          theme: "outline",
+          size: "large",
+          width: "100%",
+        });
+      }
+    },
+
+    async handleGoogleResponse(response) {
+      try {
+        const answer = await fetch(`${this.$apiUrl}/auth/google`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ credential: response.credential }),
+        });
+
+        const data = await answer.json();
+        if (answer.ok) {
+          this.error = false;
+          this.message = "Successfully logged in with Google!";
+          localStorage.setItem("poliyvalues_token", data.token);
+          localStorage.setItem("is_admin", data.data.user.Admin);
+          localStorage.setItem("user_name", data.data.user.name);
+          setTimeout(() => {
+            this.$router.push("/Home"); // ou window.location.href = "/" selon ton router
+          }, 1000);
+        } else {
+          this.error = true;
+          this.message = "Error: " + data.error;
+        }
+      } catch (error) {
+        this.error = true;
+        this.message = "Error connecting with Google server";
+        console.error("Google auth error:", error);
+      }
+    },
     async handleLogin() {
       if (!this.email || !this.password) return; //Must add an error message
       try {

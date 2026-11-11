@@ -8,6 +8,7 @@ import {
   deleteMe,
   getMe,
   updateMe,
+  googleLogin,
 } from "../controllers/authController.js";
 
 const router = express.Router();
@@ -19,5 +20,5 @@ router.put("/password", verifyToken, changePassword);
 router.delete("/me", verifyToken, deleteMe);
 router.get("/me", verifyToken, getMe);
 router.put("/me", verifyToken, updateMe);
-
+router.post("/google", googleLogin);
 export default router;
