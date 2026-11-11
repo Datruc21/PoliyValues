@@ -134,7 +134,1160 @@
       { "title": "Wikipedia - Fusionism", "url": "https://en.wikipedia.org/wiki/Fusionism" },
       { "title": "Wikipedia - Frank Meyer", "url": "https://en.wikipedia.org/wiki/Frank_Meyer_(political_philosopher)" }
     ]
+  },
+  {
+    "theme": "Law and order",
+    "ideology": "Anarcho-capitalism",
+    "question_text": "Courts, police and even national defence should be provided by competing private companies, not by a state.",
+    "explanation_concept": "Anarcho-capitalists argue that security, courts and arbitration can be supplied by competing private firms through voluntary contracts, replacing the state's monopoly on force. Critics doubt that private defence agencies would not become new rulers or serve only those who can pay.",
+    "links": [
+      {
+        "title": "Wikipedia - Anarcho-capitalism",
+        "url": "https://en.wikipedia.org/wiki/Anarcho-capitalism"
+      },
+      {
+        "title": "Wikipedia - Murray Rothbard",
+        "url": "https://en.wikipedia.org/wiki/Murray_Rothbard"
+      }
+    ]
+  },
+  {
+    "theme": "Taxation",
+    "ideology": "Anarcho-capitalism",
+    "question_text": "Taxation is a form of theft and should be abolished entirely.",
+    "explanation_concept": "Many anarcho-capitalists see taxation as coercive because it is taken without consent, and argue that every service should be funded voluntarily. Critics respond that voluntary funding cannot reliably provide public goods such as roads, public health or defence.",
+    "links": [
+      {
+        "title": "Wikipedia - Anarcho-capitalism",
+        "url": "https://en.wikipedia.org/wiki/Anarcho-capitalism"
+      },
+      {
+        "title": "Wikipedia - Murray Rothbard",
+        "url": "https://en.wikipedia.org/wiki/Murray_Rothbard"
+      }
+    ]
+  },
+  {
+    "theme": "Property",
+    "ideology": "Anarcho-capitalism",
+    "question_text": "Private property rights should be absolute, to the point that roads, water and other infrastructure can be privately owned.",
+    "explanation_concept": "Strong, near-absolute private property rights are at the centre of anarcho-capitalism, which would allow even infrastructure to be privately owned. Critics argue this could give owners great power over people who depend on their roads, water or land.",
+    "links": [
+      {
+        "title": "Wikipedia - Anarcho-capitalism",
+        "url": "https://en.wikipedia.org/wiki/Anarcho-capitalism"
+      },
+      {
+        "title": "Wikipedia - Murray Rothbard",
+        "url": "https://en.wikipedia.org/wiki/Murray_Rothbard"
+      }
+    ]
+  },
+  {
+    "theme": "The state",
+    "ideology": "Anarcho-capitalism",
+    "question_text": "A society with no government at all would be more peaceful and prosperous than one with a limited government.",
+    "explanation_concept": "Anarcho-capitalism goes further than limited-government libertarianism by seeking to abolish the state entirely and replace it with a market in services. Critics say it is unrealistic and could lead to rule by the wealthiest.",
+    "links": [
+      {
+        "title": "Wikipedia - Anarcho-capitalism",
+        "url": "https://en.wikipedia.org/wiki/Anarcho-capitalism"
+      },
+      {
+        "title": "Wikipedia - Murray Rothbard",
+        "url": "https://en.wikipedia.org/wiki/Murray_Rothbard"
+      }
+    ]
+  },
+  {
+    "theme": "The state",
+    "ideology": "Minarchism",
+    "question_text": "The state should be limited to protecting people from force, fraud and theft through police, courts and defence.",
+    "explanation_concept": "Minarchists accept a 'night-watchman' state limited to protecting individuals from force, fraud and theft, with police, courts and a military. Critics on the left say this leaves too little room for social protection.",
+    "links": [
+      {
+        "title": "Wikipedia - Minarchism",
+        "url": "https://en.wikipedia.org/wiki/Minarchism"
+      },
+      {
+        "title": "Wikipedia - Night-watchman state",
+        "url": "https://en.wikipedia.org/wiki/Night-watchman_state"
+      }
+    ]
+  },
+  {
+    "theme": "Welfare",
+    "ideology": "Minarchism",
+    "question_text": "Education, healthcare and welfare should be provided by private or voluntary institutions, not by the state.",
+    "explanation_concept": "Minarchists believe that education, healthcare and welfare should be handled by private or voluntary institutions rather than the state. Critics argue that this could leave poorer people without access to essential services.",
+    "links": [
+      {
+        "title": "Wikipedia - Minarchism",
+        "url": "https://en.wikipedia.org/wiki/Minarchism"
+      },
+      {
+        "title": "Wikipedia - Night-watchman state",
+        "url": "https://en.wikipedia.org/wiki/Night-watchman_state"
+      }
+    ]
+  },
+  {
+    "theme": "Anarchism or state",
+    "ideology": "Minarchism",
+    "question_text": "A minimal state is necessary, because a society with no state at all would not protect people's rights.",
+    "explanation_concept": "Minarchism differs from anarcho-capitalism by holding that a minimal state is necessary and legitimate to protect rights. Anarcho-capitalists reply that any state, however small, relies on coercive taxation.",
+    "links": [
+      {
+        "title": "Wikipedia - Minarchism",
+        "url": "https://en.wikipedia.org/wiki/Minarchism"
+      },
+      {
+        "title": "Wikipedia - Night-watchman state",
+        "url": "https://en.wikipedia.org/wiki/Night-watchman_state"
+      }
+    ]
+  },
+  {
+    "theme": "Constitutions",
+    "ideology": "Minarchism",
+    "question_text": "A constitution should strictly limit what a government is allowed to do, even if voters want more.",
+    "explanation_concept": "Minarchists want government powers strictly limited by a constitution, even against majority wishes. Defenders of majority rule argue that voters should be able to decide the scope of government.",
+    "links": [
+      {
+        "title": "Wikipedia - Minarchism",
+        "url": "https://en.wikipedia.org/wiki/Minarchism"
+      },
+      {
+        "title": "Wikipedia - Night-watchman state",
+        "url": "https://en.wikipedia.org/wiki/Night-watchman_state"
+      }
+    ]
+  },
+  {
+    "theme": "Land",
+    "ideology": "Geolibertarianism",
+    "question_text": "Land and natural resources belong to everyone, so those who use them should pay the community for that privilege.",
+    "explanation_concept": "Geolibertarians combine libertarianism with Georgism: land and natural resources are seen as the common heritage of all, and those who use them owe the community compensation. Critics question how land value can be fairly measured and separated from improvements.",
+    "links": [
+      {
+        "title": "Wikipedia - Geolibertarianism",
+        "url": "https://en.wikipedia.org/wiki/Geolibertarianism"
+      },
+      {
+        "title": "Wikipedia - Georgism",
+        "url": "https://en.wikipedia.org/wiki/Georgism"
+      }
+    ]
+  },
+  {
+    "theme": "Taxation",
+    "ideology": "Geolibertarianism",
+    "question_text": "A tax on the value of land should replace taxes on work, trade and production.",
+    "explanation_concept": "Georgists propose a land value tax in place of taxes on labour and production, arguing that it does not discourage work and cannot be avoided by moving land. Critics say it could be hard to apply and might burden landowners with little income.",
+    "links": [
+      {
+        "title": "Wikipedia - Geolibertarianism",
+        "url": "https://en.wikipedia.org/wiki/Geolibertarianism"
+      },
+      {
+        "title": "Wikipedia - Georgism",
+        "url": "https://en.wikipedia.org/wiki/Georgism"
+      }
+    ]
+  },
+  {
+    "theme": "Property",
+    "ideology": "Geolibertarianism",
+    "question_text": "People own the fruits of their own labour, but nobody can claim exclusive ownership of the earth itself.",
+    "explanation_concept": "Geolibertarianism holds that people own what they produce but not the earth itself, a view that differs from other libertarian theories of property. Critics, including many libertarians, argue that this weakens property rights.",
+    "links": [
+      {
+        "title": "Wikipedia - Geolibertarianism",
+        "url": "https://en.wikipedia.org/wiki/Geolibertarianism"
+      },
+      {
+        "title": "Wikipedia - Georgism",
+        "url": "https://en.wikipedia.org/wiki/Georgism"
+      }
+    ]
+  },
+  {
+    "theme": "Economy",
+    "ideology": "Geolibertarianism",
+    "question_text": "Apart from sharing the value of land, government should stay out of the economy as much as possible.",
+    "explanation_concept": "Apart from sharing the value of land, geolibertarians favour free markets and a small government. Critics note that this still relies on a state able to value land and collect the payments.",
+    "links": [
+      {
+        "title": "Wikipedia - Geolibertarianism",
+        "url": "https://en.wikipedia.org/wiki/Geolibertarianism"
+      },
+      {
+        "title": "Wikipedia - Georgism",
+        "url": "https://en.wikipedia.org/wiki/Georgism"
+      }
+    ]
+  },
+  {
+    "theme": "Workers' power",
+    "ideology": "Anarcho-syndicalism",
+    "question_text": "Workers' unions should organise the economy directly, replacing both the state and capitalist employers.",
+    "explanation_concept": "Anarcho-syndicalists want revolutionary trade unions to organise production and replace both capitalism and the state. Critics argue that unions can become bureaucracies of their own.",
+    "links": [
+      {
+        "title": "Wikipedia - Anarcho-syndicalism",
+        "url": "https://en.wikipedia.org/wiki/Anarcho-syndicalism"
+      },
+      {
+        "title": "Wikipedia - General strike",
+        "url": "https://en.wikipedia.org/wiki/General_strike"
+      }
+    ]
+  },
+  {
+    "theme": "Strikes",
+    "ideology": "Anarcho-syndicalism",
+    "question_text": "The general strike is the most effective way to bring about a new society.",
+    "explanation_concept": "The general strike is seen as the main revolutionary weapon: a mass stoppage that could paralyse capitalism and open the way to a new society. Critics doubt that strikes alone could overthrow a state.",
+    "links": [
+      {
+        "title": "Wikipedia - Anarcho-syndicalism",
+        "url": "https://en.wikipedia.org/wiki/Anarcho-syndicalism"
+      },
+      {
+        "title": "Wikipedia - General strike",
+        "url": "https://en.wikipedia.org/wiki/General_strike"
+      }
+    ]
+  },
+  {
+    "theme": "Workplace",
+    "ideology": "Anarcho-syndicalism",
+    "question_text": "Workplaces should be run through direct democracy by the workers, without bosses or managers.",
+    "explanation_concept": "Anarcho-syndicalists favour workers' self-management through direct democracy in the workplace, with no bosses or managers. Critics question whether large organisations can function without managers.",
+    "links": [
+      {
+        "title": "Wikipedia - Anarcho-syndicalism",
+        "url": "https://en.wikipedia.org/wiki/Anarcho-syndicalism"
+      },
+      {
+        "title": "Wikipedia - General strike",
+        "url": "https://en.wikipedia.org/wiki/General_strike"
+      }
+    ]
+  },
+  {
+    "theme": "Political action",
+    "ideology": "Anarcho-syndicalism",
+    "question_text": "Political parties and elections are not the way to change society: unions and direct action are.",
+    "explanation_concept": "Anarcho-syndicalism favours direct action, such as strikes and boycotts, over parliamentary politics and political parties. Others on the left argue that elections and parties are also needed to change laws.",
+    "links": [
+      {
+        "title": "Wikipedia - Anarcho-syndicalism",
+        "url": "https://en.wikipedia.org/wiki/Anarcho-syndicalism"
+      },
+      {
+        "title": "Wikipedia - General strike",
+        "url": "https://en.wikipedia.org/wiki/General_strike"
+      }
+    ]
+  },
+  {
+    "theme": "Property",
+    "ideology": "Mutualism",
+    "question_text": "People should be able to own what they use and work, but not collect rent from land or capital that others work.",
+    "explanation_concept": "Mutualism, associated with Pierre-Joseph Proudhon, favours possession based on use and work, and opposes profit taken from land or capital that others work. Critics argue that it is hard to separate use from ownership in practice.",
+    "links": [
+      {
+        "title": "Wikipedia - Mutualism",
+        "url": "https://en.wikipedia.org/wiki/Mutualism_(economic_theory)"
+      },
+      {
+        "title": "Wikipedia - Pierre-Joseph Proudhon",
+        "url": "https://en.wikipedia.org/wiki/Pierre-Joseph_Proudhon"
+      }
+    ]
+  },
+  {
+    "theme": "Banking",
+    "ideology": "Mutualism",
+    "question_text": "Cooperatives and mutual banks offering credit at cost could replace capitalist banking.",
+    "explanation_concept": "Mutualists propose mutual banks that lend at cost, so that credit is available to workers and small producers. Critics question whether such banks could survive economically.",
+    "links": [
+      {
+        "title": "Wikipedia - Mutualism",
+        "url": "https://en.wikipedia.org/wiki/Mutualism_(economic_theory)"
+      },
+      {
+        "title": "Wikipedia - Pierre-Joseph Proudhon",
+        "url": "https://en.wikipedia.org/wiki/Pierre-Joseph_Proudhon"
+      }
+    ]
+  },
+  {
+    "theme": "Prices",
+    "ideology": "Mutualism",
+    "question_text": "Goods should be exchanged on the basis of the labour needed to produce them, without a profit margin.",
+    "explanation_concept": "Some mutualists, in the tradition of the labour theory of value, proposed that goods be exchanged for goods embodying equal labour, with no profit margin. Economists criticise this approach because labour time alone does not determine what goods are worth to people.",
+    "links": [
+      {
+        "title": "Wikipedia - Mutualism",
+        "url": "https://en.wikipedia.org/wiki/Mutualism_(economic_theory)"
+      },
+      {
+        "title": "Wikipedia - Pierre-Joseph Proudhon",
+        "url": "https://en.wikipedia.org/wiki/Pierre-Joseph_Proudhon"
+      }
+    ]
+  },
+  {
+    "theme": "Organisation",
+    "ideology": "Mutualism",
+    "question_text": "A free society should be built on voluntary contracts and federations of workers' associations, without a state.",
+    "explanation_concept": "Mutualists favour voluntary contracts and federations of workers' associations as the basis of society, rather than a state. Critics ask how disputes and large-scale coordination would be handled.",
+    "links": [
+      {
+        "title": "Wikipedia - Mutualism",
+        "url": "https://en.wikipedia.org/wiki/Mutualism_(economic_theory)"
+      },
+      {
+        "title": "Wikipedia - Pierre-Joseph Proudhon",
+        "url": "https://en.wikipedia.org/wiki/Pierre-Joseph_Proudhon"
+      }
+    ]
+  },
+  {
+    "theme": "Direct democracy",
+    "ideology": "Communalism",
+    "question_text": "Political power should lie in local citizens' assemblies that make decisions by direct democracy.",
+    "explanation_concept": "Murray Bookchin's communalism places power in citizens' assemblies open to all residents of a town or neighbourhood. Critics wonder whether face-to-face assemblies can govern large, complex societies.",
+    "links": [
+      {
+        "title": "Wikipedia - Communalism (Bookchin)",
+        "url": "https://en.wikipedia.org/wiki/Communalism_(Bookchin)"
+      },
+      {
+        "title": "Wikipedia - Libertarian municipalism",
+        "url": "https://en.wikipedia.org/wiki/Libertarian_municipalism"
+      }
+    ]
+  },
+  {
+    "theme": "Confederation",
+    "ideology": "Communalism",
+    "question_text": "Local communities should be linked in confederations run by recallable delegates, rather than by a central state.",
+    "explanation_concept": "Communalists link municipalities in confederations coordinated by recallable delegates mandated by local assemblies, instead of a central state. Critics question how such confederations would handle conflicts between communities.",
+    "links": [
+      {
+        "title": "Wikipedia - Communalism (Bookchin)",
+        "url": "https://en.wikipedia.org/wiki/Communalism_(Bookchin)"
+      },
+      {
+        "title": "Wikipedia - Libertarian municipalism",
+        "url": "https://en.wikipedia.org/wiki/Libertarian_municipalism"
+      }
+    ]
+  },
+  {
+    "theme": "Ecology",
+    "ideology": "Communalism",
+    "question_text": "Ecological problems come from hierarchy and domination between people, so they can only be solved by a decentralised, directly democratic society.",
+    "explanation_concept": "Bookchin's social ecology argues that ecological problems come from hierarchy and domination between people, so a free decentralised society is needed to resolve them. Critics argue that this underestimates the role of technology and global coordination.",
+    "links": [
+      {
+        "title": "Wikipedia - Communalism (Bookchin)",
+        "url": "https://en.wikipedia.org/wiki/Communalism_(Bookchin)"
+      },
+      {
+        "title": "Wikipedia - Libertarian municipalism",
+        "url": "https://en.wikipedia.org/wiki/Libertarian_municipalism"
+      }
+    ]
+  },
+  {
+    "theme": "Elections",
+    "ideology": "Communalism",
+    "question_text": "Radicals should take part in municipal elections to build a counter-power to the nation-state.",
+    "explanation_concept": "Unlike most anarchists, communalists are not opposed in principle to municipal elections, as long as candidates aim to build popular assemblies and challenge the state. Some anarchists see this as a compromise with the state.",
+    "links": [
+      {
+        "title": "Wikipedia - Communalism (Bookchin)",
+        "url": "https://en.wikipedia.org/wiki/Communalism_(Bookchin)"
+      },
+      {
+        "title": "Wikipedia - Libertarian municipalism",
+        "url": "https://en.wikipedia.org/wiki/Libertarian_municipalism"
+      }
+    ]
+  },
+  {
+    "theme": "Revolution",
+    "ideology": "Trotskyism",
+    "question_text": "Socialism cannot survive in one country alone: the revolution must spread internationally.",
+    "explanation_concept": "Trotsky's theory of permanent revolution holds that socialism cannot be built in one country and must spread internationally. Stalin's rival doctrine of 'socialism in one country' prevailed in the Soviet Union.",
+    "links": [
+      {
+        "title": "Wikipedia - Trotskyism",
+        "url": "https://en.wikipedia.org/wiki/Trotskyism"
+      },
+      {
+        "title": "Wikipedia - Permanent revolution",
+        "url": "https://en.wikipedia.org/wiki/Permanent_revolution"
+      }
+    ]
+  },
+  {
+    "theme": "Soviet Union",
+    "ideology": "Trotskyism",
+    "question_text": "The Soviet Union under Stalin was a workers' state corrupted by a bureaucracy that should have been overthrown by the workers.",
+    "explanation_concept": "Trotskyists generally describe the Soviet Union as a 'degenerated workers' state' ruled by a bureaucracy, which needed a political revolution rather than a return to capitalism. Other communists and critics describe it differently, for example as state capitalism or as an authoritarian regime.",
+    "links": [
+      {
+        "title": "Wikipedia - Trotskyism",
+        "url": "https://en.wikipedia.org/wiki/Trotskyism"
+      },
+      {
+        "title": "Wikipedia - Permanent revolution",
+        "url": "https://en.wikipedia.org/wiki/Permanent_revolution"
+      }
+    ]
+  },
+  {
+    "theme": "Organisation",
+    "ideology": "Trotskyism",
+    "question_text": "Revolutionaries should build an international organisation of disciplined parties to lead the working class.",
+    "explanation_concept": "Trotskyists favour revolutionary parties, and Trotsky founded the Fourth International in 1938 to coordinate them worldwide. Critics, including anarchists and left communists, argue that vanguard parties tend to take power over the workers.",
+    "links": [
+      {
+        "title": "Wikipedia - Trotskyism",
+        "url": "https://en.wikipedia.org/wiki/Trotskyism"
+      },
+      {
+        "title": "Wikipedia - Permanent revolution",
+        "url": "https://en.wikipedia.org/wiki/Permanent_revolution"
+      }
+    ]
+  },
+  {
+    "theme": "Strategy",
+    "ideology": "Trotskyism",
+    "question_text": "Campaigns should be built around 'transitional demands' that lead workers step by step from everyday struggles towards revolution.",
+    "explanation_concept": "The Transitional Programme (1938) proposed demands that start from workers' daily concerns and lead step by step towards the overthrow of capitalism. Supporters see it as a bridge between everyday struggles and revolution; critics see it as unrealistic.",
+    "links": [
+      {
+        "title": "Wikipedia - Trotskyism",
+        "url": "https://en.wikipedia.org/wiki/Trotskyism"
+      },
+      {
+        "title": "Wikipedia - Permanent revolution",
+        "url": "https://en.wikipedia.org/wiki/Permanent_revolution"
+      }
+    ]
+  },
+  {
+    "theme": "Soviet Union",
+    "ideology": "Left communism",
+    "question_text": "The Soviet Union was not socialist but a form of state capitalism.",
+    "explanation_concept": "Many left communists argued that the USSR was state capitalism rather than socialism, since workers still sold their labour to the state. Marxist-Leninists reject this view.",
+    "links": [
+      {
+        "title": "Wikipedia - Left communism",
+        "url": "https://en.wikipedia.org/wiki/Left_communism"
+      },
+      {
+        "title": "Wikipedia - State capitalism",
+        "url": "https://en.wikipedia.org/wiki/State_capitalism"
+      }
+    ]
+  },
+  {
+    "theme": "Elections",
+    "ideology": "Left communism",
+    "question_text": "Communists should refuse to take part in elections and parliaments.",
+    "explanation_concept": "Left communists criticised Lenin's call to take part in parliaments and elections, arguing that this strengthens the bourgeois state. Lenin and his followers held that it was a useful tactic.",
+    "links": [
+      {
+        "title": "Wikipedia - Left communism",
+        "url": "https://en.wikipedia.org/wiki/Left_communism"
+      },
+      {
+        "title": "Wikipedia - State capitalism",
+        "url": "https://en.wikipedia.org/wiki/State_capitalism"
+      }
+    ]
+  },
+  {
+    "theme": "Trade unions",
+    "ideology": "Left communism",
+    "question_text": "Trade unions have become part of the capitalist system and cannot be used to overthrow it.",
+    "explanation_concept": "Many left communists argue that trade unions have become integrated into capitalism and cannot be used for revolution. Their critics see unions as indispensable organisations of the working class.",
+    "links": [
+      {
+        "title": "Wikipedia - Left communism",
+        "url": "https://en.wikipedia.org/wiki/Left_communism"
+      },
+      {
+        "title": "Wikipedia - State capitalism",
+        "url": "https://en.wikipedia.org/wiki/State_capitalism"
+      }
+    ]
+  },
+  {
+    "theme": "Workers' councils",
+    "ideology": "Left communism",
+    "question_text": "The revolution must be made by workers themselves through workers' councils, not delegated to a party leadership.",
+    "explanation_concept": "Council communists, a tendency within left communism, believe that the working class should rule directly through workers' councils rather than through a party or state. Other Marxists argue that a party is needed to lead the class.",
+    "links": [
+      {
+        "title": "Wikipedia - Left communism",
+        "url": "https://en.wikipedia.org/wiki/Left_communism"
+      },
+      {
+        "title": "Wikipedia - State capitalism",
+        "url": "https://en.wikipedia.org/wiki/State_capitalism"
+      }
+    ]
+  },
+  {
+    "theme": "Ownership",
+    "ideology": "Market socialism",
+    "question_text": "Companies can be owned by their workers or by society and still compete with each other in a market.",
+    "explanation_concept": "Market socialism combines social or worker ownership of firms with competition in a market. Critics from both left and right question whether the two can really be combined.",
+    "links": [
+      {
+        "title": "Wikipedia - Market socialism",
+        "url": "https://en.wikipedia.org/wiki/Market_socialism"
+      },
+      {
+        "title": "Wikipedia - Worker cooperative",
+        "url": "https://en.wikipedia.org/wiki/Worker_cooperative"
+      }
+    ]
+  },
+  {
+    "theme": "Profit",
+    "ideology": "Market socialism",
+    "question_text": "Markets and prices are useful tools, but profits should not flow to private capitalists.",
+    "explanation_concept": "Market socialists keep markets and prices as tools for allocating goods, while directing profits to workers or society rather than to private owners. Critics on the right argue that this removes incentives for investment.",
+    "links": [
+      {
+        "title": "Wikipedia - Market socialism",
+        "url": "https://en.wikipedia.org/wiki/Market_socialism"
+      },
+      {
+        "title": "Wikipedia - Worker cooperative",
+        "url": "https://en.wikipedia.org/wiki/Worker_cooperative"
+      }
+    ]
+  },
+  {
+    "theme": "Planning",
+    "ideology": "Market socialism",
+    "question_text": "Central planning of the whole economy is neither necessary nor desirable for socialism.",
+    "explanation_concept": "Market socialists reject full central planning, pointing to the difficulty of gathering the information needed to plan an entire economy. Advocates of planned economies argue that modern computing could make it possible.",
+    "links": [
+      {
+        "title": "Wikipedia - Market socialism",
+        "url": "https://en.wikipedia.org/wiki/Market_socialism"
+      },
+      {
+        "title": "Wikipedia - Worker cooperative",
+        "url": "https://en.wikipedia.org/wiki/Worker_cooperative"
+      }
+    ]
+  },
+  {
+    "theme": "Cooperatives",
+    "ideology": "Market socialism",
+    "question_text": "Worker-owned cooperatives should be the main form of business in a fair economy.",
+    "explanation_concept": "Worker-owned cooperatives, run democratically by their workers, are the typical business form in many market socialist models. Critics argue they can struggle to raise capital and expand.",
+    "links": [
+      {
+        "title": "Wikipedia - Market socialism",
+        "url": "https://en.wikipedia.org/wiki/Market_socialism"
+      },
+      {
+        "title": "Wikipedia - Worker cooperative",
+        "url": "https://en.wikipedia.org/wiki/Worker_cooperative"
+      }
+    ]
+  },
+  {
+    "theme": "Growth",
+    "ideology": "Eco-socialism",
+    "question_text": "Capitalism's need for endless growth is the main cause of the ecological crisis.",
+    "explanation_concept": "Eco-socialists argue that capitalism's constant drive for growth and profit is incompatible with ecological sustainability. Others argue that markets and technology can decouple growth from environmental harm.",
+    "links": [
+      {
+        "title": "Wikipedia - Eco-socialism",
+        "url": "https://en.wikipedia.org/wiki/Eco-socialism"
+      },
+      {
+        "title": "Wikipedia - Degrowth",
+        "url": "https://en.wikipedia.org/wiki/Degrowth"
+      }
+    ]
+  },
+  {
+    "theme": "Energy",
+    "ideology": "Eco-socialism",
+    "question_text": "Fighting climate change requires public or collective ownership of key industries such as energy.",
+    "explanation_concept": "Eco-socialists often call for collective or public ownership of major industries such as energy to speed up the transition from fossil fuels. Critics fear that state control would be inefficient.",
+    "links": [
+      {
+        "title": "Wikipedia - Eco-socialism",
+        "url": "https://en.wikipedia.org/wiki/Eco-socialism"
+      },
+      {
+        "title": "Wikipedia - Degrowth",
+        "url": "https://en.wikipedia.org/wiki/Degrowth"
+      }
+    ]
+  },
+  {
+    "theme": "Social justice",
+    "ideology": "Eco-socialism",
+    "question_text": "Environmental policies must be designed to protect workers and the poor, not only the planet.",
+    "explanation_concept": "Eco-socialism links environmental and social justice: climate policies should not make workers and the poor pay for a crisis they did not cause. Critics argue that mixing the two goals can slow environmental action.",
+    "links": [
+      {
+        "title": "Wikipedia - Eco-socialism",
+        "url": "https://en.wikipedia.org/wiki/Eco-socialism"
+      },
+      {
+        "title": "Wikipedia - Degrowth",
+        "url": "https://en.wikipedia.org/wiki/Degrowth"
+      }
+    ]
+  },
+  {
+    "theme": "Planning",
+    "ideology": "Eco-socialism",
+    "question_text": "Market tools such as carbon trading are not enough: the economy itself must be democratically planned.",
+    "explanation_concept": "Eco-socialists generally argue that market tools such as carbon trading are not enough, and that the economy should be democratically planned around ecological limits. Market economists defend carbon pricing as an efficient way to cut emissions.",
+    "links": [
+      {
+        "title": "Wikipedia - Eco-socialism",
+        "url": "https://en.wikipedia.org/wiki/Eco-socialism"
+      },
+      {
+        "title": "Wikipedia - Degrowth",
+        "url": "https://en.wikipedia.org/wiki/Degrowth"
+      }
+    ]
+  },
+  {
+    "theme": "Domination",
+    "ideology": "Eco-feminism",
+    "question_text": "The domination of women and the exploitation of nature come from the same system of hierarchy and control.",
+    "explanation_concept": "Ecofeminism holds that the oppression of women and the exploitation of nature are linked, both arising from patriarchal systems of domination. Critics argue that this link is overstated.",
+    "links": [
+      {
+        "title": "Wikipedia - Ecofeminism",
+        "url": "https://en.wikipedia.org/wiki/Ecofeminism"
+      },
+      {
+        "title": "Wikipedia - Patriarchy",
+        "url": "https://en.wikipedia.org/wiki/Patriarchy"
+      }
+    ]
+  },
+  {
+    "theme": "Equality and ecology",
+    "ideology": "Eco-feminism",
+    "question_text": "Environmental protection and the fight for gender equality cannot be separated.",
+    "explanation_concept": "Ecofeminists see environmental protection and gender equality as part of one struggle, noting that women are often among those most affected by environmental degradation. Other movements treat the two issues separately.",
+    "links": [
+      {
+        "title": "Wikipedia - Ecofeminism",
+        "url": "https://en.wikipedia.org/wiki/Ecofeminism"
+      },
+      {
+        "title": "Wikipedia - Patriarchy",
+        "url": "https://en.wikipedia.org/wiki/Patriarchy"
+      }
+    ]
+  },
+  {
+    "theme": "Capitalism",
+    "ideology": "Eco-feminism",
+    "question_text": "Patriarchy and industrial capitalism are connected, and both must be challenged to solve the ecological crisis.",
+    "explanation_concept": "Many ecofeminists argue that patriarchy and industrial capitalism reinforce each other, and that both must be challenged to solve the ecological crisis. Other feminists and environmentalists point to different causes.",
+    "links": [
+      {
+        "title": "Wikipedia - Ecofeminism",
+        "url": "https://en.wikipedia.org/wiki/Ecofeminism"
+      },
+      {
+        "title": "Wikipedia - Patriarchy",
+        "url": "https://en.wikipedia.org/wiki/Patriarchy"
+      }
+    ]
+  },
+  {
+    "theme": "Care",
+    "ideology": "Eco-feminism",
+    "question_text": "Values traditionally linked to care, such as nurturing and interdependence, offer a better model for our relationship to nature.",
+    "explanation_concept": "Cultural ecofeminists argue that values associated with care, nurturing and interdependence offer a better model for relating to nature. Other feminists criticise this view as reinforcing gender stereotypes.",
+    "links": [
+      {
+        "title": "Wikipedia - Ecofeminism",
+        "url": "https://en.wikipedia.org/wiki/Ecofeminism"
+      },
+      {
+        "title": "Wikipedia - Patriarchy",
+        "url": "https://en.wikipedia.org/wiki/Patriarchy"
+      }
+    ]
+  },
+  {
+    "theme": "Resistance",
+    "ideology": "Neo-Luddism",
+    "question_text": "We should actively resist new technologies that harm workers, communities or the environment, even if they are profitable.",
+    "explanation_concept": "Neo-Luddism opposes many forms of modern technology and promotes resisting those seen as harmful, in the spirit of the 19th-century Luddites. Critics argue that technology has also brought large gains in health and living standards.",
+    "links": [
+      {
+        "title": "Wikipedia - Neo-Luddism",
+        "url": "https://en.wikipedia.org/wiki/Neo-Luddism"
+      },
+      {
+        "title": "Wikipedia - Luddite",
+        "url": "https://en.wikipedia.org/wiki/Luddite"
+      }
+    ]
+  },
+  {
+    "theme": "Progress",
+    "ideology": "Neo-Luddism",
+    "question_text": "Technological progress is not automatically good: it should be judged by what it does to human life.",
+    "explanation_concept": "Neo-Luddites reject the idea that technological progress is automatically good and ask what it does to human life and communities. Defenders of technology see innovation as the main source of human progress.",
+    "links": [
+      {
+        "title": "Wikipedia - Neo-Luddism",
+        "url": "https://en.wikipedia.org/wiki/Neo-Luddism"
+      },
+      {
+        "title": "Wikipedia - Luddite",
+        "url": "https://en.wikipedia.org/wiki/Luddite"
+      }
+    ]
+  },
+  {
+    "theme": "Giving up technology",
+    "ideology": "Neo-Luddism",
+    "question_text": "Society should be ready to give up certain technologies altogether, not just regulate them.",
+    "explanation_concept": "Some neo-Luddites go beyond regulation and argue that certain technologies should be given up altogether. Critics say this is unrealistic and would be costly.",
+    "links": [
+      {
+        "title": "Wikipedia - Neo-Luddism",
+        "url": "https://en.wikipedia.org/wiki/Neo-Luddism"
+      },
+      {
+        "title": "Wikipedia - Luddite",
+        "url": "https://en.wikipedia.org/wiki/Luddite"
+      }
+    ]
+  },
+  {
+    "theme": "Automation",
+    "ideology": "Neo-Luddism",
+    "question_text": "Automation and artificial intelligence should be opposed when they destroy jobs and skills.",
+    "explanation_concept": "Neo-Luddites worry that automation and AI destroy jobs and skills and increase the power of those who control the machines. Others argue that new technology also creates new jobs.",
+    "links": [
+      {
+        "title": "Wikipedia - Neo-Luddism",
+        "url": "https://en.wikipedia.org/wiki/Neo-Luddism"
+      },
+      {
+        "title": "Wikipedia - Luddite",
+        "url": "https://en.wikipedia.org/wiki/Luddite"
+      }
+    ]
+  },
+  {
+    "theme": "Democracy abroad",
+    "ideology": "Neoconservatism",
+    "question_text": "Using military force to promote democracy and defend liberal values abroad is justified.",
+    "explanation_concept": "Neoconservatism is associated with support for promoting democracy abroad, including by military means. Critics point to the costs and unintended consequences of interventions such as the Iraq War.",
+    "links": [
+      {
+        "title": "Wikipedia - Neoconservatism",
+        "url": "https://en.wikipedia.org/wiki/Neoconservatism"
+      },
+      {
+        "title": "Wikipedia - Democracy promotion",
+        "url": "https://en.wikipedia.org/wiki/Democracy_promotion"
+      }
+    ]
+  },
+  {
+    "theme": "Military strength",
+    "ideology": "Neoconservatism",
+    "question_text": "A country should keep overwhelming military superiority in order to shape world order.",
+    "explanation_concept": "Neoconservatives generally favour keeping American military power far above any rival. Critics argue this drives arms races and overstretches the country.",
+    "links": [
+      {
+        "title": "Wikipedia - Neoconservatism",
+        "url": "https://en.wikipedia.org/wiki/Neoconservatism"
+      },
+      {
+        "title": "Wikipedia - Democracy promotion",
+        "url": "https://en.wikipedia.org/wiki/Democracy_promotion"
+      }
+    ]
+  },
+  {
+    "theme": "Morality",
+    "ideology": "Neoconservatism",
+    "question_text": "Foreign policy should be guided by moral values, not only by national interest.",
+    "explanation_concept": "Neoconservatives generally hold that foreign policy should be guided by moral values and not only by a calculation of interests, which differs from the realist school. Realists argue that morality should not drive foreign policy.",
+    "links": [
+      {
+        "title": "Wikipedia - Neoconservatism",
+        "url": "https://en.wikipedia.org/wiki/Neoconservatism"
+      },
+      {
+        "title": "Wikipedia - Democracy promotion",
+        "url": "https://en.wikipedia.org/wiki/Democracy_promotion"
+      }
+    ]
+  },
+  {
+    "theme": "Authoritarian regimes",
+    "ideology": "Neoconservatism",
+    "question_text": "Democratic states should challenge authoritarian regimes rather than tolerate them for the sake of stability.",
+    "explanation_concept": "Neoconservatives tend to see the support of friendly dictatorships as a mistake and prefer to challenge authoritarian regimes. Realists argue that stability sometimes matters more than ideals.",
+    "links": [
+      {
+        "title": "Wikipedia - Neoconservatism",
+        "url": "https://en.wikipedia.org/wiki/Neoconservatism"
+      },
+      {
+        "title": "Wikipedia - Democracy promotion",
+        "url": "https://en.wikipedia.org/wiki/Democracy_promotion"
+      }
+    ]
+  },
+  {
+    "theme": "Head of state",
+    "ideology": "Monarchism",
+    "question_text": "A hereditary monarch can be a better head of state than an elected president, because they stand above party politics.",
+    "explanation_concept": "Monarchists argue that a hereditary monarch can stand above party politics and represent the whole nation. Republicans argue that heads of state should be chosen by the people.",
+    "links": [
+      {
+        "title": "Wikipedia - Monarchism",
+        "url": "https://en.wikipedia.org/wiki/Monarchism"
+      },
+      {
+        "title": "Wikipedia - Constitutional monarchy",
+        "url": "https://en.wikipedia.org/wiki/Constitutional_monarchy"
+      }
+    ]
+  },
+  {
+    "theme": "Continuity",
+    "ideology": "Monarchism",
+    "question_text": "A monarchy provides continuity and national unity that a republic cannot.",
+    "explanation_concept": "Supporters of monarchy value the continuity and national unity a crown can provide across generations. Critics argue that hereditary privilege is incompatible with equality.",
+    "links": [
+      {
+        "title": "Wikipedia - Monarchism",
+        "url": "https://en.wikipedia.org/wiki/Monarchism"
+      },
+      {
+        "title": "Wikipedia - Constitutional monarchy",
+        "url": "https://en.wikipedia.org/wiki/Constitutional_monarchy"
+      }
+    ]
+  },
+  {
+    "theme": "Restoration",
+    "ideology": "Monarchism",
+    "question_text": "A country with a monarchy should keep it, and one that abolished it should consider restoring it.",
+    "explanation_concept": "Monarchists in countries that abolished their monarchy sometimes campaign for its restoration. Others consider the end of the monarchy to be final.",
+    "links": [
+      {
+        "title": "Wikipedia - Monarchism",
+        "url": "https://en.wikipedia.org/wiki/Monarchism"
+      },
+      {
+        "title": "Wikipedia - Constitutional monarchy",
+        "url": "https://en.wikipedia.org/wiki/Constitutional_monarchy"
+      }
+    ]
+  },
+  {
+    "theme": "Checks on power",
+    "ideology": "Monarchism",
+    "question_text": "A monarch can act as a check on politicians, even if their powers are mostly symbolic.",
+    "explanation_concept": "Even where a monarch's powers are mostly symbolic, as in constitutional monarchies, monarchists argue that the crown can act as a check on politicians through its authority and neutrality. Critics argue that an unelected figure should not have any such role.",
+    "links": [
+      {
+        "title": "Wikipedia - Monarchism",
+        "url": "https://en.wikipedia.org/wiki/Monarchism"
+      },
+      {
+        "title": "Wikipedia - Constitutional monarchy",
+        "url": "https://en.wikipedia.org/wiki/Constitutional_monarchy"
+      }
+    ]
+  },
+  {
+    "theme": "Property",
+    "ideology": "Distributism",
+    "question_text": "Property should be spread as widely as possible, so that most families own land, a workshop or a small business.",
+    "explanation_concept": "Distributism, developed by thinkers such as G. K. Chesterton and Hilaire Belloc from Catholic social teaching, argues that productive property should be spread as widely as possible. Critics argue that it is hard to apply to modern industry.",
+    "links": [
+      {
+        "title": "Wikipedia - Distributism",
+        "url": "https://en.wikipedia.org/wiki/Distributism"
+      },
+      {
+        "title": "Wikipedia - Subsidiarity",
+        "url": "https://en.wikipedia.org/wiki/Subsidiarity"
+      }
+    ]
+  },
+  {
+    "theme": "Corporations and the state",
+    "ideology": "Distributism",
+    "question_text": "Both giant corporations and an all-powerful state are threats to freedom.",
+    "explanation_concept": "Distributists criticise both capitalism, which concentrates property in few hands, and socialism, which concentrates it in the state. Critics argue that small-scale production is less efficient.",
+    "links": [
+      {
+        "title": "Wikipedia - Distributism",
+        "url": "https://en.wikipedia.org/wiki/Distributism"
+      },
+      {
+        "title": "Wikipedia - Subsidiarity",
+        "url": "https://en.wikipedia.org/wiki/Subsidiarity"
+      }
+    ]
+  },
+  {
+    "theme": "Subsidiarity",
+    "ideology": "Distributism",
+    "question_text": "Economic decisions should be made at the most local level possible.",
+    "explanation_concept": "Distributists favour the principle of subsidiarity: decisions should be made at the most local level that can handle them. Critics argue that some problems, such as climate change, need larger-scale solutions.",
+    "links": [
+      {
+        "title": "Wikipedia - Distributism",
+        "url": "https://en.wikipedia.org/wiki/Distributism"
+      },
+      {
+        "title": "Wikipedia - Subsidiarity",
+        "url": "https://en.wikipedia.org/wiki/Subsidiarity"
+      }
+    ]
+  },
+  {
+    "theme": "Morality",
+    "ideology": "Distributism",
+    "question_text": "Economic life should be guided by moral and religious principles, not only by profit.",
+    "explanation_concept": "Distributism is rooted in the idea that economic life should serve human dignity and moral values, not only profit. Critics argue that moral principles are too vague to guide an economy.",
+    "links": [
+      {
+        "title": "Wikipedia - Distributism",
+        "url": "https://en.wikipedia.org/wiki/Distributism"
+      },
+      {
+        "title": "Wikipedia - Subsidiarity",
+        "url": "https://en.wikipedia.org/wiki/Subsidiarity"
+      }
+    ]
+  },
+  {
+    "theme": "Voting",
+    "ideology": "Liquid democracy",
+    "question_text": "Citizens should be able to vote directly on laws, or lend their vote to someone they trust.",
+    "explanation_concept": "In liquid democracy, citizens can vote directly on a decision or delegate their vote to someone they trust. Critics worry that it could give too much power to a few popular delegates.",
+    "links": [
+      {
+        "title": "Wikipedia - Liquid democracy",
+        "url": "https://en.wikipedia.org/wiki/Liquid_democracy"
+      },
+      {
+        "title": "Wikipedia - Delegative democracy",
+        "url": "https://en.wikipedia.org/wiki/Delegative_democracy"
+      }
+    ]
+  },
+  {
+    "theme": "Delegation",
+    "ideology": "Liquid democracy",
+    "question_text": "Any delegation of your vote should be revocable at any time.",
+    "explanation_concept": "A key feature of liquid democracy is that delegation can be withdrawn at any time, unlike elections where mandates last several years. Critics note that this can make decisions unstable.",
+    "links": [
+      {
+        "title": "Wikipedia - Liquid democracy",
+        "url": "https://en.wikipedia.org/wiki/Liquid_democracy"
+      },
+      {
+        "title": "Wikipedia - Delegative democracy",
+        "url": "https://en.wikipedia.org/wiki/Delegative_democracy"
+      }
+    ]
+  },
+  {
+    "theme": "Topics",
+    "ideology": "Liquid democracy",
+    "question_text": "You should be able to choose different delegates for different topics.",
+    "explanation_concept": "Liquid democracy allows delegation on specific topics, so that you can choose different delegates for different issues. Critics say it asks citizens to manage many choices.",
+    "links": [
+      {
+        "title": "Wikipedia - Liquid democracy",
+        "url": "https://en.wikipedia.org/wiki/Liquid_democracy"
+      },
+      {
+        "title": "Wikipedia - Delegative democracy",
+        "url": "https://en.wikipedia.org/wiki/Delegative_democracy"
+      }
+    ]
+  },
+  {
+    "theme": "Online voting",
+    "ideology": "Liquid democracy",
+    "question_text": "Online voting platforms should be used for real political decisions.",
+    "explanation_concept": "Liquid democracy is usually imagined with online tools, which raises security and fairness questions: electronic voting can be hard to protect from fraud and pressure.",
+    "links": [
+      {
+        "title": "Wikipedia - Liquid democracy",
+        "url": "https://en.wikipedia.org/wiki/Liquid_democracy"
+      },
+      {
+        "title": "Wikipedia - Delegative democracy",
+        "url": "https://en.wikipedia.org/wiki/Delegative_democracy"
+      }
+    ]
+  },
+  {
+    "theme": "Copyright",
+    "ideology": "Pirate politics",
+    "question_text": "Copyright and patent laws should be drastically reduced to allow the free sharing of culture and knowledge.",
+    "explanation_concept": "Pirate parties call for reforming copyright and patent law to allow the free sharing of culture and knowledge. Artists and industries argue that creators need protection to earn a living.",
+    "links": [
+      {
+        "title": "Wikipedia - Pirate politics",
+        "url": "https://en.wikipedia.org/wiki/Pirate_politics"
+      },
+      {
+        "title": "Wikipedia - Pirate Party",
+        "url": "https://en.wikipedia.org/wiki/Pirate_Party"
+      }
+    ]
+  },
+  {
+    "theme": "Privacy",
+    "ideology": "Pirate politics",
+    "question_text": "Citizens' privacy must be protected from mass surveillance.",
+    "explanation_concept": "Privacy and opposition to mass surveillance are central to pirate politics. Security services argue that surveillance helps to prevent crime and terrorism.",
+    "links": [
+      {
+        "title": "Wikipedia - Pirate politics",
+        "url": "https://en.wikipedia.org/wiki/Pirate_politics"
+      },
+      {
+        "title": "Wikipedia - Pirate Party",
+        "url": "https://en.wikipedia.org/wiki/Pirate_Party"
+      }
+    ]
+  },
+  {
+    "theme": "Transparency",
+    "ideology": "Pirate politics",
+    "question_text": "Government data and decision-making should be transparent by default.",
+    "explanation_concept": "Pirate parties promote the transparency of government data and decision-making. Critics argue that some matters, such as security, need confidentiality.",
+    "links": [
+      {
+        "title": "Wikipedia - Pirate politics",
+        "url": "https://en.wikipedia.org/wiki/Pirate_politics"
+      },
+      {
+        "title": "Wikipedia - Pirate Party",
+        "url": "https://en.wikipedia.org/wiki/Pirate_Party"
+      }
+    ]
+  },
+  {
+    "theme": "Participation",
+    "ideology": "Pirate politics",
+    "question_text": "Citizens should have a direct say through online participation tools, not only through elections.",
+    "explanation_concept": "Pirate parties experiment with online participation tools that give citizens a more direct say between elections. Critics point to low participation and digital divides.",
+    "links": [
+      {
+        "title": "Wikipedia - Pirate politics",
+        "url": "https://en.wikipedia.org/wiki/Pirate_politics"
+      },
+      {
+        "title": "Wikipedia - Pirate Party",
+        "url": "https://en.wikipedia.org/wiki/Pirate_Party"
+      }
+    ]
+  },
+  {
+    "theme": "Unity",
+    "ideology": "Pan-Africanism",
+    "question_text": "African countries should work towards political and economic unity across the continent.",
+    "explanation_concept": "Pan-Africanism calls for solidarity and unity among African peoples; the African Union is one institutional expression of this idea. Critics argue that Africa's diversity makes full political union difficult.",
+    "links": [
+      {
+        "title": "Wikipedia - Pan-Africanism",
+        "url": "https://en.wikipedia.org/wiki/Pan-Africanism"
+      },
+      {
+        "title": "Wikipedia - African Union",
+        "url": "https://en.wikipedia.org/wiki/African_Union"
+      }
+    ]
+  },
+  {
+    "theme": "Diaspora",
+    "ideology": "Pan-Africanism",
+    "question_text": "People of African descent around the world share a common history and destiny.",
+    "explanation_concept": "Pan-Africanism has strong roots in the African diaspora and holds that people of African descent worldwide share a common history and destiny. Critics argue that identities in Africa and in the diaspora differ widely.",
+    "links": [
+      {
+        "title": "Wikipedia - Pan-Africanism",
+        "url": "https://en.wikipedia.org/wiki/Pan-Africanism"
+      },
+      {
+        "title": "Wikipedia - African Union",
+        "url": "https://en.wikipedia.org/wiki/African_Union"
+      }
+    ]
+  },
+  {
+    "theme": "Borders",
+    "ideology": "Pan-Africanism",
+    "question_text": "Colonial-era borders should not limit cooperation between African nations.",
+    "explanation_concept": "Many pan-Africanists criticise colonial-era borders for dividing peoples, although African states have largely kept existing borders to avoid conflicts. Critics fear that questioning them would cause wars.",
+    "links": [
+      {
+        "title": "Wikipedia - Pan-Africanism",
+        "url": "https://en.wikipedia.org/wiki/Pan-Africanism"
+      },
+      {
+        "title": "Wikipedia - African Union",
+        "url": "https://en.wikipedia.org/wiki/African_Union"
+      }
+    ]
+  },
+  {
+    "theme": "Self-reliance",
+    "ideology": "Pan-Africanism",
+    "question_text": "Africa should rely less on foreign powers and build its own economic and political institutions.",
+    "explanation_concept": "Pan-Africanists call for Africa to reduce its dependence on foreign powers and develop its own economic and political institutions. Critics note that trade and investment from abroad also bring benefits.",
+    "links": [
+      {
+        "title": "Wikipedia - Pan-Africanism",
+        "url": "https://en.wikipedia.org/wiki/Pan-Africanism"
+      },
+      {
+        "title": "Wikipedia - African Union",
+        "url": "https://en.wikipedia.org/wiki/African_Union"
+      }
+    ]
   }
+  
   ],
 
   "user_question_status": [
@@ -146,4 +1299,4 @@
       "is_favorite": true
     }
   ]
-}
+ }
