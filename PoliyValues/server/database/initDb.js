@@ -27,8 +27,29 @@ async function ensureVerificationColumns() {
   }
 }
 
+async function ensureUserQuestionStatusColumns() {
+  const columns = [
+    {
+      name: "is_reviewed",
+      sql: "ALTER TABLE user_question_status ADD COLUMN is_reviewed BOOLEAN NOT NULL DEFAULT FALSE",
+    },
+  ];
+
+  for (const column of columns) {
+    const [existing] = await db.query("SHOW COLUMNS FROM user_question_status LIKE ?", [
+      column.name,
+    ]);
+
+    if (existing.length === 0) {
+      await db.query(column.sql);
+      console.log(`✅ Column ${column.name} added successfully`);
+    }
+  }
+}
+
 export async function initDb() {
   try {
+    // 1. Table users
     await db.query(`
       CREATE TABLE IF NOT EXISTS users (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -43,7 +64,9 @@ export async function initDb() {
         verificationTokenExpires DATETIME DEFAULT NULL
       ) ENGINE=InnoDB;
     `);
+
     await ensureVerificationColumns();
+
     // 2. Table questions
     await db.query(`
       CREATE TABLE IF NOT EXISTS questions (
@@ -64,6 +87,7 @@ export async function initDb() {
         question_id INT NOT NULL,
         is_completed BOOLEAN DEFAULT FALSE,
         is_favorite BOOLEAN DEFAULT FALSE,
+        is_reviewed BOOLEAN NOT NULL DEFAULT FALSE,
         opinion_value TINYINT NULL CHECK (opinion_value BETWEEN -2 AND 2),
         answered_at TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
         PRIMARY KEY (user_id, question_id),
@@ -72,9 +96,12 @@ export async function initDb() {
       ) ENGINE=InnoDB;
     `);
 
+    // Ajout de la colonne pour les bases déjà existantes
+    await ensureUserQuestionStatusColumns();
+
     console.log("✅ Tables MySQL créées / vérifiées avec succès !");
 
-    // Lancement du seeding
+    // 4. Lancement du seeding
     await seedDB();
   } catch (error) {
     console.error("❌ Erreur lors de l'initialisation de la DB :", error);

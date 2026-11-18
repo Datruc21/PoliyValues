@@ -86,13 +86,26 @@ const getFavorites = async (req, res) => {
 
   try {
     const [rows] = await db.query(
-      `SELECT q.id, q.theme, q.question_text, q.explanation_concept, q.links, uqs.opinion_value
+      `SELECT
+          q.id,
+          q.theme,
+          q.ideology,
+          q.question_text,
+          q.explanation_concept,
+          q.links,
+          q.created_at,
+          uqs.opinion_value,
+          uqs.is_completed,
+          uqs.is_reviewed,
+          uqs.answered_at
        FROM user_question_status uqs
        JOIN questions q ON q.id = uqs.question_id
-       WHERE uqs.user_id = ? AND uqs.is_favorite = TRUE
+       WHERE uqs.user_id = ?
+         AND uqs.is_favorite = TRUE
        ORDER BY q.theme`,
       [userId],
     );
+
     res.json(rows);
   } catch (err) {
     console.error(err);
@@ -150,4 +163,58 @@ const getStats = async (req, res) => {
   }
 };
 
-export { getRandomQuestion, submitAnswer, toggleFavorite, getFavorites, resetAnswers, getStats };
+const updateReviewed = async (req, res) => {
+  const userId = req.user.id;
+  const { questionId, isReviewed } = req.body;
+
+  if (!questionId || typeof isReviewed !== "boolean") {
+    return res.status(400).json({
+      error: "questionId and isReviewed are required",
+    });
+  }
+
+  try {
+    await db.query(
+      `UPDATE user_question_status
+       SET is_reviewed = ?
+       WHERE user_id = ?
+         AND question_id = ?
+         AND is_favorite = TRUE`,
+      [isReviewed, userId, questionId],
+    );
+
+    const [rows] = await db.query(
+      `SELECT question_id
+       FROM user_question_status
+       WHERE user_id = ?
+         AND question_id = ?
+         AND is_favorite = TRUE`,
+      [userId, questionId],
+    );
+
+    if (rows.length === 0) {
+      return res.status(404).json({
+        error: "Favorite not found",
+      });
+    }
+
+    res.status(200).json({
+      message: "Review status updated successfully",
+      is_reviewed: isReviewed,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      error: "Error while updating review status",
+    });
+  }
+};
+export {
+  updateReviewed,
+  getRandomQuestion,
+  submitAnswer,
+  toggleFavorite,
+  getFavorites,
+  resetAnswers,
+  getStats,
+};
