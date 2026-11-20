@@ -32,7 +32,6 @@
       </form>
     </div>
 
-    <!-- Formulaire Modifier Mot de passe -->
     <div class="setting-item">
       <h3>Change Password</h3>
       <form @submit.prevent="changePassword">
@@ -51,14 +50,12 @@
       </form>
     </div>
 
-    <!-- Messages de succès et d'erreur -->
     <p v-if="successMessage" style="color: green">{{ successMessage }}</p>
     <p v-if="message" class="error-message" style="color: red">{{ message }}</p>
 
     <button class="btn-danger" @click="logOut">Log out</button>
     <button class="btn-danger" @click="openModal = true">Delete account</button>
 
-    <!-- Correction du Teleport : il doit envelopper la modale -->
     <teleport to="body">
       <Modal v-if="openModal">
         <h3>Delete account</h3>
@@ -106,7 +103,6 @@ export default {
     };
   },
   mounted() {
-    // Récupérer les infos de l'utilisateur au chargement
     this.getMe();
     this.isAdmin = localStorage.getItem("is_admin");
   },

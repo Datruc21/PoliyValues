@@ -1,11 +1,9 @@
 import db from "../config/db.js";
 
 const getRandomQuestion = async (req, res) => {
-  //Get user
   const id = req.user.id;
 
   try {
-    //ask database for 1 random question not already answered by the user (we assume the attribute is_completed can't be NULL)
     const [questions] = await db.query(
       "SELECT q.*, COALESCE(uqs.is_favorite, FALSE) AS is_favorite \
                             FROM questions q\
@@ -15,18 +13,15 @@ const getRandomQuestion = async (req, res) => {
                             ORDER BY RAND() \
                             LIMIT 1",
       [id],
-    ); //[userId] ??
+    );
 
-    // In case there is no more available questions
     if (questions.length === 0) {
       return res.status(404).json({
         message: "You have already answered all available questions.",
       });
     }
-    //Send the answer
     res.json(questions[0]);
   } catch (err) {
-    //Keep the server from crashing if the database doesnt'answer
     console.error(err);
     res.status(500).json({ error: "Server error" });
   }
@@ -37,7 +32,6 @@ const submitAnswer = async (req, res) => {
 
   const { questionId, opinionValue } = req.body;
 
-  //Vérification de sécurité de base
   if (!questionId || opinionValue === undefined) {
     return res.status(400).json({ error: "questionId et opinionValue sont requis" });
   }

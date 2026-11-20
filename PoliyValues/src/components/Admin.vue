@@ -20,8 +20,8 @@ to modify, template-->
           <h3>Add / Edit a Question</h3>
 
           <div class="form-group">
-              <label>Question ID (for Edit / Delete):</label>
-              <input type="text" v-model="selectedQuestionId" />
+            <label>Question ID (for Edit / Delete):</label>
+            <input type="text" v-model="selectedQuestionId" />
           </div>
 
           <div class="form-group">
@@ -30,28 +30,17 @@ to modify, template-->
           </div>
           <div class="form-group">
             <label>Question:</label>
-            <input
-              type="text"
-              v-model="question_text"
-              placeholder="Enter question text"
-            />
+            <input type="text" v-model="question_text" placeholder="Enter question text" />
           </div>
 
           <div class="form-group">
             <label>Explanation / Concept:</label>
-            <textarea
-              v-model="explanation_concept"
-              placeholder="Explain the concept..."
-            ></textarea>
+            <textarea v-model="explanation_concept" placeholder="Explain the concept..."></textarea>
           </div>
 
           <div class="form-group">
             <label>Theme:</label>
-            <input
-              type="text"
-              v-model="theme"
-              placeholder="e.g., Mathematics, History..."
-            />
+            <input type="text" v-model="theme" placeholder="e.g., Mathematics, History..." />
           </div>
 
           <div class="form-group">
@@ -61,34 +50,23 @@ to modify, template-->
 
           <div class="button-group">
             <button @click="addQuestion" class="btn btn-primary">Add</button>
-            <button @click="editQuestion" class="btn btn-secondary">
-              Edit
-            </button>
+            <button @click="editQuestion" class="btn btn-secondary">Edit</button>
           </div>
         </div>
 
-        <!-- Search & Deletion -->
         <div class="action-card">
           <h3>Search & Delete</h3>
           <div class="search-box">
-            <input
-              type="text"
-              v-model="name"
-              placeholder="Search for a question..."
-            />
+            <input type="text" v-model="name" placeholder="Search for a question..." />
             <button @click="searchQuestion" class="btn btn-info">Search</button>
           </div>
-          <button @click="deleteQuestion" class="btn btn-danger mt-3">
-            Delete Question
-          </button>
+          <button @click="deleteQuestion" class="btn btn-danger mt-3">Delete Question</button>
         </div>
       </section>
 
-      <!-- ================= SECTION 2: USER & ROLE MANAGEMENT ================= -->
       <section class="admin-section">
         <h2>User & Role Management</h2>
 
-        <!-- Search User -->
         <div class="action-card">
           <h3>Search a User</h3>
           <div class="search-box">
@@ -97,7 +75,6 @@ to modify, template-->
           </div>
         </div>
 
-        <!-- Ban / Unban -->
         <div class="action-card">
           <h3>Moderation (Banning)</h3>
           <p class="user-status">
@@ -110,16 +87,11 @@ to modify, template-->
           </div>
         </div>
 
-        <!-- Admin Roles -->
         <div class="action-card">
           <h3>Administrator Rights</h3>
           <div class="button-group">
-            <button @click="makeAdmin" class="btn btn-primary">
-              Make Admin
-            </button>
-            <button @click="undoAdmin" class="btn btn-warning">
-              Remove Admin
-            </button>
+            <button @click="makeAdmin" class="btn btn-primary">Make Admin</button>
+            <button @click="undoAdmin" class="btn btn-warning">Remove Admin</button>
           </div>
         </div>
       </section>
@@ -144,16 +116,17 @@ export default {
     };
   },
   methods: {
-
     authFetch(path, options = {}) {
       const token = localStorage.getItem("poliyvalues_token");
       return fetch(`http://localhost:3000${path}`, {
         ...options,
-        headers: { ...(options.headers || {}), Authorization: `Bearer ${token}` },
+        headers: {
+          ...(options.headers || {}),
+          Authorization: `Bearer ${token}`,
+        },
       });
     },
 
-    // 1. Add a question
     async addQuestion() {
       try {
         let formattedLinks = this.links
@@ -189,7 +162,6 @@ export default {
       }
     },
 
-    // 2. Edit a question
     async editQuestion() {
       if (!this.selectedQuestionId) {
         alert("Please select or specify the ID of a question to edit.");
@@ -204,20 +176,17 @@ export default {
               .map((l) => ({ title: l, url: l }))
           : null;
 
-        const response = await this.authFetch(
-          `/api/admin/questions/${this.selectedQuestionId}`,
-          {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              question_text: this.question_text,
-              explanation_concept: this.explanation_concept,
-              theme: this.theme,
-              links: formattedLinks,
-              ideology: this.ideology,
-            }),
-          },
-        );
+        const response = await this.authFetch(`/api/admin/questions/${this.selectedQuestionId}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            question_text: this.question_text,
+            explanation_concept: this.explanation_concept,
+            theme: this.theme,
+            links: formattedLinks,
+            ideology: this.ideology,
+          }),
+        });
 
         const data = await response.json();
         if (!response.ok) throw new Error(data.error);
@@ -229,7 +198,6 @@ export default {
       }
     },
 
-    // 3. Search a question
     async searchQuestion() {
       try {
         const response = await this.authFetch(
@@ -246,7 +214,6 @@ export default {
       }
     },
 
-    // 4. Delete a question
     async deleteQuestion() {
       if (!this.selectedQuestionId) {
         alert("Please specify the ID of the question to delete.");
@@ -255,12 +222,9 @@ export default {
       if (!confirm("Are you sure you want to delete this question?")) return;
 
       try {
-        const response = await this.authFetch(
-          `/api/admin/questions/${this.selectedQuestionId}`,
-          {
-            method: "DELETE",
-          },
-        );
+        const response = await this.authFetch(`/api/admin/questions/${this.selectedQuestionId}`, {
+          method: "DELETE",
+        });
         const data = await response.json();
         if (!response.ok) throw new Error(data.error);
 
@@ -272,7 +236,6 @@ export default {
       }
     },
 
-    // 5. Search a user
     async searchUser() {
       try {
         const response = await this.authFetch(
@@ -289,19 +252,15 @@ export default {
       }
     },
 
-    // 6. Ban a user
     async banUser() {
       if (!this.selectedUserId) {
         alert("Please select a user ID.");
         return;
       }
       try {
-        const response = await this.authFetch(
-          `/api/admin/users/${this.selectedUserId}/ban`,
-          {
-            method: "POST",
-          },
-        );
+        const response = await this.authFetch(`/api/admin/users/${this.selectedUserId}/ban`, {
+          method: "POST",
+        });
         const data = await response.json();
         if (!response.ok) throw new Error(data.error);
 
@@ -312,19 +271,15 @@ export default {
       }
     },
 
-    // 7. Unban a user
     async unbanUser() {
       if (!this.selectedUserId) {
         alert("Please select a user ID.");
         return;
       }
       try {
-        const response = await this.authFetch(
-          `/api/admin/users/${this.selectedUserId}/unban`,
-          {
-            method: "POST",
-          },
-        );
+        const response = await this.authFetch(`/api/admin/users/${this.selectedUserId}/unban`, {
+          method: "POST",
+        });
         const data = await response.json();
         if (!response.ok) throw new Error(data.error);
 
@@ -335,7 +290,6 @@ export default {
       }
     },
 
-    // 8. Make a user Admin
     async makeAdmin() {
       if (!this.selectedUserId) {
         alert("Please select a user ID.");
@@ -358,7 +312,6 @@ export default {
       }
     },
 
-    // 9. Remove Admin rights
     async undoAdmin() {
       if (!this.selectedUserId) {
         alert("Please select a user ID.");
@@ -387,7 +340,7 @@ export default {
       this.theme = "";
       this.links = "";
       this.selectedQuestionId = null;
-      this.ideology="";
+      this.ideology = "";
     },
   },
 };
@@ -408,45 +361,95 @@ export default {
   padding-bottom: 10px;
   margin-bottom: 20px;
 }
-.admin-grid { display: flex; flex-direction: column; gap: 2rem; }
+.admin-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
 .admin-section h2 {
   color: var(--primary-color);
   border-bottom: 1px solid var(--border-color);
-  padding-bottom: 5px; margin-bottom: 5px;
+  padding-bottom: 5px;
+  margin-bottom: 5px;
 }
-.form-card, .action-card {
+.form-card,
+.action-card {
   border: 1px solid var(--border-color);
   border-radius: 8px;
   padding: 1.5rem;
   margin-bottom: 1rem;
   background-color: var(--bg-card);
 }
-.form-card h3, .action-card h3, .form-group label { color: var(--text-main); margin-top: 0; }
-.form-group { margin-bottom: 1rem; }
-.form-group label { display: block; font-weight: bold; margin-bottom: 0.3rem; }
-input[type="text"], textarea {
-  width: 100%; padding: 0.5rem;
+.form-card h3,
+.action-card h3,
+.form-group label {
+  color: var(--text-main);
+  margin-top: 0;
+}
+.form-group {
+  margin-bottom: 1rem;
+}
+.form-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.3rem;
+}
+input[type="text"],
+textarea {
+  width: 100%;
+  padding: 0.5rem;
   background-color: var(--input-bg);
   color: var(--text-main);
   border: 1px solid var(--border-color);
-  border-radius: 4px; box-sizing: border-box;
+  border-radius: 4px;
+  box-sizing: border-box;
 }
-.search-box { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
-.search-box input { flex: 1; }
-.button-group { display: flex; gap: 0.5rem; margin-top: 1rem; }
+.search-box {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.search-box input {
+  flex: 1;
+}
+.button-group {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
 .btn {
-  padding: 0.5rem 1rem; border: none; border-radius: 4px;
-  cursor: pointer; color: white; font-weight: bold;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  color: white;
+  font-weight: bold;
 }
-.btn:hover { opacity: 0.8; }
-.btn-primary { background-color: var(--primary-color); }
-.btn-secondary { background-color: var(--primary-color); }
-.btn-info { background-color: var(--secondary-color); }
-.btn-danger { background-color: var(--danger-color); }
-.btn-success { background-color: var(--primary-color); }
-.btn-warning { background-color: var(--danger-color); }
+.btn:hover {
+  opacity: 0.8;
+}
+.btn-primary {
+  background-color: var(--primary-color);
+}
+.btn-secondary {
+  background-color: var(--primary-color);
+}
+.btn-info {
+  background-color: var(--secondary-color);
+}
+.btn-danger {
+  background-color: var(--danger-color);
+}
+.btn-success {
+  background-color: var(--primary-color);
+}
+.btn-warning {
+  background-color: var(--danger-color);
+}
 .user-status {
   background-color: var(--bg-body);
-  padding: 0.5rem; border-radius: 4px; color: var(--text-main);
+  padding: 0.5rem;
+  border-radius: 4px;
+  color: var(--text-main);
 }
 </style>

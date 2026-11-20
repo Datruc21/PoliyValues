@@ -1,19 +1,17 @@
 <template>
   <div id="favorites-page">
-    <!-- Header -->
     <div class="page-header">
       <h1>My Library</h1>
       <p>Your personal political knowledge collection.</p>
     </div>
 
-    <!-- Loading / Error -->
     <p v-if="isLoading" class="status-message">Loading...</p>
-    <p v-else-if="errorMessage" class="status-message">
+
+    <p v-else-if="errorMessage" class="status-message error-message">
       {{ errorMessage }}
     </p>
 
     <template v-else>
-      <!-- Statistics -->
       <div class="stats-grid">
         <div class="stat-card">
           <span class="stat-number">{{ favorites.length }}</span>
@@ -31,13 +29,11 @@
         </div>
       </div>
 
-      <!-- Review button -->
       <button v-if="favorites.length > 0" class="review-all-btn" @click="startReview">
-        <span>↻</span> Review unlearned concepts
+        ↻ Review unlearned concepts
       </button>
 
-      <!-- Search -->
-      <div class="toolbar" v-if="favorites.length > 0">
+      <div v-if="favorites.length > 0" class="toolbar">
         <input
           v-model="searchQuery"
           type="text"
@@ -45,7 +41,6 @@
           class="search-input"
         />
 
-        <!-- Theme filter -->
         <select v-model="selectedTheme" class="theme-filter">
           <option value="">All themes</option>
           <option v-for="theme in themes" :key="theme" :value="theme">
@@ -53,24 +48,20 @@
           </option>
         </select>
 
-        <!-- Review filter -->
         <label class="review-filter">
           <input type="checkbox" v-model="showOnlyUnreviewed" />
           Not reviewed only
         </label>
       </div>
 
-      <!-- Empty favorites -->
       <p v-if="favorites.length === 0" class="status-message">
         You have no favorites yet. Click on ☆ during a quiz to add one.
       </p>
 
-      <!-- No search results -->
       <p v-else-if="filteredFavorites.length === 0" class="status-message">
         No favorites match your search.
       </p>
 
-      <!-- Favorites list -->
       <ul v-else class="favorites-list">
         <li v-for="fav in filteredFavorites" :key="fav.id" class="favorite-card">
           <div class="card-header">
@@ -87,23 +78,19 @@
             </button>
           </div>
 
-          <!-- Question -->
           <p class="question">
             {{ fav.question_text }}
           </p>
 
-          <!-- Concept -->
           <p class="concept-label">
             {{ fav.ideology || fav.theme }}
           </p>
 
-          <!-- User opinion -->
           <div v-if="fav.is_completed" class="opinion-info">
             Your opinion:
             <strong>{{ getOpinionLabel(fav.opinion_value) }}</strong>
           </div>
 
-          <!-- Status -->
           <div class="status-badges">
             <span class="status-badge" :class="fav.is_completed ? 'answered' : 'not-answered'">
               {{ fav.is_completed ? "Answered" : "Not answered" }}
@@ -114,23 +101,20 @@
             </span>
           </div>
 
-          <!-- Details button -->
           <button class="toggle-btn" @click="toggleDetails(fav.id)">
             {{ openId === fav.id ? "Hide details" : "Explore concept" }}
           </button>
 
-          <!-- Explanation -->
           <div v-if="openId === fav.id" class="details">
             <h3>Understanding the concept</h3>
 
             <p>{{ fav.explanation_concept }}</p>
 
-            <!-- Links -->
             <div v-if="fav.links && fav.links.length">
               <h3>Learn more</h3>
 
               <ul class="links">
-                <li v-for="(link, i) in fav.links" :key="i">
+                <li v-for="(link, index) in fav.links" :key="index">
                   <a :href="link.url" target="_blank" rel="noopener noreferrer">
                     {{ link.title }}
                   </a>
@@ -138,7 +122,6 @@
               </ul>
             </div>
 
-            <!-- Review action -->
             <button
               class="review-btn"
               :class="{ 'already-reviewed': fav.is_reviewed }"
@@ -153,147 +136,168 @@
   </div>
 </template>
 
-<script setup>
-import { ref, computed, onMounted } from "vue";
+<script>
+export default {
+  name: "FavoritesPage",
 
-const favorites = ref([]);
-const isLoading = ref(true);
-const errorMessage = ref("");
-const openId = ref(null);
+  data() {
+    return {
+      favorites: [],
+      isLoading: true,
+      errorMessage: "",
+      openId: null,
+      searchQuery: "",
+      selectedTheme: "",
+      showOnlyUnreviewed: false,
+    };
+  },
 
-const searchQuery = ref("");
-const selectedTheme = ref("");
-const showOnlyUnreviewed = ref(false);
+  computed: {
+    answeredCount() {
+      return this.favorites.filter((fav) => fav.is_completed).length;
+    },
 
-// Fetch favorites
-const fetchFavorites = async () => {
-  const token = localStorage.getItem("poliyvalues_token");
+    reviewedCount() {
+      return this.favorites.filter((fav) => fav.is_reviewed).length;
+    },
 
-  try {
-    const response = await fetch("http://localhost:3000/api/questions/favorites", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    themes() {
+      return [...new Set(this.favorites.map((fav) => fav.theme))].sort();
+    },
 
-    if (response.ok) {
-      favorites.value = await response.json();
-    } else {
-      errorMessage.value = "Impossible to load your favorites.";
-    }
-  } catch (error) {
-    errorMessage.value = "Impossible to connect to the network.";
-  } finally {
-    isLoading.value = false;
-  }
-};
+    filteredFavorites() {
+      return this.favorites.filter((fav) => {
+        const query = this.searchQuery.toLowerCase();
 
-// Statistics
-const answeredCount = computed(() => favorites.value.filter((f) => f.is_completed).length);
+        const question = (fav.question_text || "").toLowerCase();
+        const explanation = (fav.explanation_concept || "").toLowerCase();
+        const ideology = (fav.ideology || "").toLowerCase();
 
-const reviewedCount = computed(() => favorites.value.filter((f) => f.is_reviewed).length);
+        const matchesSearch =
+          question.includes(query) || explanation.includes(query) || ideology.includes(query);
 
-// Available themes
-const themes = computed(() => [...new Set(favorites.value.map((f) => f.theme))].sort());
+        const matchesTheme = !this.selectedTheme || fav.theme === this.selectedTheme;
 
-// Search and filters
-const filteredFavorites = computed(() => {
-  return favorites.value.filter((fav) => {
-    const query = searchQuery.value.toLowerCase();
+        const matchesReview = !this.showOnlyUnreviewed || !fav.is_reviewed;
 
-    const matchesSearch =
-      fav.question_text.toLowerCase().includes(query) ||
-      fav.explanation_concept.toLowerCase().includes(query) ||
-      (fav.ideology || "").toLowerCase().includes(query);
+        return matchesSearch && matchesTheme && matchesReview;
+      });
+    },
+  },
 
-    const matchesTheme = !selectedTheme.value || fav.theme === selectedTheme.value;
+  methods: {
+    getToken() {
+      return localStorage.getItem("poliyvalues_token");
+    },
 
-    const matchesReview = !showOnlyUnreviewed.value || !fav.is_reviewed;
+    async fetchFavorites() {
+      this.isLoading = true;
+      this.errorMessage = "";
 
-    return matchesSearch && matchesTheme && matchesReview;
-  });
-});
+      try {
+        const response = await fetch("http://localhost:3000/api/questions/favorites", {
+          headers: {
+            Authorization: `Bearer ${this.getToken()}`,
+          },
+        });
 
-// Toggle explanation
-const toggleDetails = (id) => {
-  openId.value = openId.value === id ? null : id;
-};
+        if (!response.ok) {
+          throw new Error("Impossible to load your favorites.");
+        }
 
-// Remove favorite
-const removeFavorite = async (id) => {
-  const token = localStorage.getItem("poliyvalues_token");
-
-  try {
-    const response = await fetch("http://localhost:3000/api/questions/favorite", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ questId: id }),
-    });
-
-    if (response.ok) {
-      favorites.value = favorites.value.filter((f) => f.id !== id);
-
-      if (openId.value === id) {
-        openId.value = null;
+        this.favorites = await response.json();
+      } catch (error) {
+        this.errorMessage =
+          error.message === "Failed to fetch"
+            ? "Impossible to connect to the network."
+            : error.message;
+      } finally {
+        this.isLoading = false;
       }
-    }
-  } catch (error) {
-    console.error("Error removing favorite:", error);
-  }
+    },
+
+    toggleDetails(id) {
+      this.openId = this.openId === id ? null : id;
+    },
+
+    async removeFavorite(id) {
+      try {
+        const response = await fetch("http://localhost:3000/api/questions/favorite", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${this.getToken()}`,
+          },
+          body: JSON.stringify({
+            questId: id,
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error("Unable to remove favorite.");
+        }
+
+        this.favorites = this.favorites.filter((fav) => fav.id !== id);
+
+        if (this.openId === id) {
+          this.openId = null;
+        }
+      } catch (error) {
+        console.error("Error removing favorite:", error);
+      }
+    },
+
+    async updateReview(fav) {
+      const newStatus = !fav.is_reviewed;
+
+      try {
+        const response = await fetch("http://localhost:3000/api/questions/review", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${this.getToken()}`,
+          },
+          body: JSON.stringify({
+            questionId: fav.id,
+            isReviewed: newStatus,
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error("Unable to update review status.");
+        }
+
+        fav.is_reviewed = newStatus;
+      } catch (error) {
+        console.error("Error updating review:", error);
+      }
+    },
+
+    startReview() {
+      this.showOnlyUnreviewed = true;
+
+      if (this.filteredFavorites.length > 0) {
+        this.openId = this.filteredFavorites[0].id;
+      }
+    },
+
+    getOpinionLabel(value) {
+      const labels = {
+        "-2": "Strongly disagree",
+        "-1": "Disagree",
+        0: "Neutral",
+        1: "Agree",
+        2: "Strongly agree",
+      };
+
+      return labels[value] || "Unknown";
+    },
+  },
+
+  mounted() {
+    this.fetchFavorites();
+  },
 };
-
-// Update review status
-const updateReview = async (fav) => {
-  const token = localStorage.getItem("poliyvalues_token");
-  const newStatus = !fav.is_reviewed;
-
-  try {
-    const response = await fetch("http://localhost:3000/api/questions/review", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        questionId: fav.id,
-        isReviewed: newStatus,
-      }),
-    });
-
-    if (response.ok) {
-      fav.is_reviewed = newStatus;
-    }
-  } catch (error) {
-    console.error("Error updating review:", error);
-  }
-};
-
-// Start review session
-const startReview = () => {
-  showOnlyUnreviewed.value = true;
-
-  if (filteredFavorites.value.length > 0) {
-    openId.value = filteredFavorites.value[0].id;
-  }
-};
-
-// Opinion label
-const getOpinionLabel = (value) => {
-  const labels = {
-    "-2": "Strongly disagree",
-    "-1": "Disagree",
-    0: "Neutral",
-    1: "Agree",
-    2: "Strongly agree",
-  };
-
-  return labels[value] || "Unknown";
-};
-
-onMounted(fetchFavorites);
 </script>
 
 <style scoped>
@@ -301,6 +305,7 @@ onMounted(fetchFavorites);
   max-width: 750px;
   margin: 3rem auto;
   padding: 0 1rem;
+  color: var(--text-main);
 }
 
 .page-header {
@@ -310,19 +315,22 @@ onMounted(fetchFavorites);
 
 .page-header h1 {
   margin-bottom: 0.5rem;
+  color: var(--text-main);
 }
 
 .page-header p {
-  color: var(--text-secondary, #888);
+  color: var(--text-muted);
 }
 
 .status-message {
   text-align: center;
-  color: #6c757d;
+  color: var(--text-muted);
   margin: 2rem 0;
 }
 
-/* Statistics */
+.error-message {
+  color: var(--danger-color);
+}
 
 .stats-grid {
   display: grid;
@@ -333,7 +341,9 @@ onMounted(fetchFavorites);
 
 .stat-card {
   background: var(--bg-card);
+  color: var(--text-main);
   padding: 1.2rem;
+  border: 1px solid var(--border-color);
   border-radius: 14px;
   display: flex;
   flex-direction: column;
@@ -345,15 +355,13 @@ onMounted(fetchFavorites);
 .stat-number {
   font-size: 1.8rem;
   font-weight: bold;
-  color: var(--text-main);
+  color: var(--primary-color);
 }
 
 .stat-label {
   font-size: 0.85rem;
-  color: var(--text-secondary, #888);
+  color: var(--text-muted);
 }
-
-/* Review button */
 
 .review-all-btn {
   width: 100%;
@@ -361,13 +369,16 @@ onMounted(fetchFavorites);
   margin-bottom: 1.5rem;
   border: none;
   border-radius: 10px;
-  background: #4361ee;
+  background: var(--primary-color);
   color: white;
   font-weight: 600;
   cursor: pointer;
+  transition: background 0.3s ease;
 }
 
-/* Toolbar */
+.review-all-btn:hover {
+  background: var(--primary-hover);
+}
 
 .toolbar {
   display: flex;
@@ -379,11 +390,18 @@ onMounted(fetchFavorites);
 .search-input,
 .theme-filter {
   width: 100%;
+  box-sizing: border-box;
   padding: 0.8rem;
-  border: 1px solid #ced4da;
+  border: 1px solid var(--border-color);
   border-radius: 8px;
-  background: var(--bg-card);
+  background: var(--input-bg);
   color: var(--text-main);
+}
+
+.search-input:focus,
+.theme-filter:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
 }
 
 .review-filter {
@@ -393,8 +411,6 @@ onMounted(fetchFavorites);
   font-size: 0.9rem;
   color: var(--text-main);
 }
-
-/* Favorites */
 
 .favorites-list {
   list-style: none;
@@ -406,9 +422,14 @@ onMounted(fetchFavorites);
 
 .favorite-card {
   background: var(--bg-card);
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
   border-radius: 16px;
   padding: 1.5rem;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  transition:
+    background 0.3s ease,
+    color 0.3s ease;
 }
 
 .card-header {
@@ -418,8 +439,8 @@ onMounted(fetchFavorites);
 }
 
 .theme-badge {
-  background: rgba(67, 97, 238, 0.12);
-  color: #4361ee;
+  background: var(--primary-color);
+  color: white;
   padding: 0.35rem 0.7rem;
   border-radius: 20px;
   font-size: 0.8rem;
@@ -431,6 +452,11 @@ onMounted(fetchFavorites);
   font-size: 1.5rem;
   color: var(--danger-color);
   cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.remove-btn:hover {
+  color: var(--danger-hover);
 }
 
 .question {
@@ -440,7 +466,7 @@ onMounted(fetchFavorites);
 }
 
 .concept-label {
-  color: var(--text-secondary, #888);
+  color: var(--text-muted);
   font-size: 0.85rem;
 }
 
@@ -475,27 +501,30 @@ onMounted(fetchFavorites);
   color: #92400e;
 }
 
-/* Details */
-
 .toggle-btn {
-  background: none;
-  border: 1px solid #ced4da;
+  background: var(--input-bg);
+  border: 1px solid var(--border-color);
   border-radius: 8px;
   padding: 0.6rem 1rem;
-  color: #4361ee;
+  color: var(--primary-color);
   cursor: pointer;
+}
+
+.toggle-btn:hover {
+  border-color: var(--primary-color);
 }
 
 .details {
   margin-top: 1rem;
   padding-top: 1rem;
-  border-top: 1px dashed #e0e0e0;
+  border-top: 1px dashed var(--border-color);
   color: var(--text-main);
   line-height: 1.6;
 }
 
 .details h3 {
   font-size: 1rem;
+  color: var(--primary-color);
 }
 
 .links {
@@ -503,10 +532,12 @@ onMounted(fetchFavorites);
 }
 
 .links a {
-  color: #4361ee;
+  color: var(--primary-color);
 }
 
-/* Review */
+.links a:hover {
+  color: var(--primary-hover);
+}
 
 .review-btn {
   margin-top: 1rem;
@@ -514,14 +545,18 @@ onMounted(fetchFavorites);
   width: 100%;
   border: none;
   border-radius: 8px;
-  background: #16a34a;
+  background: var(--primary-color);
   color: white;
   cursor: pointer;
   font-weight: 600;
 }
 
+.review-btn:hover {
+  background: var(--primary-hover);
+}
+
 .review-btn.already-reviewed {
-  background: #64748b;
+  background: var(--text-muted);
 }
 
 @media (max-width: 450px) {
@@ -539,6 +574,10 @@ onMounted(fetchFavorites);
 
   .stat-label {
     font-size: 0.75rem;
+  }
+
+  .favorite-card {
+    padding: 1rem;
   }
 }
 </style>

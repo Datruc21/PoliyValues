@@ -16,15 +16,15 @@
         <p v-if="itemsFor(col.value).length === 0" class="empty">Nothing here</p>
 
         <div v-for="a in itemsFor(col.value)" :key="a.id" class="item">
-            <strong>{{ a.ideology || a.theme }}</strong>
-            <small v-if="a.ideology">{{ a.theme }}</small>
-            <span class="peers">
-                <template v-if="ratioText(a)">
-                <b>{{ ratioText(a) }}</b> answered the same
-                </template>
-                <template v-else>No one else has answered yet</template>
-            </span>
-            <a v-if="firstLink(a)" :href="firstLink(a)" target="_blank" rel="noopener">Learn more</a>
+          <strong>{{ a.ideology || a.theme }}</strong>
+          <small v-if="a.ideology">{{ a.theme }}</small>
+          <span class="peers">
+            <template v-if="ratioText(a)">
+              <b>{{ ratioText(a) }}</b> answered the same
+            </template>
+            <template v-else>No one else has answered yet</template>
+          </span>
+          <a v-if="firstLink(a)" :href="firstLink(a)" target="_blank" rel="noopener">Learn more</a>
         </div>
       </section>
     </div>
@@ -70,18 +70,90 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-#stats-page { max-width: 1100px; margin: 3rem auto; padding: 0 1rem; }
-h1 { text-align: center; margin-bottom: 2rem; }
-.status { text-align: center; color: #6c757d; }
-.columns { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; align-items: start; }
-.column h2 { font-size: 0.95rem; text-align: center; padding-bottom: 0.5rem; border-bottom: 2px solid; margin: 0 0 0.75rem; }
-.item { background: #fff; border-radius: 12px; padding: 0.75rem; margin-bottom: 0.75rem; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); display: flex; flex-direction: column; gap: 0.25rem; }
-.item small { color: #6c757d; }
-.item a { color: #4361ee; font-size: 0.85rem; }
-.empty { text-align: center; color: #adb5bd; font-size: 0.85rem; }
+#stats-page {
+  max-width: 1100px;
+  margin: 3rem auto;
+  padding: 0 1rem;
+  color: var(--text-main);
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: var(--text-main);
+}
+
+.status {
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.columns {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1rem;
+  align-items: start;
+}
+
+.column h2 {
+  font-size: 0.95rem;
+  text-align: center;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid;
+  margin: 0 0 0.75rem;
+}
+
+.item {
+  background: var(--bg-card);
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 0.75rem;
+  margin-bottom: 0.75rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  transition:
+    background 0.3s ease,
+    color 0.3s ease;
+}
+
+.item strong {
+  color: var(--text-main);
+}
+
+.item small {
+  color: var(--text-muted);
+}
+
+.peers {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.peers b {
+  color: var(--text-main);
+}
+
+.item a {
+  color: var(--primary-color);
+  font-size: 0.85rem;
+}
+
+.item a:hover {
+  color: var(--primary-hover);
+}
+
+.empty {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
 @media (max-width: 800px) {
-  .columns { grid-template-columns: 1fr; }
-.peers { font-size: 0.8rem; color: var(--text-muted); }
-.peers b { color: var(--text-main); }
+  .columns {
+    grid-template-columns: 1fr;
+  }
 }
 </style>

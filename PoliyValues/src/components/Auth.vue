@@ -1,6 +1,5 @@
 <template>
   <div class="auth-container">
-    <!-- SCREEN 1: SIGN IN OR SIGN UP -->
     <template v-if="!isVerifying">
       <h1 v-if="accountCreated">Welcome to PoliyValues, sign in to proceed</h1>
       <h1 v-else>Welcome to PoliyValues, sign up to proceed</h1>
@@ -32,7 +31,6 @@
       <a v-else @click="accountCreated = true">Already have an account ? Sign in here</a>
     </template>
 
-    <!-- SCREEN 2: EMAIL VERIFICATION -->
     <template v-else>
       <h1>Email Verification</h1>
       <p class="subtitle">
@@ -305,7 +303,6 @@ button {
 button:hover {
   opacity: 0.8;
 }
-/* Style spécifique pour les boutons de suppression en rouge */
 .btn-danger,
 button.delete-btn {
   background-color: #dc3545 !important;

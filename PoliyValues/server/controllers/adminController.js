@@ -1,21 +1,16 @@
 import db from "../config/db.js";
 
 const checkIsAdmin = async (userId) => {
-  const [users] = await db.execute("SELECT Admin FROM users WHERE id = ?", [
-    userId,
-  ]);
+  const [users] = await db.execute("SELECT Admin FROM users WHERE id = ?", [userId]);
   if (users.length === 0) return false;
   return Boolean(users[0].Admin);
 };
 
-// 1. Add a question
 export const addQuestion = async (req, res) => {
   try {
     const isAdmin = await checkIsAdmin(req.user.id || req.user.userId);
     if (!isAdmin) {
-      return res
-        .status(403)
-        .json({ error: "Access denied. Administrator rights required." });
+      return res.status(403).json({ error: "Access denied. Administrator rights required." });
     }
 
     const { theme, question_text, explanation_concept, links, ideology } = req.body;
@@ -38,7 +33,7 @@ export const addQuestion = async (req, res) => {
       question_text,
       explanation_concept,
       linksValue,
-      ideology
+      ideology,
     ]);
 
     res.status(201).json({
@@ -51,14 +46,11 @@ export const addQuestion = async (req, res) => {
   }
 };
 
-// 2. Edit a question
 export const editQuestion = async (req, res) => {
   try {
     const isAdmin = await checkIsAdmin(req.user.id || req.user.userId);
     if (!isAdmin) {
-      return res
-        .status(403)
-        .json({ error: "Access denied. Administrator rights required." });
+      return res.status(403).json({ error: "Access denied. Administrator rights required." });
     }
 
     const { id } = req.params;
@@ -95,14 +87,11 @@ export const editQuestion = async (req, res) => {
   }
 };
 
-// 3. Search questions (by theme or text)
 export const searchQuestion = async (req, res) => {
   try {
     const isAdmin = await checkIsAdmin(req.user.id || req.user.userId);
     if (!isAdmin) {
-      return res
-        .status(403)
-        .json({ error: "Access denied. Administrator rights required." });
+      return res.status(403).json({ error: "Access denied. Administrator rights required." });
     }
 
     const { q, theme } = req.query;
@@ -130,21 +119,16 @@ export const searchQuestion = async (req, res) => {
   }
 };
 
-// 4. Delete a question
 export const deleteQuestion = async (req, res) => {
   try {
     const isAdmin = await checkIsAdmin(req.user.id || req.user.userId);
     if (!isAdmin) {
-      return res
-        .status(403)
-        .json({ error: "Access denied. Administrator rights required." });
+      return res.status(403).json({ error: "Access denied. Administrator rights required." });
     }
 
     const { id } = req.params;
 
-    const [result] = await db.execute("DELETE FROM questions WHERE id = ?", [
-      id,
-    ]);
+    const [result] = await db.execute("DELETE FROM questions WHERE id = ?", [id]);
 
     if (result.affectedRows === 0) {
       return res.status(404).json({ error: "Question not found." });
@@ -157,22 +141,16 @@ export const deleteQuestion = async (req, res) => {
   }
 };
 
-// --- USER MANAGEMENT ---
-
-// 5. Search user (by name or email)
 export const searchUser = async (req, res) => {
   try {
     const isAdmin = await checkIsAdmin(req.user.id || req.user.userId);
     if (!isAdmin) {
-      return res
-        .status(403)
-        .json({ error: "Access denied. Administrator rights required." });
+      return res.status(403).json({ error: "Access denied. Administrator rights required." });
     }
 
     const { q } = req.query;
 
-    let query =
-      "SELECT id, name, email, Admin, isBanned, created_at FROM users WHERE 1=1";
+    let query = "SELECT id, name, email, Admin, isBanned, created_at FROM users WHERE 1=1";
     let params = [];
 
     if (q) {
@@ -188,22 +166,16 @@ export const searchUser = async (req, res) => {
   }
 };
 
-// 6. Ban a user
 export const banUser = async (req, res) => {
   try {
     const isAdmin = await checkIsAdmin(req.user.id || req.user.userId);
     if (!isAdmin) {
-      return res
-        .status(403)
-        .json({ error: "Access denied. Administrator rights required." });
+      return res.status(403).json({ error: "Access denied. Administrator rights required." });
     }
 
     const { id } = req.params;
 
-    const [result] = await db.execute(
-      "UPDATE users SET isBanned = 1 WHERE id = ?",
-      [id],
-    );
+    const [result] = await db.execute("UPDATE users SET isBanned = 1 WHERE id = ?", [id]);
 
     if (result.affectedRows === 0) {
       return res.status(404).json({ error: "User not found." });
@@ -216,22 +188,16 @@ export const banUser = async (req, res) => {
   }
 };
 
-// 7. Unban a user
 export const unbanUser = async (req, res) => {
   try {
     const isAdmin = await checkIsAdmin(req.user.id || req.user.userId);
     if (!isAdmin) {
-      return res
-        .status(403)
-        .json({ error: "Access denied. Administrator rights required." });
+      return res.status(403).json({ error: "Access denied. Administrator rights required." });
     }
 
     const { id } = req.params;
 
-    const [result] = await db.execute(
-      "UPDATE users SET isBanned = 0 WHERE id = ?",
-      [id],
-    );
+    const [result] = await db.execute("UPDATE users SET isBanned = 0 WHERE id = ?", [id]);
 
     if (result.affectedRows === 0) {
       return res.status(404).json({ error: "User not found." });
@@ -244,22 +210,16 @@ export const unbanUser = async (req, res) => {
   }
 };
 
-// 8. Make a user Admin
 export const makeAdmin = async (req, res) => {
   try {
     const isAdmin = await checkIsAdmin(req.user.id || req.user.userId);
     if (!isAdmin) {
-      return res
-        .status(403)
-        .json({ error: "Access denied. Administrator rights required." });
+      return res.status(403).json({ error: "Access denied. Administrator rights required." });
     }
 
     const { id } = req.params;
 
-    const [result] = await db.execute(
-      "UPDATE users SET Admin = 1 WHERE id = ?",
-      [id],
-    );
+    const [result] = await db.execute("UPDATE users SET Admin = 1 WHERE id = ?", [id]);
 
     if (result.affectedRows === 0) {
       return res.status(404).json({ error: "User not found." });
@@ -272,22 +232,16 @@ export const makeAdmin = async (req, res) => {
   }
 };
 
-// 9. Remove Admin rights
 export const undoAdmin = async (req, res) => {
   try {
     const isAdmin = await checkIsAdmin(req.user.id || req.user.userId);
     if (!isAdmin) {
-      return res
-        .status(403)
-        .json({ error: "Access denied. Administrator rights required." });
+      return res.status(403).json({ error: "Access denied. Administrator rights required." });
     }
 
     const { id } = req.params;
 
-    const [result] = await db.execute(
-      "UPDATE users SET Admin = 0 WHERE id = ?",
-      [id],
-    );
+    const [result] = await db.execute("UPDATE users SET Admin = 0 WHERE id = ?", [id]);
 
     if (result.affectedRows === 0) {
       return res.status(404).json({ error: "User not found." });
